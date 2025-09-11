@@ -1,1 +1,22 @@
-<p>header works!</p>
+<header class="app-header">
+  <div class="left-section">
+    <div class="logo">IMDB</div>
+    <button class="menu-button">☰</button>
+  </div>
+
+  <div class="search-section">
+    <select [(ngModel)]="searchCategory">
+      <option value="all">All</option>
+      <option value="movies">Movies</option>
+      <option value="actors">Actors</option>
+    </select>
+    <input type="text" [(ngModel)]="query" placeholder="Search..." />
+    <button (click)="search()">🔍</button>
+  </div>
+
+  <div class="right-section">
+    <a routerLink="/materials">Free Materials</a>
+    <a routerLink="/login">Sign In</a>
+    <button class="lang-button">EN</button>
+  </div>
+</header>
