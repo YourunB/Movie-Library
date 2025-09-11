@@ -1,11 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrls: ['./header.scss'],
+  imports: [FormsModule]
 })
-export class Header {
+export class Header{
+  query = '';
+  searchCategory = 'all';
 
+  private router = inject(Router);
+
+  search() {
+    if (this.query.trim()) {
+      this.router.navigate(['/search'], {
+        queryParams: {
+          q: this.query.trim(),
+          category: this.searchCategory
+        }
+      });
+    }
+  }
 }
