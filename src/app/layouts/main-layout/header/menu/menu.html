@@ -4,8 +4,10 @@
       <div class="header__logo">IMDB</div>
       <button (click)="close()" class="header__close">X</button>
     </div>
-    <a routerLink="/" (click)="close()">Home</a>
-    <a routerLink="/popular" (click)="close()">Popular</a>
-    <a routerLink="/search" (click)="close()">Search</a>
+    <div class="main">
+      <a routerLink="/" (click)="close()">Home</a>
+      <a routerLink="/popular" (click)="close()">Popular</a>
+      <a routerLink="/search" (click)="close()">Search</a>
+    </div>
   </div>
 </nav>
