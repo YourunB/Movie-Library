@@ -2,7 +2,7 @@
   <div class="header-wrapper">
     <div class="left-section">
       <div class="logo">IMDB</div>
-      <button class="menu-button">☰</button>
+      <button class="menu-button" (click)="toggleMenu()">☰</button>
     </div>
 
     <div class="search-section">
@@ -21,4 +21,6 @@
       <button class="lang-button">EN</button>
     </div>
   </div>
+
+  <app-menu *ngIf="menuOpen$ | async"></app-menu>
 </header>

@@ -1,15 +1,23 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { selectMenuOpen } from '../../../../store/ui.selectors';
+import { toggleMenu } from '../../../../store/ui.actions';
+import { Menu } from './menu/menu';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
   standalone: true,
   styleUrls: ['./header.scss'],
-  imports: [FormsModule]
+  imports: [FormsModule, Menu, CommonModule]
 })
 export class Header{
+  private store = inject(Store);
+  menuOpen$ = this.store.select(selectMenuOpen);
+
   query = '';
   searchCategory = 'all';
 
@@ -24,5 +32,9 @@ export class Header{
         }
       });
     }
+  }
+
+  toggleMenu() {
+    this.store.dispatch(toggleMenu());
   }
 }
