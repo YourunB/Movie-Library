@@ -9,9 +9,11 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes'; 
+import { routes } from './app.routes';
 
 import { uiReducer } from '../store/ui.reducer';
+import { dashboardReducer } from '../store/dashboard.reducer';
+import { DashboardEffects } from '../store/dashboard.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,8 +25,9 @@ export const appConfig: ApplicationConfig = {
     ),
     provideStore({
       ui: uiReducer,
+      dashboard: dashboardReducer,
     }),
-    provideEffects([]),
+    provideEffects([DashboardEffects]),
     provideRouter(routes),
   ]
 };
