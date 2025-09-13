@@ -1,1 +1,51 @@
-<p>signup.page works!</p>
+<div class="signup-page">
+  <form [formGroup]="signupForm" class="signup-form" (ngSubmit)="onSubmit()">
+    <p class="signup-form-title">Sign Up</p>
+    <mat-form-field>
+      <mat-label>User name</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Alex"
+        formControlName="userName"
+        autocomplete="username"
+        (input)="markNameAsTouched()"
+      />
+      @if (
+        signupForm.get("userName")?.invalid && signupForm.get("userName")?.touched
+      ) {
+        <mat-error>
+          {{ userNameErrors() }}
+        </mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter your password</mat-label>
+      <input
+        matInput
+        [type]="hide() ? 'password' : 'text'"
+        formControlName="password"
+        autocomplete="current-password"
+        (input)="markPasswordAsTouched()"
+      />
+      <button
+        matIconButton
+        matSuffix
+        (click)="hidePassword($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()"
+      >
+        <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      @if (signupForm.get("password")?.invalid && signupForm.get("password")?.touched) {
+        <mat-error>
+          {{ passWordErrors() }}
+        </mat-error>
+      }
+    </mat-form-field>
+    <button class="signup-button" mat-button="elevated" [disabled]="signupForm.invalid">Log in</button>
+    <div class="signup-links">
+        <p>Do you already have an account?</p>
+        <a [routerLink]="['/signin']">SignIn</a>
+    </div>
+  </form>
+</div>
