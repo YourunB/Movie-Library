@@ -8,6 +8,10 @@ import { provideHttpClient, withInterceptorsFromDi, withFetch } from '@angular/c
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes'; 
+
+import { uiReducer } from '../store/ui.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +21,10 @@ export const appConfig: ApplicationConfig = {
       withFetch(),
       withInterceptorsFromDi()
     ),
-    provideStore({}),
+    provideStore({
+      ui: uiReducer,
+    }),
     provideEffects([]),
+    provideRouter(routes),
   ]
 };
