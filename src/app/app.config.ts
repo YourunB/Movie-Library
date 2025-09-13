@@ -14,6 +14,9 @@ import { routes } from './app.routes';
 import { uiReducer } from '../store/ui.reducer';
 import { dashboardReducer } from '../store/dashboard.reducer';
 import { DashboardEffects } from '../store/dashboard.effects';
+import { environment } from '../environments/environment';
+import { TmdbService } from '../services/dashboard/tmdb.service';
+import { TmdbMockService } from '../services/dashboard/tmdb.mock.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,5 +32,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects([DashboardEffects]),
     provideRouter(routes),
+    ...(environment.useMocks ? [{ provide: TmdbService, useClass: TmdbMockService }] : []),
   ]
 };
