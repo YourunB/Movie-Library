@@ -46,5 +46,20 @@
 .main-info {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
+  max-width: 1280px;
+  margin: auto;
+
+  &__text,
+  &__year {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+
+  &__year {
+    font-size: 12px;
+    opacity: 0.6;
+  }
 }
