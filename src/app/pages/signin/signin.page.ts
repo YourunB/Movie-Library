@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,7 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
+import { SigninService } from '../../shared/services/signin.service';
 
 @Component({
   selector: 'app-signin.page',
@@ -28,13 +30,16 @@ import { RouterLink } from '@angular/router';
 })
 export class SigninPage {
   singinForm: FormGroup;
+  private signinService = inject(SigninService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
   constructor() {
     this.singinForm = new FormGroup({
-      userName: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(3)],
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
       }),
       password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(2)],
+        validators: [Validators.required, Validators.minLength(6)],
       }),
     });
   }
@@ -46,8 +51,8 @@ export class SigninPage {
   }
   protected readonly value = signal('');
 
-  markNameAsTouched() {
-    const control = this.singinForm.get('userName');
+  markEmailAsTouched() {
+    const control = this.singinForm.get('email');
     if (control?.errors) control?.markAsTouched();
   }
 
@@ -55,12 +60,10 @@ export class SigninPage {
     const control = this.singinForm.get('password');
     if (control?.errors) control?.markAsTouched();
   }
-  userNameErrors() {
+  userEmailErrors() {
     const control = this.singinForm.get('userName');
     if (control?.hasError('required')) {
-      return 'Username is required';
-    } else if (control?.hasError('minlength')) {
-      return 'Username must be at least 3 characters long';
+      return 'Email is required';
     } else {
       return null;
     }
@@ -80,7 +83,15 @@ export class SigninPage {
   onSubmit() {
     if (this.singinForm.valid) {
       const loginData = this.singinForm.value;
-      console.log(loginData);
+      this.signinService
+        .signin(loginData.email, loginData.password)
+        .then((userCredential) => {
+          this.authService.setUser(userCredential.user);
+          this.router.navigate(['./']);
+        })
+        .catch((error) => {
+          console.error('Error creating user:', error);
+        });
     }
   }
 }

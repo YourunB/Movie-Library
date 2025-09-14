@@ -16,17 +16,18 @@
   border: 1px solid white;
   color: white;
 }
-.signup-form-title{
-  font-weight: bold;
+.signup-form-title {
   align-self: center;
 }
 
 .signup-button {
+  color: black !important;
   background-color: white;
 }
 
 .signup-button:hover {
   color: white;
+  background-color: #f5c518;
 }
 
 .signup-links {

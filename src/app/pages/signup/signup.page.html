@@ -2,20 +2,19 @@
   <form [formGroup]="signupForm" class="signup-form" (ngSubmit)="onSubmit()">
     <p class="signup-form-title">Sign Up</p>
     <mat-form-field>
-      <mat-label>User name</mat-label>
+      <mat-label>Email</mat-label>
       <input
         matInput
-        placeholder="Ex. Alex"
-        formControlName="userName"
-        autocomplete="username"
-        (input)="markNameAsTouched()"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        (input)="markEmailAsTouched()"
       />
-      @if (
-        signupForm.get("userName")?.invalid && signupForm.get("userName")?.touched
+      @if ( signupForm.get("email")?.invalid && signupForm.get("email")?.touched
       ) {
-        <mat-error>
-          {{ userNameErrors() }}
-        </mat-error>
+      <mat-error>
+        {{ userEmailErrors() }}
+      </mat-error>
       }
     </mat-form-field>
     <mat-form-field>
@@ -36,16 +35,23 @@
       >
         <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-      @if (signupForm.get("password")?.invalid && signupForm.get("password")?.touched) {
-        <mat-error>
-          {{ passWordErrors() }}
-        </mat-error>
+      @if (signupForm.get("password")?.invalid &&
+      signupForm.get("password")?.touched) {
+      <mat-error>
+        {{ passWordErrors() }}
+      </mat-error>
       }
     </mat-form-field>
-    <button class="signup-button" mat-button="elevated" [disabled]="signupForm.invalid">Log in</button>
+    <button
+      class="signup-button"
+      mat-button="elevated"
+      [disabled]="signupForm.invalid"
+    >
+      Register
+    </button>
     <div class="signup-links">
-        <p>Do you already have an account?</p>
-        <a [routerLink]="['/signin']">SignIn</a>
+      <p>Already have an account?</p>
+      <a [routerLink]="['/signin']">SignIn</a>
     </div>
   </form>
 </div>

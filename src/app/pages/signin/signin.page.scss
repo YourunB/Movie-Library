@@ -17,16 +17,17 @@
   color: white;
 }
 .form-title {
-  font-weight: bold;
   align-self: center;
 }
 
 .login-button {
+  color: black !important;
   background-color: white;
 }
 
 .login-button:hover {
   color: white;
+  background-color: #f5c518;
 }
 
 .login-links {

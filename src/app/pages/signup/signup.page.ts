@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,7 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { SignupService } from '../../shared/services/signup.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-signup.page',
@@ -28,13 +30,17 @@ import { RouterLink } from '@angular/router';
 })
 export class SignupPage {
   signupForm: FormGroup;
+  private signupService = inject(SignupService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
   constructor() {
+
     this.signupForm = new FormGroup({
-      userName: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(3)],
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
       }),
       password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(2)],
+        validators: [Validators.required, Validators.minLength(6)],
       }),
     });
   }
@@ -46,8 +52,8 @@ export class SignupPage {
   }
   protected readonly value = signal('');
 
-  markNameAsTouched() {
-    const control = this.signupForm.get('userName');
+  markEmailAsTouched() {
+    const control = this.signupForm.get('email');
     if (control?.errors) control?.markAsTouched();
   }
 
@@ -55,12 +61,10 @@ export class SignupPage {
     const control = this.signupForm.get('password');
     if (control?.errors) control?.markAsTouched();
   }
-  userNameErrors() {
-    const control = this.signupForm.get('userName');
+  userEmailErrors() {
+    const control = this.signupForm.get('email');
     if (control?.hasError('required')) {
-      return 'Username is required';
-    } else if (control?.hasError('minlength')) {
-      return 'Username must be at least 3 characters long';
+      return 'Email is required';
     } else {
       return null;
     }
@@ -71,16 +75,24 @@ export class SignupPage {
     if (control?.hasError('required')) {
       return 'Password is required';
     } else if (control?.hasError('minlength')) {
-      return 'Password must be at least 2 characters long';
+      return 'Password must be at least 6 characters long';
     } else {
       return null;
     }
   }
 
   onSubmit() {
-    if (this. signupForm.valid) {
-      const signupData = this. signupForm.value;
-      console.log(signupData);
+    if (this.signupForm.valid) {
+      const signupData = this.signupForm.value;
+      this.signupService
+        .createNewUser(signupData.email, signupData.password)
+        .then((userCredential) => {
+          this.authService.setUser(userCredential.user);
+          this.router.navigate(['./'])
+        })
+        .catch((error) => {
+          console.error('Error creating user:', error);
+        });
     }
   }
 }
