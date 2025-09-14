@@ -1,0 +1,112 @@
+.wrapper-slider {
+  max-width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+  padding-top: 10px;
+}
+
+.wrapper-info-img {
+  display: flex;
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+
+  .poster {
+    height: 220px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 6px rgba(87, 85, 85, 0.3);
+  }
+  .wrapper-info {
+    position: relative;
+    padding: 0px 0px 120px 20px;
+  }
+}
+:host ::ng-deep .wrapper-slider .carousel,
+:host ::ng-deep .wrapper-slider .carousel-inner {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+:host ::ng-deep .wrapper-slider .carousel-item {
+  display: grid;
+  height: 0px;
+  backface-visibility: hidden;
+  will-change: auto;
+}
+
+:host ::ng-deep .wrapper-slider .carousel-item > img.backdrop {
+  grid-area: 1 / 1;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+:host ::ng-deep .wrapper-slider .carousel-item > img.poster {
+  grid-area: 1 / 1;
+  align-self: end;
+  justify-self: start;
+  width: 32%;
+  max-width: 170px;
+  margin: 0 0 14px 14px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.4);
+  z-index: 2;
+}
+
+:host ::ng-deep .wrapper-slider .carousel-caption {
+  grid-area: 1 / 1;
+  align-self: end;
+  z-index: 3;
+}
+
+.control-next {
+  position: absolute;
+  top: 220px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.control-prev {
+  position: absolute;
+  top: 220px;
+  left: 20px;
+  cursor: pointer;
+}
+
+.wrapper-slider .carousel-inner {
+  height: 600px;
+}
+
+.meta-row {
+  display: flex; align-items: center; gap: 10px;
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); }
+}
+
+.star-rating {
+  --rating: 0;
+  position: relative; font-size: 18px; line-height: 1;
+}
+.star-rating::before,
+.star-rating::after {
+  content: "★★★★★";
+  letter-spacing: 2px;
+}
+.star-rating::before { color: rgba(255,255,255,.25); }
+.star-rating::after  {
+  position: absolute; left: 0; top: 0; width: calc(var(--rating) / 5 * 100%);
+  color: #ffc107; overflow: hidden; white-space: nowrap;
+}
+
+.backdrop-shadow {
+      margin-top: -140px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 1) 100%);
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .wrapper-slider .carousel-item > img.poster {
+    display: none;
+  }
+}

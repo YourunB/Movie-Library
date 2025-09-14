@@ -9,7 +9,7 @@ export const TRENDING_MOVIES_MOCK: TmdbPage<TmdbMovie> = {
       "id": 1100,
       "title": "Neon Garden",
       "poster_path": "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg",
-      "backdrop_path": "https://image.tmdb.org/t/p/w1280/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg",
+      "backdrop_path": "https://image.tmdb.org/t/p/w1280/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
       "vote_average": 7.8,
       "release_date": "1988-06-04",
       "overview": "When a weary musician discovers a sealed archive, a race against a ruthless guild begins."
@@ -27,7 +27,7 @@ export const TRENDING_MOVIES_MOCK: TmdbPage<TmdbMovie> = {
       "id": 1102,
       "title": "Electric Chord",
       "poster_path": "https://image.tmdb.org/t/p/w500/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg",
-      "backdrop_path": "https://image.tmdb.org/t/p/w1280/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg",
+      "backdrop_path": "https://m.media-amazon.com/images/M/MV5BMTdlZTQ5NGUtZTU5Ni00NWFhLWEzYTItYzVlYjNhZWRmNjZkXkEyXkFqcGc@._CR63,82,899,506_QL75_UX500_CR0,0,500,281_.jpg",
       "vote_average": 8.4,
       "release_date": "1989-07-10",
       "overview": "When an exiled pilot discovers a restless AI, a race against time begins."
@@ -45,7 +45,7 @@ export const TRENDING_MOVIES_MOCK: TmdbPage<TmdbMovie> = {
       "id": 1104,
       "title": "Golden Garden",
       "poster_path": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
-      "backdrop_path": "https://image.tmdb.org/t/p/w1280/xBKGJQsAIeweesB79KC89FpBrVr.jpg",
+      "backdrop_path": "https://image.tmdb.org/thttps://m.media-amazon.com/images/M/tmdb@@._V1_QL40_QL75_UX500_CR0,0,500,281_.jpg/p/w1280/xBKGJQsAIeweesB79KC89FpBrVr.jpg",
       "vote_average": 6.8,
       "release_date": "2008-10-02",
       "overview": "When a haunted detective discovers a mirror world, a race against their own past begins."
@@ -54,7 +54,7 @@ export const TRENDING_MOVIES_MOCK: TmdbPage<TmdbMovie> = {
       "id": 1105,
       "title": "Neon City: Of Two Worlds",
       "poster_path": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
-      "backdrop_path": "https://image.tmdb.org/t/p/w1280/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg",
+      "backdrop_path": "https://image.tmdb.org/t/p/w1280/8uO0ghttps://m.media-amazon.com/images/M/MV5BNjE3YzU0YTMtYzgwMy00ZmM1LTk1NDQtMGMwMzM5ZTM1MjFmXkEyXkFqcGdeQWFsZWxvZw@@._V1_QL40_QL75_UX500_CR0,0,500,281_.jpgUM8aNqYLs1OsTBQiXu0fEv.jpg",
       "vote_average": 8.6,
       "release_date": "2003-10-17",
       "overview": "When a quiet botanist discovers a missing day, a race against their own past begins."
@@ -99,7 +99,7 @@ export const TRENDING_MOVIES_MOCK: TmdbPage<TmdbMovie> = {
       "id": 1110,
       "title": "Secret Horizon",
       "poster_path": "https://image.tmdb.org/t/p/w500/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg",
-      "backdrop_path": "https://image.tmdb.org/t/p/w1280/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg",
+      "backdrop_path": "https://m.media-amazon.com/images/M/MV5BOGIwMDk1ZjAtMjc1NC00YTRhLWJiMzItNjBjYmQ4OTRjNzNhXkEyXkFqcGc@._CR204,84,1314,739_QL75_UY281_CR0,0,500,281_.jpg",
       "vote_average": 9.5,
       "release_date": "2002-04-08",
       "overview": "When a quiet botanist discovers an impossible map, a race against their own past begins."
@@ -108,7 +108,7 @@ export const TRENDING_MOVIES_MOCK: TmdbPage<TmdbMovie> = {
       "id": 1111,
       "title": "Midnight City",
       "poster_path": "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg",
-      "backdrop_path": "https://image.tmdb.org/t/p/w1280/xBKGJQsAIeweesB79KC89FpBrVr.jpg",
+      "backdrop_path": "https://image.tmdb.org/t/p/w1280/xBKGJQshttps://m.media-amazon.com/images/M/MV5BOGIwMDk1ZjAtMjc1NC00YTRhLWJiMzItNjBjYmQ4OTRjNzNhXkEyXkFqcGc@._CR204,84,1314,739_QL75_UY281_CR0,0,500,281_.jpgAIeweesB79KC89FpBrVr.jpg",
       "vote_average": 6.9,
       "release_date": "1980-08-03",
       "overview": "When a runaway noble discovers a sealed archive, a race against their own past begins."
