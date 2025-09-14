@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { selectMenuOpen } from '../../../../store/ui.selectors';
-import { toggleMenu } from '../../../../store/ui.actions';
-import { Menu } from './menu/menu';
+import { selectMenuOpen } from '../../../../../store/ui.selectors';
+import { toggleMenu } from '../../../../../store/ui.actions';
+import { Menu } from '../menu/menu';
 import { CommonModule } from '@angular/common';
 
 @Component({
