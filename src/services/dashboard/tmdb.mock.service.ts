@@ -6,21 +6,24 @@ import {
   TRENDING_MOVIES_MOCK,
   TOP_RATED_MOVIES_MOCK,
   POPULAR_PEOPLE_MOCK,
-  REVIEWS_MOCK
+  REVIEWS_MOCK,
 } from '../../mocks/tmdb.mock-data';
 
 @Injectable()
 export class TmdbMockService {
   getTrendingMovies(): Observable<TmdbPage<TmdbMovie>> {
-    return of(TRENDING_MOVIES_MOCK).pipe(delay(300));
+    return of(TRENDING_MOVIES_MOCK).pipe(delay(200));
   }
+
   getTopRatedMovies(): Observable<TmdbPage<TmdbMovie>> {
-    return of(TOP_RATED_MOVIES_MOCK).pipe(delay(300));
+    return of(TOP_RATED_MOVIES_MOCK).pipe(delay(200));
   }
+
   getPopularPeople(): Observable<TmdbPage<TmdbPerson>> {
-    return of(POPULAR_PEOPLE_MOCK).pipe(delay(300));
+    return of(POPULAR_PEOPLE_MOCK).pipe(delay(200));
   }
-  getMovieReviews(): Observable<TmdbPage<TmdbReview>> {
-    return of(REVIEWS_MOCK).pipe(delay(300));
+
+   getMovieReviews(): Observable<TmdbPage<TmdbReview>> {
+    return of(REVIEWS_MOCK).pipe(delay(150));
   }
 }
