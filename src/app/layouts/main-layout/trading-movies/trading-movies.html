@@ -3,7 +3,6 @@
   <c-carousel-inner>
     @for (slide of slides; track slide.id) {
     <c-carousel-item class="slider">
-      <h1>hello world</h1>
       <img class="backdrop" [attr.alt]="slide.title" [src]="slide.backgroundImgSrc" loading="lazy" decoding="async" />
       <div class="backdrop-shadow"></div>
 
