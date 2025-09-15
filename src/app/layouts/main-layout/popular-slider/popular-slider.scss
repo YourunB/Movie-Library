@@ -1,0 +1,136 @@
+.popular-slider {
+  padding: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  --gap: 1rem;
+  --cards-per-slide: 6;
+  border: 1px solid green;
+  max-width: 1000px;
+  overflow: hidden;
+}
+
+/* carousel wrapper */
+.popular-slider .carousel-wrapper {
+  position: relative;
+  height: 280px;
+  padding-top: 25px;
+}
+
+/* header */
+.popular-slider .slider-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.popular-slider .slider-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* grid of cards */
+.popular-slider .card-list {
+  display: grid;
+  grid-template-columns: repeat(var(--cards-per-slide), minmax(0, 1fr));
+  gap: var(--gap);
+  padding: 0.25rem;
+}
+
+/* person card */
+.popular-slider .person-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  background: transparent; /* no background */
+  border: none; /* no border */
+  transition: transform 0.2s ease;
+}
+
+.popular-slider .person-card:hover,
+.popular-slider .person-card:focus {
+  transform: translateY(-4px);
+  outline: none;
+}
+
+/* circular image */
+.popular-slider .person-card .thumb {
+  width: 120px;       /* adjust size */
+  height: 120px;
+  border-radius: 50%; /* makes it round */
+  overflow: hidden;
+  background: #181b22;
+  flex-shrink: 0;
+}
+.popular-slider .person-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* name under avatar */
+.popular-slider .person-card .meta {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.popular-slider .person-card .meta .name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.popular-slider .person-card .meta .sub {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.wrapper-slider .carousel-inner {
+  height: 600px;
+}
+
+.carousel-item {
+  max-height: 0;
+  transition: max-height 0.5s ease;
+}
+
+.control-next {
+  position: absolute;
+  top: 220px;
+  right: 20px;
+  cursor: pointer;
+}
+.control-prev {
+  position: absolute;
+  top: 220px;
+  left: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .popular-slider  {
+    --cards-per-slide: 5;
+  }
+}
+@media (max-width: 992px) {
+  .popular-slider  {
+    --cards-per-slide: 4;
+  }
+}
+@media (max-width: 768px) {
+  .popular-slider  {
+    --cards-per-slide: 3;
+  }
+}
+@media (max-width: 576px) {
+  .popular-slider  {
+    --cards-per-slide: 2;
+  }
+}
