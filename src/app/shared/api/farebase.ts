@@ -13,8 +13,6 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.NG_APP_FIREBASE_MESSAGE_SENDER_ID,
   appId: import.meta.env.NG_APP_FIREBASE_APP_ID,
 };
-console.log(import.meta.env);
-console.log(firebaseConfig);
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

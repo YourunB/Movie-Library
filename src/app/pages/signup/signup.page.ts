@@ -13,6 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialog } from '../shared/error.dialog/error.dialog';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup.page',
@@ -33,8 +36,8 @@ export class SignupPage {
   private signupService = inject(SignupService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private dialogError = inject(MatDialog);
   constructor() {
-
     this.signupForm = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email],
@@ -65,6 +68,8 @@ export class SignupPage {
     const control = this.signupForm.get('email');
     if (control?.hasError('required')) {
       return 'Email is required';
+    } else if (control?.hasError('email')) {
+      return 'Email is invalid';
     } else {
       return null;
     }
@@ -88,10 +93,14 @@ export class SignupPage {
         .createNewUser(signupData.email, signupData.password)
         .then((userCredential) => {
           this.authService.setUser(userCredential.user);
-          this.router.navigate(['./'])
+          localStorage.setItem('userUID', userCredential.user.uid);
+          this.router.navigate(['./']);
         })
-        .catch((error) => {
-          console.error('Error creating user:', error);
+        .catch((error: HttpErrorResponse) => {
+          console.log(error);
+          this.dialogError.open(ErrorDialog, {
+            data: { message: error.name },
+          });
         });
     }
   }
