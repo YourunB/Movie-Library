@@ -24,6 +24,12 @@ interface PersonCard {
   popularity?: number;
 }
 
+type PersonLinkService =
+  | 'wikipediaPL' | 'wikipediaEN'
+  | 'imdb' | 'filmweb'
+  | 'google' | 'youtube' | 'bing'
+  | 'tmdb';
+
 @Component({
   selector: 'app-popular-slider',
   standalone: true,
@@ -49,6 +55,7 @@ export class PopularPeopleSlider {
   private store = inject(Store);
   private tmdb = inject(TmdbService);
   public iconSet = inject(IconSetService);
+  wikiBase = 'https://pl.wikipedia.org/wiki/';
 
 
   @ViewChild(CarouselComponent) carousel?: CarouselComponent;
@@ -91,4 +98,29 @@ export class PopularPeopleSlider {
   trackByPersonId(_index: number, item: { id: number }): number {
     return item.id;
   }
+
+  getPersonLink(
+  p: { id?: number; name?: string },
+  service: PersonLinkService = 'wikipediaPL'
+): string {
+  const name = (p?.name ?? '').trim();
+  if (!name) return '#';
+
+  const q = encodeURIComponent(name);
+  const normalized = encodeURIComponent(name.replace(/\s+/g, '_'));
+
+  switch (service) {
+    case 'wikipediaPL': return `https://pl.wikipedia.org/wiki/${normalized}`;
+    case 'wikipediaEN': return `https://en.wikipedia.org/wiki/${normalized}`;
+    case 'imdb':       return `https://www.imdb.com/find/?s=nm&q=${q}`;
+    case 'filmweb':    return `https://www.filmweb.pl/search?q=${q}`;
+    case 'google':     return `https://www.google.com/search?q=${q}+aktor`;
+    case 'youtube':    return `https://www.youtube.com/results?search_query=${q}`;
+    case 'bing':       return `https://www.bing.com/search?q=${q}+actor`;
+    case 'tmdb':       return p?.id != null
+                          ? `https://www.themoviedb.org/person/${p.id}`
+                          : `https://www.themoviedb.org/search?query=${q}`;
+    default:           return `https://pl.wikipedia.org/wiki/${normalized}`;
+  }
+}
 }

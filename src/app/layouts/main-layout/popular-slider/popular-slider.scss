@@ -3,6 +3,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  padding: auto;
   --gap: 1rem;
   --cards-per-slide: 6;
   border: 1px solid green;
@@ -10,14 +11,12 @@
   overflow: hidden;
 }
 
-/* carousel wrapper */
 .popular-slider .carousel-wrapper {
   position: relative;
   height: 280px;
   padding-top: 25px;
 }
 
-/* header */
 .popular-slider .slider-header {
   display: flex;
   align-items: baseline;
@@ -30,7 +29,6 @@
   margin: 0;
 }
 
-/* grid of cards */
 .popular-slider .card-list {
   display: grid;
   grid-template-columns: repeat(var(--cards-per-slide), minmax(0, 1fr));
@@ -38,7 +36,6 @@
   padding: 0.25rem;
 }
 
-/* person card */
 .popular-slider .person-card {
   display: flex;
   flex-direction: column;
@@ -46,8 +43,8 @@
   text-decoration: none;
   color: inherit;
   border-radius: 12px;
-  background: transparent; /* no background */
-  border: none; /* no border */
+  background: transparent;
+  border: none;
   transition: transform 0.2s ease;
 }
 
@@ -57,11 +54,10 @@
   outline: none;
 }
 
-/* circular image */
 .popular-slider .person-card .thumb {
-  width: 120px;       /* adjust size */
+  width: 120px;
   height: 120px;
-  border-radius: 50%; /* makes it round */
+  border-radius: 50%;
   overflow: hidden;
   background: #181b22;
   flex-shrink: 0;
@@ -73,7 +69,6 @@
   display: block;
 }
 
-/* name under avatar */
 .popular-slider .person-card .meta {
   margin-top: 0.5rem;
   text-align: center;
@@ -103,15 +98,73 @@
 
 .control-next {
   position: absolute;
-  top: 110px;
-  right: -15px;
+  bottom: 10px;
+  right: 10px;
   cursor: pointer;
 }
 .control-prev {
   position: absolute;
-  top: 110px;
-  left: -15px;
+  bottom: 10px;
+  left: 10px;
   cursor: pointer;
+}
+
+.control-next,
+.control-prev {
+  --ctrl-size: 56px;
+  width: var(--ctrl-size);
+  height: var(--ctrl-size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ffc107;
+  border: 2px solid #ffca2c;
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
+  transition: transform .18s ease, background-color .18s ease,
+              border-color .18s ease, box-shadow .18s ease;
+  overflow: visible;
+}
+
+.control-next c-icon,
+.control-prev c-icon {
+  color: #111 !important;
+  font-size: 28px;
+}
+
+.control-next:hover,
+.control-prev:hover {
+  transform: scale(1.08);
+  background-color: #ffca2c;
+  border-color: #ffe083;
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+
+.control-next:hover::after,
+.control-prev:hover::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255,193,7,.35);
+  animation: ctrl-ring .7s ease-out;
+  pointer-events: none;
+}
+
+@keyframes ctrl-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(255,193,7,.35); }
+  100% { box-shadow: 0 0 0 14px rgba(255,193,7,0); }
+}
+
+.control-next:active,
+.control-prev:active { transform: scale(.98); }
+
+.control-next:focus-visible,
+.control-prev:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .control-next, .control-prev { --ctrl-size: 48px; }
 }
 
 @media (max-width: 1200px) {
