@@ -12,12 +12,14 @@
     margin: auto;
   }
 
-  .left-section, .search-section, .right-section {
+  .left-section,
+  .search-section,
+  .right-section {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  
+
   .search-section {
     gap: 0;
     background: white;
@@ -36,7 +38,9 @@
     color: black;
   }
 
-  .menu-button, .lang-button, button {
+  .menu-button,
+  .lang-button,
+  button {
     background: none;
     border: none;
     color: white;
@@ -66,4 +70,23 @@
       text-decoration: underline;
     }
   }
+}
+
+.logout-menu {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 5px;
+}
+.user-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #f5c518;
+}
+
+.logout-icon {
+  color: #f5c518;
 }

@@ -17,7 +17,17 @@
 
     <div class="right-section">
       <a routerLink="/materials">Watchlist</a>
-      <a routerLink="/login">SignIn</a>
+      @if (!isAuthenticated) {
+      <a [routerLink]="['/signin']">SignIn</a>
+      } @else {
+      <div class="logout-menu">
+        <p class="user-email">{{ user?.email }}</p>
+        <button class="logout-button">
+          <mat-icon class="logout-icon" (click)="logout()">logout</mat-icon>
+        </button>
+      </div>
+      }
+
       <button class="lang-button">EN</button>
     </div>
   </div>

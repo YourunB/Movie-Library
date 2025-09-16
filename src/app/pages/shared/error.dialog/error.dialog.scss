@@ -1,0 +1,20 @@
+.error-dialog {
+  background-color: gray;
+  border: 2px solid #f5c518;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dialog-title {
+  color: white;
+}
+.error-message {
+  color: black;
+}
+.button-close {
+  display: flex;
+  align-items: center;
+  background-color: #f5c518;
+  border: 10px;
+  cursor: pointer;
+}
