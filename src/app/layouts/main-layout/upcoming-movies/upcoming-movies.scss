@@ -1,0 +1,72 @@
+.upcoming-section {
+  margin: 40px auto;
+  max-width: 1000px;
+  padding: 0 12px;
+
+  .section-title {
+    color: #f5c518;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .slider {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.3) transparent;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.3);
+      border-radius: 4px;
+    }
+
+    .movie-card {
+      min-width: 180px;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      }
+
+      img {
+        border-radius: 12px 12px 0 0;
+        object-fit: cover;
+        height: 270px;
+      }
+
+      mat-card-content {
+        padding: 8px 12px;
+
+        .title {
+          font-size: 0.95rem;
+          font-weight: 500;
+          margin: 6px 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .release {
+          font-size: 0.85rem;
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+}

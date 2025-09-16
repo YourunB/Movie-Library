@@ -105,10 +105,9 @@
   font-size: 16px;
   text-decoration: none;
   transition: background 0.3s ease, transform 0.25s ease, opacity 0.3s ease;
-  opacity: 0.8;   // default state
+  opacity: 0.8;  
 }
 
-/* 🔥 When the whole card is hovered */
 .side-card:hover .youtube-link {
   background: #f5c518;
   transform: scale(1.15);

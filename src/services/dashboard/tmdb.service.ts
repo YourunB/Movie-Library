@@ -38,6 +38,10 @@ export class TmdbService {
     return this.get<TmdbPage<TmdbReview>>(`/movie/${movieId}/reviews`, { page });
   }
 
+  getUpcomingMovies(page = 1) {
+    return this.get<TmdbPage<TmdbMovie>>('/movie/upcoming', { page });
+  }
+
   img(path?: string | null, size: ImageSize = 'w500') {
     if (!path) return null;
     const clean = path.startsWith('/') ? path : `/${path}`;
