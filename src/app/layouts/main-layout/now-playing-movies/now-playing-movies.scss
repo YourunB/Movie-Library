@@ -1,11 +1,18 @@
-.upcoming-section {
+.now-playing-section {
   margin: 40px auto;
   max-width: 1000px;
   padding: 0 12px;
   position: relative;
 
+  .section-wrapper{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+
   .section-title {
-    align-self: start;
+    align-self: end;
     color: #f5c518;
     margin-bottom: 20px;
     font-size: 1.5rem;
@@ -31,52 +38,35 @@
       &::-webkit-scrollbar {
         height: 8px;
       }
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
       &::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.3);
         border-radius: 4px;
-        transition: background 0.3s ease;
       }
       &::-webkit-scrollbar-thumb:hover {
         background: #f5c518;
       }
+    }
 
-      .movie-card {
-        min-width: 180px;
-        flex: 0 0 auto;
-        scroll-snap-align: start;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        transition: transform 0.2s ease, box-shadow 0.3s ease;
-        cursor: pointer;
+    .movie-card {
+      min-width: 180px;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
 
-        &:hover {
-          transform: scale(1.05);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-        }
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      }
 
-        img {
-          height: 270px;
-          object-fit: cover;
-          border-radius: 12px 12px 0 0;
-        }
-
-        .title {
-          font-size: 0.95rem;
-          margin: 6px 0 2px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .release {
-          font-size: 0.85rem;
-          opacity: 0.75;
-        }
+      img {
+        height: 270px;
+        object-fit: cover;
+        border-radius: 12px 12px 0 0;
       }
     }
+
     .nav {
       position: absolute;
       top: 50%;
@@ -92,23 +82,15 @@
       align-items: center;
       justify-content: center;
 
-      mat-icon {
-        font-size: 28px;
-      }
-
       &:hover {
         background: #f5c518;
         color: #000;
         transform: translateY(-50%) scale(1.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       }
 
-      &.prev {
-        left: 12px;
-      }
-      &.next {
-        right: 12px;
-      }
+      &.prev { left: 12px; }
+      &.next { right: 12px; }
     }
   }
 }

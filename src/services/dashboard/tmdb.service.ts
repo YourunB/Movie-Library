@@ -42,6 +42,10 @@ export class TmdbService {
     return this.get<TmdbPage<TmdbMovie>>('/movie/upcoming', { page });
   }
 
+  getNowPlayingMovies(page = 1) {
+    return this.get<TmdbPage<TmdbMovie>>('/movie/now_playing', { page });
+  }
+
   img(path?: string | null, size: ImageSize = 'w500') {
     if (!path) return null;
     const clean = path.startsWith('/') ? path : `/${path}`;
