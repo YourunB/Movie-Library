@@ -7,6 +7,12 @@
   border: 1px solid red
 }
 
+.wrapper-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .wrapper-info-img {
   display: flex;
   position: absolute;
@@ -45,23 +51,6 @@
   border-radius: 20px;
 }
 
-:host ::ng-deep .wrapper-slider .carousel-item > img.poster {
-  grid-area: 1 / 1;
-  align-self: end;
-  justify-self: start;
-  width: 32%;
-  max-width: 170px;
-  margin: 0 0 14px 14px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.4);
-  z-index: 2;
-}
-
-:host ::ng-deep .wrapper-slider .carousel-caption {
-  grid-area: 1 / 1;
-  align-self: end;
-  z-index: 3;
-}
 
 .control-next {
   position: absolute;
@@ -75,6 +64,67 @@
   top: 220px;
   left: 20px;
   cursor: pointer;
+}
+
+.control-next,
+.control-prev {
+  --ctrl-size: 56px;
+  --icon-size: 24px;
+  width: var(--ctrl-size);
+  height: var(--ctrl-size);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.7);
+  background: rgba(0,0,0,.35);
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  transition:
+    transform .18s ease,
+    background-color .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
+}
+
+.control-next c-icon,
+.control-prev c-icon,
+.control-next .text-white,
+.control-prev .text-white {
+  font-size: var(--icon-size);
+}
+
+
+.control-next:hover,
+.control-prev:hover {
+  transform: scale(1.08);
+  background-color: rgba(0,0,0,.6);
+  border-color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+.control-next:active,
+.control-prev:active { transform: scale(.98); }
+
+.control-next:focus-visible,
+.control-prev:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (min-width: 992px) {
+  .control-next,
+  .control-prev {
+    --ctrl-size: 64px;
+    --icon-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-next,
+  .control-prev {
+    --ctrl-size: 48px;
+    --icon-size: 22px;
+  }
 }
 
 .wrapper-slider .carousel-inner {
@@ -102,9 +152,31 @@
 }
 
 .backdrop-shadow {
-      margin-top: -140px;
+      margin-top: -160px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 1) 100%);
 }
+
+.youtube-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  transition: background 0.6s ease, transform 0.4s ease, opacity 0.5s ease; opacity: 1;
+  cursor: pointer;
+    .play-icon {
+      color: white;
+      font-size: 28px;
+    }
+  }
+  .carousel-item:hover
+  .youtube-link {
+    opacity: 1;
+    transform: scale(1.2);
+    background: #e50914;
+  }
 
 @media (max-width: 480px) {
   :host ::ng-deep .wrapper-slider .carousel-item > img.poster {

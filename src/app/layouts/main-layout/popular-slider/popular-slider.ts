@@ -14,7 +14,7 @@ import { TmdbService } from '../../../../services/dashboard/tmdb.service';
 import { loadDashboard } from '../../../../store/dashboard.actions';
 import { map } from 'rxjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import {cilCaretLeft, cilCaretRight } from '@coreui/icons';
+import { cilCaretLeft, cilCaretRight } from '@coreui/icons';
 
 interface PersonCard {
   id: number;

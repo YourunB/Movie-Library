@@ -1,5 +1,5 @@
 @if(slides$ | async; as slides) {
-<c-carousel class="wrapper-slider" [activeIndex]="0" transition="crossfade">
+<c-carousel class="wrapper-slider" [activeIndex]="0" transition="crossfade" [interval]="5000">
   <c-carousel-inner>
     @for (slide of slides; track slide.id) {
     <c-carousel-item class="slider">
@@ -10,6 +10,10 @@
         <img class="poster" [attr.alt]="slide.title + ' poster'" [src]="slide.imgSrc" loading="lazy" decoding="async" />
         <c-carousel-caption class="d-none d-md-block">
           <div class="wrapper-info">
+            <a class="youtube-link" [href]="'https://www.youtube.com/results?search_query=' + slide.title"
+              target="_blank" rel="noopener noreferrer" aria-label="Watch {{ slide.title }} on YouTube">
+              <c-icon name="cilCaretRight" size="xl" class="play-icon"></c-icon>
+            </a>
             <h3 class="title-caption">{{ slide.title }}</h3>
             <div class="meta-row">
               <span class="star-rating" [style.--rating]="slide.rating5"></span>
@@ -21,6 +25,8 @@
           </div>
         </c-carousel-caption>
       </div>
+      <a class="slide-overlay" [href]="'https://www.youtube.com/results?search_query=' + slide.title" target="_blank"
+        rel="noopener noreferrer" aria-label="Open YouTube results"></a>
     </c-carousel-item>
     }
   </c-carousel-inner>

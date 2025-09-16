@@ -13,7 +13,7 @@ import { map } from 'rxjs';
 import { TmdbService } from '../../../../services/dashboard/tmdb.service';
 import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilHeart } from '@coreui/icons';
+import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight } from '@coreui/icons';
 
 
 @Component({
@@ -72,7 +72,7 @@ export class TradingMovies {
       cilArrowRight,
       cilCalendar,
       cilStar,
-      cilHeart
+      cilCaretRight,
     };
 
     const sub = this.slides$.subscribe((value) => {
