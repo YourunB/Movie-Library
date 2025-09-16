@@ -7,7 +7,7 @@ import {
   CarouselControlComponent,
   CarouselIndicatorsComponent
 } from '@coreui/angular';
-import { AsyncPipe, DecimalPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectPopularPeople } from '../../../../store/dashboard.selectors';
 import { TmdbService } from '../../../../services/dashboard/tmdb.service';
@@ -16,7 +16,7 @@ import { map } from 'rxjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilCaretLeft, cilCaretRight } from '@coreui/icons';
 
-interface PersonCard {
+export interface PersonCard {
   id: number;
   name: string;
   imgSrc: string | null;
@@ -40,7 +40,7 @@ type PersonLinkService =
     AsyncPipe, NgForOf, NgIf, DecimalPipe,
     // coreui icons
     IconModule,
-    CarouselIndicatorsComponent
+    CarouselIndicatorsComponent, CommonModule
 ],
   templateUrl: './popular-slider.html',
   styleUrl: './popular-slider.scss',
@@ -100,27 +100,27 @@ export class PopularPeopleSlider {
   }
 
   getPersonLink(
-  p: { id?: number; name?: string },
-  service: PersonLinkService = 'wikipediaPL'
-): string {
-  const name = (p?.name ?? '').trim();
-  if (!name) return '#';
+    p: { id?: number; name?: string },
+    service: PersonLinkService = 'wikipediaPL'
+  ): string {
+    const name = (p?.name ?? '').trim();
+    if (!name) return '#';
 
-  const q = encodeURIComponent(name);
-  const normalized = encodeURIComponent(name.replace(/\s+/g, '_'));
+    const q = encodeURIComponent(name);
+    const normalized = encodeURIComponent(name.replace(/\s+/g, '_'));
 
-  switch (service) {
-    case 'wikipediaPL': return `https://pl.wikipedia.org/wiki/${normalized}`;
-    case 'wikipediaEN': return `https://en.wikipedia.org/wiki/${normalized}`;
-    case 'imdb':       return `https://www.imdb.com/find/?s=nm&q=${q}`;
-    case 'filmweb':    return `https://www.filmweb.pl/search?q=${q}`;
-    case 'google':     return `https://www.google.com/search?q=${q}+aktor`;
-    case 'youtube':    return `https://www.youtube.com/results?search_query=${q}`;
-    case 'bing':       return `https://www.bing.com/search?q=${q}+actor`;
-    case 'tmdb':       return p?.id != null
-                          ? `https://www.themoviedb.org/person/${p.id}`
-                          : `https://www.themoviedb.org/search?query=${q}`;
-    default:           return `https://pl.wikipedia.org/wiki/${normalized}`;
+    switch (service) {
+      case 'wikipediaPL': return `https://pl.wikipedia.org/wiki/${normalized}`;
+      case 'wikipediaEN': return `https://en.wikipedia.org/wiki/${normalized}`;
+      case 'imdb':       return `https://www.imdb.com/find/?s=nm&q=${q}`;
+      case 'filmweb':    return `https://www.filmweb.pl/search?q=${q}`;
+      case 'google':     return `https://www.google.com/search?q=${q}+aktor`;
+      case 'youtube':    return `https://www.youtube.com/results?search_query=${q}`;
+      case 'bing':       return `https://www.bing.com/search?q=${q}+actor`;
+      case 'tmdb':       return p?.id != null
+                            ? `https://www.themoviedb.org/person/${p.id}`
+                            : `https://www.themoviedb.org/search?query=${q}`;
+      default:           return `https://pl.wikipedia.org/wiki/${normalized}`;
+    }
   }
-}
 }

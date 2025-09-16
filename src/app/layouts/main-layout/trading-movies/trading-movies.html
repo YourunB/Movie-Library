@@ -1,44 +1,50 @@
-@if(slides$ | async; as slides) {
-<c-carousel class="wrapper-slider" [activeIndex]="0" transition="crossfade" [interval]="5000">
-  <c-carousel-inner>
-    @for (slide of slides; track slide.id) {
-    <c-carousel-item class="slider">
-      <img class="backdrop" [attr.alt]="slide.title" [src]="slide.backgroundImgSrc" loading="lazy" decoding="async" />
-      <div class="backdrop-shadow"></div>
+<div class="wrapper">
+  @if(slides$ | async; as slides) {
+  <c-carousel class="wrapper-slider" [activeIndex]="(activeIndex$ | async) ?? 0"
+    (itemChange)="onItemChange($any($event))" transition="crossfade" [interval]="0" [wrap]="true">
+    <c-carousel-inner>
+      @for (slide of slides; track slide.id) {
+      <c-carousel-item class="slider">
+        <img class="backdrop" [attr.alt]="slide.title" [src]="slide.backgroundImgSrc" loading="lazy" decoding="async" />
+        <div class="backdrop-shadow"></div>
 
-      <div class="wrapper-info-img">
-        <img class="poster" [attr.alt]="slide.title + ' poster'" [src]="slide.imgSrc" loading="lazy" decoding="async" />
-        <c-carousel-caption class="d-none d-md-block">
-          <div class="wrapper-info">
-            <a class="youtube-link" [href]="'https://www.youtube.com/results?search_query=' + slide.title"
-              target="_blank" rel="noopener noreferrer" aria-label="Watch {{ slide.title }} on YouTube">
-              <c-icon name="cilCaretRight" size="xl" class="play-icon"></c-icon>
-            </a>
-            <h3 class="title-caption">{{ slide.title }}</h3>
-            <div class="meta-row">
-              <span class="star-rating" [style.--rating]="slide.rating5"></span>
-              <span class="rating-text">{{ slide.rating | number:'1.1-1' }} / 10</span>
-              <span class="dot"></span>
-              <c-icon name="cil-calendar" class="me-1"></c-icon>
-              <span>{{ slide.releaseDate | date:'y' }}</span>
+        <div class="wrapper-info-img">
+          <img class="poster" [attr.alt]="slide.title + ' poster'" [src]="slide.imgSrc" loading="lazy"
+            decoding="async" />
+          <c-carousel-caption class="d-none d-md-block">
+            <div class="wrapper-info">
+              <a class="youtube-link" [href]="'https://www.youtube.com/results?search_query=' + slide.title"
+                target="_blank" rel="noopener noreferrer" aria-label="Watch {{ slide.title }} on YouTube">
+                <c-icon name="cilCaretRight" size="xl" class="play-icon"></c-icon>
+              </a>
+              <h3 class="title-caption">{{ slide.title }}</h3>
+              <div class="meta-row">
+                <span class="star-rating" [style.--rating]="slide.rating5"></span>
+                <span class="rating-text">{{ slide.rating | number:'1.1-1' }} / 10</span>
+                <span class="dot"></span>
+                <c-icon name="cil-calendar" class="me-1"></c-icon>
+                <span>{{ slide.releaseDate | date:'y' }}</span>
+              </div>
             </div>
-          </div>
-        </c-carousel-caption>
-      </div>
-      <a class="slide-overlay" [href]="'https://www.youtube.com/results?search_query=' + slide.title" target="_blank"
-        rel="noopener noreferrer" aria-label="Open YouTube results"></a>
-    </c-carousel-item>
-    }
-  </c-carousel-inner>
+          </c-carousel-caption>
+        </div>
+        <a class="slide-overlay" [href]="'https://www.youtube.com/results?search_query=' + slide.title" target="_blank"
+          rel="noopener noreferrer" aria-label="Open YouTube results"></a>
+      </c-carousel-item>
+      }
+    </c-carousel-inner>
 
-  <c-carousel-control direction="prev" class="control-prev" ariaLabel="Previous">
-    <c-icon name="cil-arrow-left" size="xl" class="text-white"></c-icon>
-  </c-carousel-control>
-  <c-carousel-control direction="next" class="control-next" ariaLabel="Next" #control>
-    <c-icon name="cil-arrow-right" size="xl" class="text-white"></c-icon>
-  </c-carousel-control>
-</c-carousel>
-}
-@else {
-<div class="skeleton"></div>
-}
+    <c-carousel-control direction="prev" class="control-prev" ariaLabel="Previous" (click)="onPrevClick()">
+      <c-icon name="cil-arrow-left" size="xl" class="text-white"></c-icon>
+    </c-carousel-control>
+    <c-carousel-control direction="next" class="control-next" ariaLabel="Next" #control (click)="onNextClick()">
+      <c-icon name="cil-arrow-right" size="xl" class="text-white"></c-icon>
+    </c-carousel-control>
+  </c-carousel>
+  <app-side-slider [slides]="(sideSlides$ | async) ?? []" (slideSelect)="onSideSelect($event)">
+  </app-side-slider>
+  }
+  @else {
+  <div class="skeleton"></div>
+  }
+</div>

@@ -30,3 +30,13 @@ export interface TmdbReview {
   content: string;
   url: string;
 }
+
+export interface SideSlide {
+  key: string;
+  sourceIndex: number;
+  title?: string;
+  imgSrc: string | null;
+  releaseDate?: string | Date;
+  name?: string;
+  rating?: number;
+}

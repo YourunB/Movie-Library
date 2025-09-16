@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  max-width: 1000px;
+  justify-content: center;
+}
+
 .wrapper-slider {
   max-width: 800px;
   height: 600px;
@@ -111,6 +117,20 @@
   outline-offset: 3px;
 }
 
+.slider-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.carousel-wrapper {
+  flex: 3;
+}
+
+app-side-slider {
+  flex: 1;
+  max-width: 310px;
+  border: 1px green solid;
+}
 @media (min-width: 992px) {
   .control-next,
   .control-prev {
