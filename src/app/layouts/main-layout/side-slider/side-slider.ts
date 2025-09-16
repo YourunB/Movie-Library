@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 
 interface SideSlide {
@@ -17,7 +17,7 @@ interface SideSlide {
 @Component({
   selector: 'app-side-slider',
   standalone: true,
-  imports: [NgForOf, NgIf, DatePipe, DecimalPipe],
+  imports: [DatePipe, DecimalPipe],
   templateUrl: './side-slider.html',
   styleUrls: ['./side-slider.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

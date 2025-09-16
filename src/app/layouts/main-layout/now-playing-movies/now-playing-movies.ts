@@ -21,7 +21,7 @@ interface NowPlayingMovie {
   templateUrl: './now-playing-movies.html',
   styleUrls: ['./now-playing-movies.scss']
 })
-export class NowPlayingMoviesComponent {
+export class NowPlayingMovies {
   private tmdb = inject(TmdbService);
 
   @ViewChild('slider', { static: false }) sliderRef!: ElementRef<HTMLDivElement>;

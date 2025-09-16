@@ -46,6 +46,12 @@ export class TmdbService {
     return this.get<TmdbPage<TmdbMovie>>('/movie/now_playing', { page });
   }
 
+  getMovieVideos(movieId: number) {
+  return this.get<{ id: number; results: { key: string; site: string; type: string; name: string }[] }>(
+    `/movie/${movieId}/videos`
+  );
+}
+
   img(path?: string | null, size: ImageSize = 'w500') {
     if (!path) return null;
     const clean = path.startsWith('/') ? path : `/${path}`;

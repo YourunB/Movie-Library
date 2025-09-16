@@ -9,6 +9,12 @@
   border: 1px solid green;
   width: 1000px;
   overflow: hidden;
+
+  .h2-section {
+    align-self: start;
+    color: #f5c518;
+    text-transform: capitalize;
+  }
 }
 
 .popular-slider .carousel-wrapper {

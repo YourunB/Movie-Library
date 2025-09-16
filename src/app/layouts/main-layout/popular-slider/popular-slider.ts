@@ -5,7 +5,6 @@ import {
   CarouselInnerComponent,
   CarouselItemComponent,
   CarouselControlComponent,
-  CarouselIndicatorsComponent
 } from '@coreui/angular';
 import { AsyncPipe, CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -34,13 +33,7 @@ type PersonLinkService =
   selector: 'app-popular-slider',
   standalone: true,
   imports: [
-    // coreui carousel
-    CarouselComponent, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent,
-    // angular
-    AsyncPipe, NgForOf, NgIf, DecimalPipe,
-    // coreui icons
-    IconModule,
-    CarouselIndicatorsComponent, CommonModule
+    CarouselComponent, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent,AsyncPipe, NgForOf, NgIf, DecimalPipe, IconModule, CommonModule
 ],
   templateUrl: './popular-slider.html',
   styleUrl: './popular-slider.scss',
