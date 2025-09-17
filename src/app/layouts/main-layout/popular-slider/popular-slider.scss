@@ -1,118 +1,102 @@
+:host {
+  width: 100%;
+}
+
 .popular-slider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: auto;
+
   --gap: 1rem;
   --cards-per-slide: 6;
-  border: 1px solid green;
-  width: 1000px;
-  overflow: hidden;
 
   .h2-section {
-    align-self: start;
     color: #f5c518;
     text-transform: capitalize;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
   }
-}
 
-.popular-slider .carousel-wrapper {
-  position: relative;
-  height: 280px;
-  padding-top: 25px;
-}
+  .carousel-wrapper {
+    position: relative;
+    height: 280px;
+    padding-top: 25px;
+  }
 
-.popular-slider .slider-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-.popular-slider .slider-header h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0;
-}
+  .slider-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
 
-.popular-slider .card-list {
-  display: grid;
-  grid-template-columns: repeat(var(--cards-per-slide), minmax(0, 1fr));
-  gap: var(--gap);
-  padding: 0.25rem;
-}
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
 
-.popular-slider .person-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  border-radius: 12px;
-  background: transparent;
-  border: none;
-  transition: transform 0.2s ease;
-}
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(var(--cards-per-slide), minmax(0, 1fr));
+     grid-auto-rows: auto;
+    gap: var(--gap);
+    height: 0px;
+  }
 
-.popular-slider .person-card:hover,
-.popular-slider .person-card:focus {
-  transform: translateY(-4px);
-  outline: none;
-}
+  .person-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
 
-.popular-slider .person-card .thumb {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: #181b22;
-  flex-shrink: 0;
-}
-.popular-slider .person-card .thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+    &:hover,
+    &:focus {
+      transform: translateY(-4px);
+      outline: none;
+    }
 
-.popular-slider .person-card .meta {
-  margin-top: 0.5rem;
-  text-align: center;
-}
-.popular-slider .person-card .meta .name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.popular-slider .person-card .meta .sub {
-  margin-top: 0.25rem;
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
+    .thumb {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #181b22;
+      flex-shrink: 0;
 
-.wrapper-slider .carousel-inner {
-  height: 600px;
-}
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
 
-.carousel-item {
-  max-height: 0;
-  transition: max-height 0.5s ease;
-}
+    .meta {
+      margin-top: 0.5rem;
+      text-align: center;
 
-.control-next {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-.control-prev {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  cursor: pointer;
+      .name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sub {
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+    }
+  }
 }
 
 .control-next,
@@ -125,11 +109,16 @@
   place-items: center;
   background: #ffc107;
   border: 2px solid #ffca2c;
-  box-shadow: 0 6px 18px rgba(0,0,0,.22);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
   transition: transform .18s ease, background-color .18s ease,
               border-color .18s ease, box-shadow .18s ease;
-  overflow: visible;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
 }
+
+.control-next { right: 10px; }
+.control-prev { left: 10px; }
 
 .control-next c-icon,
 .control-prev c-icon {
@@ -142,22 +131,7 @@
   transform: scale(1.08);
   background-color: #ffca2c;
   border-color: #ffe083;
-  box-shadow: 0 10px 24px rgba(0,0,0,.28);
-}
-
-.control-next:hover::after,
-.control-prev:hover::after {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(255,193,7,.35);
-  animation: ctrl-ring .7s ease-out;
-  pointer-events: none;
-}
-
-@keyframes ctrl-ring {
-  0%   { box-shadow: 0 0 0 0 rgba(255,193,7,.35); }
-  100% { box-shadow: 0 0 0 14px rgba(255,193,7,0); }
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .28);
 }
 
 .control-next:active,
@@ -169,27 +143,35 @@
   outline-offset: 3px;
 }
 
-@media (max-width: 480px) {
-  .control-next, .control-prev { --ctrl-size: 48px; }
+.control-next:hover::after,
+.control-prev:hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255,193,7,.35);
+  animation: ctrl-ring .7s ease-out;
+  pointer-events: none;
 }
 
-@media (max-width: 1200px) {
-  .popular-slider  {
-    --cards-per-slide: 5;
-  }
+@keyframes ctrl-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(255,193,7,.35); }
+  100% { box-shadow: 0 0 0 14px rgba(255,193,7,0); }
 }
-@media (max-width: 992px) {
-  .popular-slider  {
-    --cards-per-slide: 4;
-  }
+
+/* Responsive breakpoints */
+@media (max-width: 1400px) {
+  .popular-slider { --cards-per-slide: 5; }
 }
-@media (max-width: 768px) {
-  .popular-slider  {
-    --cards-per-slide: 3;
-  }
+@media (max-width: 1000px) {
+  .popular-slider { --cards-per-slide: 4; }
+}
+@media (max-width: 800px) {
+  .popular-slider { --cards-per-slide: 3; }
 }
 @media (max-width: 576px) {
-  .popular-slider  {
-    --cards-per-slide: 2;
-  }
+  .popular-slider { --cards-per-slide: 2; }
+}
+@media (max-width: 400px) {
+  .popular-slider { --cards-per-slide: 1; }
 }

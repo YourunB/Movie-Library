@@ -10,7 +10,6 @@
   margin: 0 auto;
   position: relative;
   padding-top: 10px;
-  border: 1px solid red
 }
 
 .wrapper-info {
@@ -129,7 +128,6 @@
 app-side-slider {
   flex: 1;
   max-width: 310px;
-  border: 1px green solid;
 }
 @media (min-width: 992px) {
   .control-next,
@@ -197,6 +195,15 @@ app-side-slider {
     transform: scale(1.2);
     background: #e50914;
   }
+
+app-side-slider {
+  flex: 1;
+  max-width: 310px;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
 
 @media (max-width: 480px) {
   :host ::ng-deep .wrapper-slider .carousel-item > img.poster {
