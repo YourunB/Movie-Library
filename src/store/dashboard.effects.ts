@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as DashboardActions from './dashboard.actions';
 import { catchError, of, switchMap } from 'rxjs';
 import { forkJoin } from 'rxjs';
-import { TmdbService } from '../services/dashboard/tmdb.service';
+import { TmdbService } from '../services//dashboard/tmdb.service';
 
 @Injectable()
 export class DashboardEffects {

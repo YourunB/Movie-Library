@@ -9,7 +9,7 @@ import {
 import { AsyncPipe, CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectPopularPeople } from '../../../../store/dashboard.selectors';
-import { TmdbService } from '../../../../services/dashboard/tmdb.service';
+import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { loadDashboard } from '../../../../store/dashboard.actions';
 import { map } from 'rxjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';

@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { selectTrending } from '../../../../store/dashboard.selectors';
 import { loadDashboard } from '../../../../store/dashboard.actions';
 import { BehaviorSubject, combineLatest, map, startWith } from 'rxjs';
-import { TmdbService } from '../../../../services/dashboard/tmdb.service';
+import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight } from '@coreui/icons';
@@ -92,7 +92,7 @@ export class TradingMovies {
         imgSrc: slides[idx].imgSrc,
         title: slides[idx].title,
         releaseDate: slides[idx].releaseDate,
-        rating: slides[idx].rating,     
+        rating: slides[idx].rating,
         sourceIndex: idx,
         slot,
         vmKey: `${slides[idx].id}-${slot}`,

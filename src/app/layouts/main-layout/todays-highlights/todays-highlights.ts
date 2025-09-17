@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { TmdbService } from '../../../../services/dashboard/tmdb.service';
+import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { forkJoin, map, Observable, switchMap } from 'rxjs';
 

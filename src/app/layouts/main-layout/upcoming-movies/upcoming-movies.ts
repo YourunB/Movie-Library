@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TmdbService } from '../../../../services/dashboard/tmdb.service';
+import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { map, Observable } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 
