@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,29 +18,35 @@ interface HighlightText {
   standalone: true,
   imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './todays-highlights.html',
-  styleUrls: ['./todays-highlights.scss']
+  styleUrls: ['./todays-highlights.scss'],
 })
-export class TodaysHighlights {
+export class TodaysHighlights implements OnInit {
   private tmdb = inject(TmdbService);
-
-  highlights$: Observable<HighlightText[]> = this.tmdb.getNowPlayingMovies().pipe(
-  switchMap((res: TmdbPage<TmdbMovie>) => {
-    const movies = res.results.slice(0, 4);
-    return forkJoin(
-      movies.map(m =>
-        this.tmdb.getMovieVideos(m.id).pipe(
-          map(videos => {
-            const trailer = videos.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
-            return {
-              id: m.id,
-              title: m.title,
-              overview: m.overview,
-              trailerUrl: trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null
-            };
-          })
-        )
-      )
+  highlights$!: Observable<HighlightText[]>;
+  ngOnInit(): void {
+    this.highlights$ = this.tmdb.getNowPlayingMovies().pipe(
+      switchMap((res: TmdbPage<TmdbMovie>) => {
+        const movies = res.results.slice(0, 4);
+        return forkJoin(
+          movies.map((m) =>
+            this.tmdb.getMovieVideos(m.id).pipe(
+              map((videos) => {
+                const trailer = videos.results.find(
+                  (v) => v.type === 'Trailer' && v.site === 'YouTube'
+                );
+                return {
+                  id: m.id,
+                  title: m.title,
+                  overview: m.overview,
+                  trailerUrl: trailer
+                    ? `https://www.youtube.com/watch?v=${trailer.key}`
+                    : null,
+                };
+              })
+            )
+          )
+        );
+      })
     );
-  })
-);
+  }
 }

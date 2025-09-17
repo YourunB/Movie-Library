@@ -6,6 +6,6 @@ export const environment = {
     apiKey: '<<YOUR_TMDB_API_KEY>>',
     language: 'en-US',
     region: 'PL',
-    includeImageLanguage: 'pl,en,null'
+    includeImageLanguage: 'pl,en,null',
   },
 };

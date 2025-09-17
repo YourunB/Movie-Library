@@ -11,11 +11,10 @@ import { routes } from './app.routes';
 import { uiReducer } from '../store/ui.reducer';
 import { dashboardReducer } from '../store/dashboard.reducer';
 import { DashboardEffects } from '../store/dashboard.effects';
-import { environment } from '../environments/environment';
 import { TmdbService } from './shared/services/dashboard/tmdb.service';
-import { TmdbMockService } from './shared/services/dashboard/tmdb.mock.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { tmdbAuthInterceptor } from '../interceptors/tmdb-auth.interceptor';
+import { environment } from '../environments/environment';
 
 
 
@@ -35,6 +34,6 @@ export const appConfig: ApplicationConfig = {
     provideEffects([DashboardEffects]),
     provideAnimations(),
     provideRouter(routes),
-    ...(environment.useMocks ? [{ provide: TmdbService, useClass: TmdbMockService }] : []),
+    ...(environment ? [{ provide: TmdbService, useClass: TmdbService }] : []),
   ]
 };
