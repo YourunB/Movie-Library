@@ -1,0 +1,212 @@
+.wrapper {
+  display: flex;
+  max-width: 1000px;
+  justify-content: center;
+}
+
+.wrapper-slider {
+  max-width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+  padding-top: 10px;
+}
+
+.wrapper-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.wrapper-info-img {
+  display: flex;
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+
+  .poster {
+    height: 220px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 6px rgba(87, 85, 85, 0.3);
+  }
+  .wrapper-info {
+    position: relative;
+    padding: 0px 0px 120px 20px;
+  }
+}
+:host ::ng-deep .wrapper-slider .carousel,
+:host ::ng-deep .wrapper-slider .carousel-inner {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+:host ::ng-deep .wrapper-slider .carousel-item {
+  display: grid;
+  height: 0px;
+  backface-visibility: hidden;
+  will-change: auto;
+}
+
+:host ::ng-deep .wrapper-slider .carousel-item > img.backdrop {
+  grid-area: 1 / 1;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+
+.control-next {
+  position: absolute;
+  top: 220px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.control-prev {
+  position: absolute;
+  top: 220px;
+  left: 20px;
+  cursor: pointer;
+}
+
+.control-next,
+.control-prev {
+  --ctrl-size: 56px;
+  --icon-size: 24px;
+  width: var(--ctrl-size);
+  height: var(--ctrl-size);
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.7);
+  background: rgba(0,0,0,.35);
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  transition:
+    transform .18s ease,
+    background-color .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
+}
+
+.control-next c-icon,
+.control-prev c-icon,
+.control-next .text-white,
+.control-prev .text-white {
+  font-size: var(--icon-size);
+}
+
+
+.control-next:hover,
+.control-prev:hover {
+  transform: scale(1.08);
+  background-color: rgba(0,0,0,.6);
+  border-color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+.control-next:active,
+.control-prev:active { transform: scale(.98); }
+
+.control-next:focus-visible,
+.control-prev:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.slider-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.carousel-wrapper {
+  flex: 3;
+}
+
+app-side-slider {
+  flex: 1;
+  max-width: 310px;
+}
+@media (min-width: 992px) {
+  .control-next,
+  .control-prev {
+    --ctrl-size: 64px;
+    --icon-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-next,
+  .control-prev {
+    --ctrl-size: 48px;
+    --icon-size: 22px;
+  }
+}
+
+.wrapper-slider .carousel-inner {
+  height: 600px;
+}
+
+.meta-row {
+  display: flex; align-items: center; gap: 10px;
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); }
+}
+
+.star-rating {
+  --rating: 0;
+  position: relative; font-size: 18px; line-height: 1;
+}
+.star-rating::before,
+.star-rating::after {
+  content: "★★★★★";
+  letter-spacing: 2px;
+}
+.star-rating::before { color: rgba(255,255,255,.25); }
+.star-rating::after  {
+  position: absolute; left: 0; top: 0; width: calc(var(--rating) / 5 * 100%);
+  color: #ffc107; overflow: hidden; white-space: nowrap;
+}
+
+.backdrop-shadow {
+      margin-top: -160px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 1) 100%);
+}
+
+.youtube-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  transition: background 0.6s ease, transform 0.4s ease, opacity 0.5s ease; opacity: 1;
+  cursor: pointer;
+    .play-icon {
+      color: white;
+      font-size: 28px;
+    }
+  }
+  .carousel-item:hover
+  .youtube-link {
+    opacity: 1;
+    transform: scale(1.2);
+    background: #e50914;
+  }
+
+app-side-slider {
+  flex: 1;
+  max-width: 310px;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .wrapper-slider .carousel-item > img.poster {
+    display: none;
+  }
+}

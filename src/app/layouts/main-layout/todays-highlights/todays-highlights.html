@@ -1,0 +1,20 @@
+<section class="highlights-text">
+  <h2 class="section-title">Today’s Highlights</h2>
+
+  <div class="news-list">
+    @for (h of highlights$ | async; track h.id) {
+    <mat-card class="news-card">
+      <mat-card-content>
+        <h3 class="title">{{ h.title }}</h3>
+        <p class="overview">{{ h.overview }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        @if (h.trailerUrl) {
+        <a mat-button color="primary" [href]="h.trailerUrl" target="_blank">▶ Watch Trailer</a>
+        }
+      </mat-card-actions>
+    </mat-card>
+    }
+  </div>
+</section>

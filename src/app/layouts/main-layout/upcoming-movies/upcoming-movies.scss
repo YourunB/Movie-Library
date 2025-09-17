@@ -1,0 +1,119 @@
+:host {
+  width: 100%;
+  padding: 10px
+}
+.upcoming-section {
+  margin: 40px auto;
+  max-width: 1000px;
+  padding: 0 12px;
+  position: relative;
+  width: 100%;
+
+  .section-title {
+    align-self: start;
+    color: #f5c518;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .slider {
+      display: flex;              /* ✅ force horizontal row */
+      flex-wrap: nowrap;          /* ✅ don’t allow wrapping */
+      gap: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;         /* ✅ prevent vertical scroll */
+      scroll-behavior: smooth;
+      padding: 8px 0;
+      scroll-snap-type: x mandatory;
+      white-space: nowrap;        /* ✅ extra safety for inline flow */
+
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        transition: background 0.3s ease;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: #f5c518;
+      }
+    }
+
+    .movie-card {
+      flex: 0 0 auto;             /* ✅ card stays fixed size horizontally */
+      min-width: 180px;           /* base width */
+      scroll-snap-align: start;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      }
+
+      img {
+        height: 270px;
+        object-fit: cover;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .title {
+        font-size: 0.95rem;
+        margin: 6px 0 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .release {
+        font-size: 0.85rem;
+        opacity: 0.75;
+      }
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      z-index: 10;
+      transition: all 0.3s ease;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        font-size: 28px;
+      }
+
+      &:hover {
+        background: #f5c518;
+        color: #000;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      &.prev { left: 12px; }
+      &.next { right: 12px; }
+    }
+  }
+}

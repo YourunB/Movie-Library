@@ -1,0 +1,38 @@
+<div class="popular-slider" [style.--cards-per-slide]="itemsPerSlide">
+  <div class="slider-header">
+    <h2 class="h2-section">Most popular celebrities</h2>
+  </div>
+
+  <ng-container *ngIf="slides$ | async as slides">
+    <c-carousel [interval]="0" [wrap]="false" [activeIndex]="0" class="carousel-wrapper">
+      <c-carousel-inner>
+        <c-carousel-item *ngFor="let slide of slides; let i = index; trackBy: trackByIndex" [active]="i === 0">
+          <div class="card-list">
+            <a class="person-card" *ngFor="let p of slide; trackBy: trackByPersonId" [href]="getPersonLink(p, 'imdb')"
+              target="_blank" rel="noopener noreferrer" [attr.aria-label]="p.name">
+              <div class="thumb">
+                <img [src]="p.imgSrc || 'assets/placeholder-profile.jpg'" [alt]="p.name" loading="lazy" />
+              </div>
+
+              <div class="meta">
+                <div class="name" [title]="p.name">{{ p.name }}</div>
+                <div class="sub" *ngIf="p.department || p.popularity">
+                  <span *ngIf="p.department as d">{{ d }}</span>
+                  <span *ngIf="p.department && p.popularity">&nbsp;•&nbsp;</span>
+                  <span *ngIf="p.popularity as pop">Popularity: {{ pop | number:'1.0-0' }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </c-carousel-item>
+      </c-carousel-inner>
+
+      <c-carousel-control direction="prev" class="control-prev" ariaLabel="Previous">
+        <c-icon name="cil-caret-left" size="xl"></c-icon>
+      </c-carousel-control>
+      <c-carousel-control direction="next" class="control-next" ariaLabel="Next">
+        <c-icon name="cil-caret-right" size="xl"></c-icon>
+      </c-carousel-control>
+    </c-carousel>
+  </ng-container>
+</div>

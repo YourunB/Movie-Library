@@ -1,0 +1,39 @@
+<div class="side-slider">
+  <h2 class="h2-side">Up next</h2>
+  <div class="wrapper-side">
+    @for (s of slides; track s.key) {
+    <div #card class="side-card" role="button" tabindex="0" (click)="onSelect(s.sourceIndex)"
+      (keydown.enter)="onSelect(s.sourceIndex)" (keydown.space)="onSelect(s.sourceIndex)"
+      [attr.aria-label]="'Open ' + (s.title || 'movie')">
+      <div class="thumb">
+        <img [src]="s.imgSrc || 'assets/placeholder.jpg'" [alt]="s.title || ''" />
+      </div>
+
+      <div class="meta">
+        <div class="top">
+          <h4 class="title">{{ s.title }}</h4>
+
+          @if (s.name) {
+          <p class="secondary">{{ s.name }}</p>
+          }
+          @if (s.releaseDate) {
+          <span class="year">{{ s.releaseDate | date:'y' }}</span>
+          }
+        </div>
+
+        @if (s.rating !== null && s.rating !== undefined) {
+        <div class="sub">
+          <span class="rating">★ {{ s.rating | number:'1.1-1' }}</span>
+        </div>
+        }
+
+        <a class="youtube-link" [href]="'https://www.youtube.com/results?search_query=' + (s.title || s.name)"
+          target="_blank" rel="noopener noreferrer" aria-label="Watch {{ s.title || s.name }} on YouTube"
+          (click)="$event.stopPropagation()">
+          ▶
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+</div>
