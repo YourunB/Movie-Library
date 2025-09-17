@@ -40,11 +40,10 @@ export class AuthService {
 
   getCurrentAuthUser() {
     onAuthStateChanged(auth, (user) => {
-      console.log(user?.uid);
       if (user?.uid) {
         this.authenticatedSubject.next(true);
         this.userSubject.next(user);
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
       } else {
         console.log('No user is signed in.');
       }

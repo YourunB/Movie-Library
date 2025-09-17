@@ -43,7 +43,6 @@ export class UpcomingMovies implements OnInit {
   sliderRef!: ElementRef<HTMLDivElement>;
 
   ngOnInit(): void {
-    console.log('TmdbService:', this.tmdb);
     this.movies$ = this.tmdb.getUpcomingMovies().pipe(
       map((res: TmdbPage<TmdbMovie>) =>
         res.results.slice(0, 10).map((m: TmdbMovie) => ({
