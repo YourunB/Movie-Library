@@ -6,7 +6,7 @@ import {
 import { Store } from '@ngrx/store';
 import { selectTrending } from '../../../../store/dashboard.selectors';
 import { loadDashboard } from '../../../../store/dashboard.actions';
-import { BehaviorSubject, combineLatest, map, startWith } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, startWith, take } from 'rxjs';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
@@ -110,14 +110,17 @@ export class TradingMovies {
   constructor() {
     this.store.dispatch(loadDashboard());
     this.iconSet.icons = { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight };
-    const sub = this.slides$.subscribe(value => {
-      if (value.length) {
-        this.slidesCount = value.length;
+
+    this.slides$
+      .pipe(
+        filter(slides => slides.length > 0),
+        take(1)                           
+      )
+      .subscribe(slides => {
+        this.slidesCount = slides.length;
         this.intent = 'next';
         this.clickNextItem();
-        sub.unsubscribe();
-      }
-    });
+      });
   }
 
 
