@@ -4,21 +4,20 @@ import {
   provideZoneChangeDetection
 } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi, withFetch, withInterceptors } from '@angular/common/http';
-
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-
 import { uiReducer } from '../store/ui.reducer';
 import { dashboardReducer } from '../store/dashboard.reducer';
 import { DashboardEffects } from '../store/dashboard.effects';
 import { environment } from '../environments/environment';
-import { TmdbService } from '../services/dashboard/tmdb.service';
-import { TmdbMockService } from '../services/dashboard/tmdb.mock.service';
+import { TmdbService } from './shared/services/dashboard/tmdb.service';
+import { TmdbMockService } from './shared/services/dashboard/tmdb.mock.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { tmdbAuthInterceptor } from '../interceptors/tmdb-auth.interceptor';
+
+
 
 export const appConfig: ApplicationConfig = {
   providers: [

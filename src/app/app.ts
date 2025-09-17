@@ -1,18 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Header } from './layouts/main-layout/header/header';
-import { TradingMovies } from './layouts/main-layout/trading-movies/trading-movies';
-import { PopularPeopleSlider } from "./layouts/main-layout/popular-slider/popular-slider";
-import { UpcomingMovies } from "./layouts/main-layout/upcoming-movies/upcoming-movies";
-import { NowPlayingMovies } from "./layouts/main-layout/now-playing-movies/now-playing-movies";
-import { TodaysHighlights } from "./layouts/main-layout/todays-highlights/todays-highlights";
+import { Footer } from './layouts/main-layout/footer/footer';
+import { RouterOutlet } from '@angular/router';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Header, TradingMovies, PopularPeopleSlider, UpcomingMovies, NowPlayingMovies, TodaysHighlights],
+  imports: [Header, Footer, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {}
-
+export class App implements OnInit {
+  private authservice = inject(AuthService);
+  private wasUser = localStorage.getItem('userUID');
+  ngOnInit(): void {
+    if (this.wasUser) {
+      this.authservice.getCurrentAuthUser();
+    }
+  }
+}
