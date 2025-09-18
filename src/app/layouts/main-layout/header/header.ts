@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -17,6 +23,7 @@ import { auth } from '../../../shared/api/farebase';
   standalone: true,
   styleUrls: ['./header.scss'],
   imports: [FormsModule, Menu, CommonModule, RouterLink, MatIconModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header implements OnInit {
   private store = inject(Store);
@@ -31,13 +38,16 @@ export class Header implements OnInit {
   user: User | null = null;
   isAuthenticated = false;
 
+  private cdr = inject(ChangeDetectorRef);
+
   ngOnInit() {
     this.authService.getUserObservable().subscribe((user) => {
       this.user = user;
+      this.cdr.detectChanges();
     });
-
     this.authService.getAuthenticatedObservable().subscribe((authenticated) => {
       this.isAuthenticated = authenticated;
+      this.cdr.detectChanges();
     });
   }
 

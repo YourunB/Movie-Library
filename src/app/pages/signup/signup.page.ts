@@ -92,9 +92,10 @@ export class SignupPage {
       this.signupService
         .createNewUser(signupData.email, signupData.password)
         .then((userCredential) => {
-          this.authService.setUser(userCredential.user);
           localStorage.setItem('userUID', userCredential.user.uid);
-          this.router.navigate(['./']);
+          this.authService.setUser(userCredential.user);
+           
+          this.router.navigate(['/']);
         })
         .catch((error: HttpErrorResponse) => {
           console.log(error);
