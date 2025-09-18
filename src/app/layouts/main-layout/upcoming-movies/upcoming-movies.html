@@ -10,13 +10,15 @@
 
     <div class="slider" #slider>
       @for (movie of movies; track movie.id) {
-      <mat-card class="movie-card">
-        <img mat-card-image [src]="movie.imgSrc" [alt]="movie.title" />
-        <mat-card-content>
-          <h3 class="title">{{ movie.title }}</h3>
-          <p class="release">{{ movie.releaseDate | date:'longDate' }}</p>
-        </mat-card-content>
-      </mat-card>
+      <a [routerLink]="['/movie', movie.id]" class="movie-link">
+        <mat-card class="movie-card">
+          <img mat-card-image [src]="movie.imgSrc" [alt]="movie.title" />
+          <mat-card-content>
+            <h3 class="title">{{ movie.title }}</h3>
+            <p class="release">{{ movie.releaseDate | date:'longDate' }}</p>
+          </mat-card-content>
+        </mat-card>
+      </a>
       }
     </div>
 
