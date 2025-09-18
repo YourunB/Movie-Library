@@ -9,3 +9,14 @@ export const selectPopularPeople = createSelector(selectDashboardState, (s) => s
 export const selectReviews = createSelector(selectDashboardState, (s) => s.reviews);
 export const selectLoading = createSelector(selectDashboardState, (s) => s.loading);
 export const selectError = createSelector(selectDashboardState, (s) => s.error);
+
+export const selectSelectedMovie = createSelector(
+    selectDashboardState,
+    (s) => s.selectedMovie
+  );
+  
+  export const selectLoadingMovie = createSelector(
+    selectDashboardState,
+    (s) => s.loadingMovie
+  );
+  
