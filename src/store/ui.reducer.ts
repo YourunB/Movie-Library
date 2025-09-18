@@ -18,15 +18,23 @@ export const initialState: UiState = {
 
 // Helper function to add state to history
 const addToHistory = (state: UiState, newState: Partial<UiState>): UiState => {
-  const updatedState = { ...state, ...newState };
+  // Create clean state without history to avoid circular reference
+  const cleanState: UiState = {
+    menuOpen: newState.menuOpen ?? state.menuOpen,
+    theme: newState.theme ?? state.theme,
+    history: [], // Empty history for stored state
+    historyIndex: -1, // Reset index for stored state
+  };
+
   const newHistory = state.history.slice(0, state.historyIndex + 1);
-  newHistory.push(updatedState);
+  newHistory.push(cleanState);
 
   // Limit history to last 10 entries
   const limitedHistory = newHistory.slice(-10);
 
   return {
-    ...updatedState,
+    ...state,
+    ...newState,
     history: limitedHistory,
     historyIndex: limitedHistory.length - 1,
   };
@@ -51,22 +59,21 @@ const getNextState = (state: UiState): UiState | null => {
 export const uiReducer = createReducer(
   initialState,
   on(toggleMenu, (state): UiState => {
-    const newState = { ...state, menuOpen: !state.menuOpen };
+    const newState: Partial<UiState> = { menuOpen: !state.menuOpen };
     return addToHistory(state, newState);
   }),
   on(closeMenu, (state): UiState => {
-    const newState = { ...state, menuOpen: false };
+    const newState: Partial<UiState> = { menuOpen: false };
     return addToHistory(state, newState);
   }),
   on(toggleTheme, (state): UiState => {
-    const newState = {
-      ...state,
+    const newState: Partial<UiState> = {
       theme: state.theme === 'light' ? 'dark' : 'light',
     };
     return addToHistory(state, newState);
   }),
   on(setTheme, (state, { theme }): UiState => {
-    const newState = { ...state, theme };
+    const newState: Partial<UiState> = { theme: theme as Theme };
     return addToHistory(state, newState);
   })
 );
