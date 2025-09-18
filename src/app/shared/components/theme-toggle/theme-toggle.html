@@ -1,0 +1,8 @@
+<button mat-icon-button (click)="toggleTheme()"
+  matTooltip="{{ (theme$ | async) === 'dark' ? 'Switch to light mode' : 'Switch to dark mode' }}"
+  class="theme-toggle-btn">
+
+  <mat-icon class="theme-icon">
+    {{ (theme$ | async) === 'dark' ? 'light_mode' : 'dark_mode' }}
+  </mat-icon>
+</button>
