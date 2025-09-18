@@ -1,10 +1,12 @@
-<section *ngIf="movie$ | async as movie; else loading">
-  <h1>{{ movie.title }}</h1>
-  <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-  <p><strong>Overview:</strong> {{ movie.overview }}</p>
-  <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
-</section>
-
-<ng-template #loading>
-  <p>Loading...</p>
-</ng-template>
+<main>
+  <section *ngIf="movie$ | async as movie; else loading">
+    <h1>{{ movie.title }}</h1>
+    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+    <p><strong>Overview:</strong> {{ movie.overview }}</p>
+    <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
+  </section>
+  
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+</main>
