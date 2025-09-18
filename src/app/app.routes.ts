@@ -4,7 +4,7 @@ import { SignupPage } from './pages/signup/signup.page';
 import { SigninPage } from './pages/signin/signin.page';
 import { authGuard } from './shared/guards/auth.guard';
 import { NotFoundPage } from './pages/not-found.page/not-found.page';
-import { MoviePage } from './pages/movie/movie';
+import { MoviePage } from './pages/movie/movie.page';
 
 export const routes: Routes = [
   { path: '', component: HomePage, canActivate: [authGuard] },
