@@ -78,8 +78,9 @@
   width: var(--ctrl-size);
   height: var(--ctrl-size);
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,.7);
-  background: rgba(0,0,0,.35);
+  border: 2px solid var(--text-primary);
+  background: var(--shadow-color);
+  color: var(--text-primary);
   display: grid;
   place-items: center;
   z-index: 5;
@@ -88,7 +89,8 @@
     background-color .18s ease,
     border-color .18s ease,
     box-shadow .18s ease,
-    opacity .18s ease;
+    opacity .18s ease,
+    color .18s ease;
 }
 
 .control-next c-icon,
@@ -102,9 +104,9 @@
 .control-next:hover,
 .control-prev:hover {
   transform: scale(1.08);
-  background-color: rgba(0,0,0,.6);
-  border-color: #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  background-color: var(--hover-background);
+  border-color: var(--primary-color);
+  box-shadow: 0 6px 18px var(--shadow-color);
 }
 
 .control-next:active,
@@ -112,7 +114,7 @@
 
 .control-next:focus-visible,
 .control-prev:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--primary-color);
   outline-offset: 3px;
 }
 
@@ -151,7 +153,7 @@ app-side-slider {
 
 .meta-row {
   display: flex; align-items: center; gap: 10px;
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-secondary); }
 }
 
 .star-rating {
@@ -163,15 +165,15 @@ app-side-slider {
   content: "★★★★★";
   letter-spacing: 2px;
 }
-.star-rating::before { color: rgba(255,255,255,.25); }
+.star-rating::before { color: var(--text-secondary); }
 .star-rating::after  {
   position: absolute; left: 0; top: 0; width: calc(var(--rating) / 5 * 100%);
   color: #ffc107; overflow: hidden; white-space: nowrap;
 }
 
 .backdrop-shadow {
-      margin-top: -160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 1) 100%);
+  margin-top: -160px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, var(--background-color) 100%);
 }
 
 .youtube-link {
@@ -181,11 +183,11 @@ app-side-slider {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.6);
+  background: var(--shadow-color);
   transition: background 0.6s ease, transform 0.4s ease, opacity 0.5s ease; opacity: 1;
   cursor: pointer;
     .play-icon {
-      color: white;
+      color: var(--text-primary);
       font-size: 28px;
     }
   }

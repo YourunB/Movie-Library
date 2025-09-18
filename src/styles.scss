@@ -6,33 +6,45 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+// CSS Custom Properties for Theme Variables
+:root {
+  // Light theme colors
+  --primary-color: #2196f3;
+  --secondary-color: #ff4081;
+  --accent-color: #4caf50;
+  --background-color: #ffffff;
+  --surface-color: #f5f5f5;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --border-color: #e0e0e0;
+  --card-background: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --hover-background: rgba(0, 0, 0, 0.04);
+  --header-background: #ffffff;
+  --input-background: #ffffff;
+  --button-background: #2196f3;
+  --button-text: #ffffff;
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
+// Dark theme colors
+.dark-theme {
+  --primary-color: #64b5f6;
+  --secondary-color: #f48fb1;
+  --accent-color: #81c784;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --border-color: #333333;
+  --card-background: #1e1e1e;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --hover-background: rgba(255, 255, 255, 0.04);
+  --header-background: #1e1e1e;
+  --input-background: #2a2a2a;
+  --button-background: #2196f3;
+  --button-text: #ffffff;
 }
+
 html {
   scroll-behavior: smooth;
   box-sizing: border-box;
@@ -50,13 +62,53 @@ a {
 }
 
 body {
-  background: black;
-  color: white;
+  background-color: var(--background-color);
+  color: var(--text-primary);
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+// Global component styles with theme support
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button {
+  background-color: var(--button-background);
+  color: var(--button-text);
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: var(--hover-background);
+  }
+}
+
+.input {
+  background-color: var(--input-background);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.surface {
+  background-color: var(--surface-color);
+}

@@ -16,13 +16,14 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { signOut, User } from 'firebase/auth';
 import { MatIconModule } from '@angular/material/icon';
 import { auth } from '../../../shared/api/farebase';
+import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
   standalone: true,
   styleUrls: ['./header.scss'],
-  imports: [FormsModule, Menu, CommonModule, RouterLink, MatIconModule],
+  imports: [FormsModule, Menu, CommonModule, RouterLink, MatIconModule, ThemeToggle],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header implements OnInit {

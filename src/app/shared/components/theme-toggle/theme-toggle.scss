@@ -1,0 +1,30 @@
+.theme-toggle-btn {
+  transition: all 0.3s ease;
+
+  .theme-icon {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    .theme-icon {
+      transform: scale(1.1);
+    }
+  }
+
+  &:active {
+    .theme-icon {
+      transform: scale(0.95);
+    }
+  }
+}
+
+// Theme-specific styles
+:host {
+  .light-theme & {
+    color: var(--primary-color);
+  }
+
+  .dark-theme & {
+    color: var(--accent-color);
+  }
+}
