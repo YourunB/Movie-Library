@@ -3,8 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { TmdbMovie, TmdbPage, TmdbPerson, TmdbReview } from '../../models/dashboard';
 import { environment } from '../../environments/environment';
 
-
-
 type PosterSize   = 'w92'|'w154'|'w185'|'w342'|'w500'|'w780'|'original';
 type BackdropSize = 'w300'|'w780'|'w1280'|'original';
 type ImageSize = PosterSize | BackdropSize;
@@ -14,7 +12,6 @@ export class TmdbService {
   private readonly baseUrl = environment.tmdb.apiBaseUrl;
   private readonly apiKey  = environment.tmdb.apiKey;
   private readonly lang = 'en-US';
-
 
   private get<T>(path: string, params: Record<string, string | number> = {}) {
     const p = new HttpParams({
@@ -46,6 +43,10 @@ export class TmdbService {
   getNowPlayingMovies(page = 1) {
     return this.get<TmdbPage<TmdbMovie>>('/movie/now_playing', { page });
   }
+
+  getMovieById(movieId: number) {
+    return this.get<TmdbMovie>(`/movie/${movieId}`);
+  }  
 
   getMovieVideos(movieId: number) {
   return this.get<{ id: number; results: { key: string; site: string; type: string; name: string }[] }>(

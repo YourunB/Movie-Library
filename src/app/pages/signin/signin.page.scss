@@ -3,9 +3,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   min-width: 100vw;
   gap: 20px;
+  min-height: calc(100vh - 258px);
 }
 .login-form {
   display: flex;
