@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Gallery } from './gallery';
+import { Gallery } from './gallery.page';
 
 describe('Gallery', () => {
   let component: Gallery;
