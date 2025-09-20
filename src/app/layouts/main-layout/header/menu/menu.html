@@ -2,12 +2,35 @@
   <div class="dropdown-menu__wrapper">
     <div class="header">
       <div class="header__logo">IMDB</div>
-      <button (click)="close()" class="header__close">X</button>
+      <button (click)="close()" class="header__close">✕</button>
     </div>
+
     <div class="main">
       <a routerLink="/" (click)="close()">Home</a>
-      <a routerLink="/popular" (click)="close()">Popular</a>
-      <a routerLink="/search" (click)="close()">Search</a>
+      <a routerLink="/about" (click)="close()">About</a>
+
+      <div class="main__menu-section">
+        <h3>Most Popular</h3>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Matrix' }" (click)="close()">Matrix</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Inception' }" (click)="close()">Inception</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Interstellar' }" (click)="close()">Interstellar</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Fight Club' }" (click)="close()">Fight Club</a>
+      </div>
+
+      <div class="main__menu-section">
+        <h3>Award Winners</h3>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'The Godfather' }" (click)="close()">The Godfather</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Parasite' }" (click)="close()">Parasite</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Schindler\'s List' }" (click)="close()">Schindler's List</a>
+      </div>
+
+      <div class="main__menu-section">
+        <h3>Family & Animation</h3>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Toy Story' }" (click)="close()">Toy Story</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Frozen' }" (click)="close()">Frozen</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Shrek' }" (click)="close()">Shrek</a>
+        <a [routerLink]="['/gallery']" [queryParams]="{ q: 'Moana' }" (click)="close()">Moana</a>
+      </div>
     </div>
   </div>
 </nav>

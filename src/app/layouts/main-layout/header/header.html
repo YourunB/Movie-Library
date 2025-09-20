@@ -6,11 +6,6 @@
     </div>
 
     <div class="search-section">
-      <select [(ngModel)]="searchCategory">
-        <option value="all">All</option>
-        <option value="movies">Movies</option>
-        <option value="actors">Actors</option>
-      </select>
       <input type="text" [(ngModel)]="query" />
       <button (click)="search()">🔍</button>
     </div>

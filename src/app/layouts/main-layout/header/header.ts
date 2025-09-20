@@ -54,7 +54,7 @@ export class Header implements OnInit {
 
   search() {
     if (this.query.trim()) {
-      this.router.navigate(['/search'], {
+      this.router.navigate(['/gallery'], {
         queryParams: {
           q: this.query.trim(),
           category: this.searchCategory,
