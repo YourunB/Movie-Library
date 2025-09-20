@@ -12,10 +12,7 @@ export class ThemeService {
   private themeSubject = new BehaviorSubject<'light' | 'dark'>('dark');
 
   constructor() {
-    // Initialize theme from localStorage or system preference
     this.initializeTheme();
-
-    // Subscribe to theme changes and apply them
     this.store.select(selectTheme).subscribe(theme => {
       this.themeSubject.next(theme);
       this.applyTheme(theme);
@@ -40,13 +37,11 @@ export class ThemeService {
   }
 
   private initializeTheme(): void {
-    // Check localStorage first
     const savedTheme = localStorage.getItem('movie-library-theme') as 'light' | 'dark' | null;
 
     if (savedTheme) {
       this.setTheme(savedTheme);
     } else {
-      // Check system preference
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       this.setTheme(prefersDark ? 'dark' : 'light');
     }
@@ -54,14 +49,8 @@ export class ThemeService {
 
   private applyTheme(theme: 'light' | 'dark'): void {
     const htmlElement = document.documentElement;
-
-    // Remove existing theme classes
     htmlElement.classList.remove('light-theme', 'dark-theme');
-
-    // Add new theme class
     htmlElement.classList.add(`${theme}-theme`);
-
-    // Update meta theme-color for mobile browsers
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
