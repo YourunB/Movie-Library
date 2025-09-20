@@ -47,6 +47,10 @@ export class TmdbService {
     return this.get<TmdbPage<TmdbMovie>>('/movie/now_playing', { page });
   }
 
+  searchMovies(query: string, page = 1) {
+    return this.get<TmdbPage<TmdbMovie>>('/search/movie', { query, page });
+  }  
+
   getMovieVideos(movieId: number) {
   return this.get<{ id: number; results: { key: string; site: string; type: string; name: string }[] }>(
     `/movie/${movieId}/videos`
