@@ -3,7 +3,10 @@ main {
 }
 
 .img-wrapper {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   overflow: hidden;
+  max-height: 510px;
 }
 
 .gallery-grid {
@@ -23,6 +26,9 @@ main {
 
 .movie-card img {
   transition: 1s;
+  height: 510px;
+  width: 100%;
+  object-fit: cover;
 }
 
 @media (hover:hover) {

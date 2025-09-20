@@ -8,7 +8,11 @@
           <a [routerLink]="['/movie', movie.id]" class="movie-link">
             <mat-card class="movie-card">
               <div class="img-wrapper">
-                <img mat-card-image [src]="tmdb.img(movie.poster_path, 'w342')" [alt]="movie.title" />
+                <img
+                  mat-card-image
+                  [src]="movie.poster_path ? tmdb.img(movie.poster_path, 'w342') : 'images/placeholder.jpg'"
+                  [alt]="movie.title"
+                />
               </div>
               <mat-card-content>
                 <h3 class="title">{{ movie.title }}</h3>
@@ -16,7 +20,7 @@
               </mat-card-content>
             </mat-card>
           </a>
-        }        
+        }
       </div>
     } @else {
       <p class="no-results">Nothing was found</p>
