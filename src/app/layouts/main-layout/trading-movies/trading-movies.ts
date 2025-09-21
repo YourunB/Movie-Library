@@ -13,6 +13,8 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight } from '@coreui/icons';
 import { SideSlider } from '../side-slider/side-slider';
 import { SideSlide, TmdbMovie, TmdbPerson } from '../../../../models/dashboard';
+import { MatDialog } from '@angular/material/dialog';
+import { TrailerModal, TrailerModalData } from '../../../shared/components/trailer-modal/trailer-modal';
 
 type Intent = 'none' | 'next' | 'prev' | 'side';
 type Slot = 'left' | 'mid' | 'right';
@@ -48,6 +50,7 @@ export class TradingMovies {
   private store = inject(Store);
   private tmdb = inject(TmdbService);
   public iconSet = inject(IconSetService);
+  private dialog = inject(MatDialog);
 
   @ViewChild(CarouselComponent) carouselComponent?: CarouselComponent;
   @ViewChild('control') nextControl!: CarouselControlComponent;
@@ -185,5 +188,20 @@ export class TradingMovies {
       imgSrc: this.tmdb.img(p.profile_path, 'w154'),
       name: p.known_for_department,
     };
+  }
+
+  openTrailerModal(movie: { title: string; id: number }): void {
+    const dialogData: TrailerModalData = {
+      movieTitle: movie.title,
+      movieId: movie.id
+    };
+
+    this.dialog.open(TrailerModal, {
+      data: dialogData,
+      width: '90vw',
+      maxWidth: '900px',
+      maxHeight: '80vh',
+      panelClass: 'trailer-modal-panel'
+    });
   }
 }

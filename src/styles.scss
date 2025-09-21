@@ -112,3 +112,11 @@ html, body {
 .surface {
   background-color: var(--surface-color);
 }
+
+.trailer-modal-panel {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+}
