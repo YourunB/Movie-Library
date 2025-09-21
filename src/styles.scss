@@ -24,6 +24,8 @@
   --input-background: #ffffff;
   --button-background: #2196f3;
   --button-text: #ffffff;
+  --header-color: #212121;
+  --paragraph-color: var(--header-color);
 }
 
 // Dark theme colors
@@ -43,6 +45,7 @@
   --input-background: #2a2a2a;
   --button-background: #2196f3;
   --button-text: #ffffff;
+  --paragraph-color: var(--text-primary);
 }
 
 html {
@@ -119,4 +122,12 @@ html, body {
     border-radius: 12px;
     overflow: hidden;
   }
+}
+
+p {
+  color: var(--paragraph-color);
+}
+
+a {
+  color: var(--primary-color);
 }
