@@ -190,10 +190,10 @@ export class TradingMovies {
     };
   }
 
-  openTrailerModal(movie: { title: string; id: number }): void {
+    openTrailerModal(payload: { title: string; id?: number | string }): void {
     const dialogData: TrailerModalData = {
-      movieTitle: movie.title,
-      movieId: movie.id
+      movieTitle: payload.title,
+      movieId: typeof payload.id === 'number' ? payload.id : undefined
     };
 
     this.dialog.open(TrailerModal, {

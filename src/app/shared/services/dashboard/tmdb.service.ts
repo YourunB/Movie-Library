@@ -1,13 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { TmdbMovie, TmdbPage, TmdbPerson, TmdbReview } from '../../../../models/dashboard';
+import { TmdbMovie, TmdbPage, TmdbPerson, TmdbReview, TmdbVideo } from '../../../../models/dashboard';
 import { environment } from '../../../../environments/environment';
+import { map } from 'rxjs';
 
 
 
 type PosterSize   = 'w92'|'w154'|'w185'|'w342'|'w500'|'w780'|'original';
 type BackdropSize = 'w300'|'w780'|'w1280'|'original';
 type ImageSize = PosterSize | BackdropSize;
+interface TmdbVideos { results: TmdbVideo[] };
+interface TmdbMovieDetails {
+  id: number;
+  title: string;
+  overview: string;
+  tagline?: string;
+  videos?: TmdbVideos;
+}
 @Injectable({ providedIn: 'root' })
 export class TmdbService {
   private readonly http = inject(HttpClient);
@@ -57,5 +66,37 @@ export class TmdbService {
     if (!path) return null;
     const clean = path.startsWith('/') ? path : `/${path}`;
     return `https://image.tmdb.org/t/p/${size}${clean}`;
+  }
+
+  getMovieDetailsWithVideos(movieId: number) {
+    return this.get<TmdbMovieDetails>(`/movie/${movieId}`, {
+      append_to_response: 'videos',
+    });
+  }
+
+   private pickPreferredTrailer(list: TmdbVideo[] = []): TmdbVideo | undefined {
+    const lower = (s?: string) => (s ?? '').toLowerCase();
+    return (
+      list.find(v => v.site === 'YouTube' && v.type === 'Trailer' && lower(v.name).includes('official')) ||
+      list.find(v => v.site === 'YouTube' && v.type === 'Trailer') ||
+      list.find(v => v.type === 'Trailer') ||
+      undefined
+    );
+  }
+
+  getTrailerWithOverview(movieId: number) {
+    return this.getMovieDetailsWithVideos(movieId).pipe(
+      map(d => {
+        const trailer = this.pickPreferredTrailer(d.videos?.results ?? []);
+        return {
+          overview: d.overview,
+          tagline: d.tagline,
+          title: d.title,
+          trailer: trailer && trailer.site === 'YouTube'
+            ? { key: trailer.key, name: trailer.name, publishedAt: trailer.published_at }
+            : undefined
+        };
+      })
+    );
   }
 }

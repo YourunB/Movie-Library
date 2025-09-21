@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 interface SideSlide {
   key: string;
@@ -26,6 +26,7 @@ export class SideSlider implements AfterViewInit, OnChanges {
   @Input() slides: SideSlide[] = [];
   @Input() activeIndex = 0;
 
+  @Output() playTrailer = new EventEmitter<{ title: string; id?: number }>();
   @ViewChildren('card') cards!: QueryList<ElementRef<HTMLDivElement>>;
   trackByVmKey = (_: number, s: SideSlide) => s.vmKey;
 
@@ -40,6 +41,13 @@ export class SideSlider implements AfterViewInit, OnChanges {
 
   getLabel(slide: SideSlide): string {
     return slide.title ?? slide.name ?? '';
+  }
+
+  onPlay(s: SideSlide): void {
+    this.playTrailer.emit({
+      title: s.title ?? s.name ?? 'Untitled',
+      id: typeof s.id === 'number' ? s.id : undefined,
+    });
   }
 
   private scrollToActive(): void {

@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { of, switchMap, catchError } from 'rxjs';
+import { of, catchError } from 'rxjs';
 
 import { TmdbService } from '../../services/dashboard/tmdb.service';
 
@@ -36,6 +36,12 @@ export class TrailerModal {
   safeUrl: SafeResourceUrl | null = null;
   error: string | null = null;
 
+  movieOverview: string | null = null;
+  movieTagline: string | null = null;
+  videoName: string | null = null;
+  publishedAt?: string;
+  descExpanded = false;
+
   public dialogRef = inject(MatDialogRef<TrailerModal>);
   public data = inject(MAT_DIALOG_DATA) as TrailerModalData;
 
@@ -44,42 +50,40 @@ export class TrailerModal {
   }
 
   private loadTrailer(): void {
-    if (!this.data.movieId) {
+    const id = this.data.movieId;
+    if (!id) {
       this.error = 'Movie ID not provided';
       this.loading = false;
       return;
     }
 
-    this.tmdbService.getMovieVideos(this.data.movieId).pipe(
-      switchMap((response) => {
-        const trailer =
-          response.results?.find(v =>
-            v.site === 'YouTube' &&
-            v.type === 'Trailer' &&
-            v.name?.toLowerCase().includes('official')
-          ) ||
-          response.results?.find(v =>
-            v.site === 'YouTube' && v.type === 'Trailer'
-          );
-
-        if (trailer) {
-          this.videoKey = trailer.key;
-          const url = `https://www.youtube.com/embed/${this.videoKey}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-          this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-        } else {
-          this.error = 'No official trailer found for this movie';
-        }
-
-        this.loading = false;
-        return of(null);
-      }),
+    this.tmdbService.getTrailerWithOverview(id).pipe(
       catchError(() => {
         this.error = 'Failed to load trailer';
         this.loading = false;
         return of(null);
       })
-    ).subscribe();
+    ).subscribe(res => {
+      if (!res) return;
+
+      // Save description/tagline regardless of trailer presence
+      this.movieOverview = res.overview || null;
+      this.movieTagline = res.tagline || null;
+
+      if (res.trailer?.key) {
+        this.videoKey = res.trailer.key;
+        this.videoName = res.trailer.name || null;
+        this.publishedAt = res.trailer.publishedAt;
+        const url = `https://www.youtube.com/embed/${this.videoKey}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      } else {
+        this.error = 'No trailer found for this movie';
+      }
+
+      this.loading = false;
+    });
   }
+
 
   closeModal(): void {
     this.dialogRef.close();
@@ -97,4 +101,6 @@ export class TrailerModal {
     const q = encodeURIComponent(this.data.movieTitle + ' trailer');
     window.open(`https://www.youtube.com/results?search_query=${q}`, '_blank');
   }
+
+  toggleDesc(): void { this.descExpanded = !this.descExpanded; }
 }

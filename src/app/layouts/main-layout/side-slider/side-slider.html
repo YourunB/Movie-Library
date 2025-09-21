@@ -25,11 +25,10 @@
         </div>
         }
 
-        <a class="youtube-link" [href]="'https://www.youtube.com/results?search_query=' + (s.title || s.name)"
-          target="_blank" rel="noopener noreferrer" aria-label="Watch {{ s.title || s.name }} on YouTube"
-          (click)="$event.stopPropagation()">
+        <button type="button" class="youtube-link" (click)="onPlay(s); $event.stopPropagation()"
+          [attr.aria-label]="'Play trailer for ' + (s.title || s.name)">
           ▶
-        </a>
+        </button>
       </div>
     </div>
     }
