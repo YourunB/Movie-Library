@@ -29,9 +29,8 @@ interface SideSlideView {
   sourceIndex: number;
   slot: Slot;
   vmKey: string;
-  rating?: number; // <-- add this
+  rating?: number;
 }
-
 
 @Component({
   selector: 'app-trading-movies',
@@ -114,7 +113,7 @@ export class TradingMovies {
     this.slides$
       .pipe(
         filter(slides => slides.length > 0),
-        take(1)                           
+        take(1)
       )
       .subscribe(slides => {
         this.slidesCount = slides.length;
@@ -186,10 +185,5 @@ export class TradingMovies {
       imgSrc: this.tmdb.img(p.profile_path, 'w154'),
       name: p.known_for_department,
     };
-  }
-
-  onSideSelect(index: number): void {
-    this.intent = 'side';
-    this.activeIndex$.next(index);
   }
 }

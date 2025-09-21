@@ -10,7 +10,6 @@ import { AsyncPipe, CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/co
 import { Store } from '@ngrx/store';
 import { selectPopularPeople } from '../../../../store/dashboard.selectors';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { loadDashboard } from '../../../../store/dashboard.actions';
 import { combineLatest, map, startWith } from 'rxjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilCaretLeft, cilCaretRight } from '@coreui/icons';
@@ -94,7 +93,6 @@ export class PopularPeopleSlider {
   )
 
   constructor() {
-    this.store.dispatch(loadDashboard());
     this.iconSet.icons = { cilCaretLeft, cilCaretRight };
 
     this.breakpoint.observe([

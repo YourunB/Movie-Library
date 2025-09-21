@@ -2,9 +2,7 @@
   <h2 class="h2-side">Up next</h2>
   <div class="wrapper-side">
     @for (s of slides; track s.key) {
-    <div #card class="side-card" role="button" tabindex="0" (click)="onSelect(s.sourceIndex)"
-      (keydown.enter)="onSelect(s.sourceIndex)" (keydown.space)="onSelect(s.sourceIndex)"
-      [attr.aria-label]="'Open ' + (s.title || 'movie')">
+    <div #card class="side-card" role="button" tabindex="0" [attr.aria-label]="'Open ' + (s.title || 'movie')">
       <div class="thumb">
         <img [src]="s.imgSrc || 'assets/placeholder.jpg'" [alt]="s.title || ''" />
       </div>

@@ -41,7 +41,7 @@
       <c-icon name="cil-arrow-right" size="xl" class="text-white"></c-icon>
     </c-carousel-control>
   </c-carousel>
-  <app-side-slider [slides]="(sideSlides$ | async) ?? []" (slideSelect)="onSideSelect($event)">
+  <app-side-slider [slides]="(sideSlides$ | async) ?? []">
   </app-side-slider>
   }
   @else {
