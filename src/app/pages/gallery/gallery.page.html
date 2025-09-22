@@ -1,0 +1,29 @@
+<main>
+  <h2>Movies Gallery</h2>
+
+  @if (movies$ | async; as movies) {
+    @if (movies.length > 0) {
+      <div class="gallery-grid">
+        @for (movie of movies; track movie.id) {
+          <a [routerLink]="['/movie', movie.id]" class="movie-link">
+            <mat-card class="movie-card">
+              <div class="img-wrapper">
+                <img
+                  mat-card-image
+                  [src]="movie.poster_path ? tmdb.img(movie.poster_path, 'w342') : 'images/placeholder.jpg'"
+                  [alt]="movie.title"
+                />
+              </div>
+              <mat-card-content>
+                <h3 class="title">{{ movie.title }}</h3>
+                <p class="release">{{ movie.release_date | date:'longDate' }}</p>
+              </mat-card-content>
+            </mat-card>
+          </a>
+        }
+      </div>
+    } @else {
+      <p class="no-results">Nothing was found</p>
+    }
+  }
+</main>

@@ -1,16 +1,11 @@
 <header class="app-header">
   <div class="header-wrapper">
     <div class="left-section">
-      <div class="logo">IMDB</div>
+      <a class="logo" routerLink="/">IMDB</a>
       <button class="menu-button" (click)="toggleMenu()">☰</button>
     </div>
 
     <div class="search-section">
-      <select [(ngModel)]="searchCategory">
-        <option value="all">All</option>
-        <option value="movies">Movies</option>
-        <option value="actors">Actors</option>
-      </select>
       <input type="text" [(ngModel)]="query" />
       <button (click)="search()">🔍</button>
     </div>

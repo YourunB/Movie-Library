@@ -13,6 +13,7 @@ export class ThemeService {
 
   constructor() {
     this.initializeTheme();
+
     this.store.select(selectTheme).subscribe(theme => {
       this.themeSubject.next(theme);
       this.applyTheme(theme);
@@ -49,6 +50,8 @@ export class ThemeService {
 
   private applyTheme(theme: 'light' | 'dark'): void {
     const htmlElement = document.documentElement;
+    htmlElement.classList.remove('light-theme', 'dark-theme');
+    htmlElement.classList.add(`${theme}-theme`);
     htmlElement.classList.remove('light-theme', 'dark-theme');
     htmlElement.classList.add(`${theme}-theme`);
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');

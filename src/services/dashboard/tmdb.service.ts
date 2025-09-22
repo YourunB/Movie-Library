@@ -13,7 +13,6 @@ export class TmdbService {
   private readonly apiKey  = environment.tmdb.apiKey;
   private readonly lang = 'en-US';
 
-
   private get<T>(path: string, params: Record<string, string | number> = {}) {
     const p = new HttpParams({
       fromObject: { api_key: this.apiKey, language: this.lang, ...params },
@@ -44,6 +43,10 @@ export class TmdbService {
   getNowPlayingMovies(page = 1) {
     return this.get<TmdbPage<TmdbMovie>>('/movie/now_playing', { page });
   }
+
+  getMovieById(movieId: number) {
+    return this.get<TmdbMovie>(`/movie/${movieId}`);
+  }  
 
   getMovieVideos(movieId: number) {
   return this.get<{ id: number; results: { key: string; site: string; type: string; name: string }[] }>(

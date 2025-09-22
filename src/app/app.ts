@@ -8,6 +8,7 @@ import { VpnInfoBanner } from './shared/components/vpn-info-banner/vpn-info-bann
 import { RegionInfoService } from './shared/services/region-info.service';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -20,6 +21,7 @@ export class App implements OnInit {
   private authservice = inject(AuthService);
   private themeService = inject(ThemeService);
   private wasUser = localStorage.getItem('userUID');
+
   showVpnInfo$ = inject(RegionInfoService).showVpnInfo$;
 
   ngOnInit(): void {

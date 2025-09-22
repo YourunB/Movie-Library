@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as DashboardActions from './dashboard.actions';
-import { catchError, of, switchMap } from 'rxjs';
+import { map, catchError, of, switchMap } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { TmdbService } from '../services//dashboard/tmdb.service';
+import { TmdbMovie } from '../models/dashboard';
 
 @Injectable()
 export class DashboardEffects {
@@ -50,4 +51,21 @@ export class DashboardEffects {
       )
     )
   );
+
+  loadMovieById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DashboardActions.loadMovieById),
+      switchMap(({ id }) =>
+        this.tmbdService.getMovieById(Number(id)).pipe(
+          map((movie: TmdbMovie) =>
+            DashboardActions.loadMovieByIdSuccess({ movie })
+          ),
+          catchError(err =>
+            of(DashboardActions.loadMovieByIdFailure({ error: String(err) }))
+          )
+        )
+      )
+    )
+  );
+  
 }

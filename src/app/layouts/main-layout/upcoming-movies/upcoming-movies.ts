@@ -13,6 +13,7 @@ import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { map, Observable, startWith } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { RouterModule } from '@angular/router';
 
 interface UpcomingMovie {
   id: number;
@@ -30,6 +31,7 @@ interface UpcomingMovie {
     MatButtonModule,
     MatIconModule,
     DatePipe,
+    RouterModule
   ],
   templateUrl: './upcoming-movies.html',
   styleUrls: ['./upcoming-movies.scss'],
