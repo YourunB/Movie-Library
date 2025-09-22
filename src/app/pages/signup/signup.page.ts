@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -37,6 +37,7 @@ export class SignupPage {
   private authService = inject(AuthService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
+  isHide = true;
   constructor() {
     this.signupForm = new FormGroup({
       email: new FormControl('', {
@@ -48,12 +49,12 @@ export class SignupPage {
     });
   }
 
-  hide = signal(true);
   hidePassword(event: MouseEvent) {
-    this.hide.set(!this.hide());
+    console.log(event.type);
     event.stopPropagation();
+    event.preventDefault();
+    this.isHide = !this.isHide;
   }
-  protected readonly value = signal('');
 
   markEmailAsTouched() {
     const control = this.signupForm.get('email');
@@ -94,7 +95,7 @@ export class SignupPage {
         .then((userCredential) => {
           localStorage.setItem('userUID', userCredential.user.uid);
           this.authService.setUser(userCredential.user);
-           
+
           this.router.navigate(['/']);
         })
         .catch((error: HttpErrorResponse) => {
