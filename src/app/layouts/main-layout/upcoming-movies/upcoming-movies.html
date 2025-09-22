@@ -15,13 +15,21 @@
       @for (movie of movies; track movie.id) {
       <a [routerLink]="['/movie', movie.id]" class="movie-link">
         <mat-card class="movie-card">
-          <img mat-card-image [src]="movie.imgSrc" [alt]="movie.title" />
+          <img mat-card-image [src]="movie.poster_path" [alt]="movie.title" />
           <mat-card-content class="content">
-            @if(authService.isAuthenticated()) {
-            <mat-icon class="favorite-icon">favorite</mat-icon>
+            @if(isAuth$ | async) {
+            <mat-icon
+              [ngClass]="{
+                'in-watchlist':
+                  watchListService.isMovieInWatchlist(movie.id) | async
+              }"
+              class="favorite-icon"
+              (click)="toggleFavorite($event, movie)"
+              >favorite</mat-icon
+            >
             }
             <h3 class="title">{{ movie.title }}</h3>
-            <p class="release">{{ movie.releaseDate | date : "longDate" }}</p>
+            <p class="release">{{ movie.release_date| date : "longDate" }}</p>
           </mat-card-content>
         </mat-card>
       </a>

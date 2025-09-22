@@ -20,6 +20,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { tmdbAuthInterceptor } from '../interceptors/tmdb-auth.interceptor';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { watchlistReducer } from '../store/watchlist/watchlist.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       ui: uiReducer,
       dashboard: dashboardReducer,
+      watchlist: watchlistReducer,
     }),
     provideStoreDevtools({
       maxAge: 25,

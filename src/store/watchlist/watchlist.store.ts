@@ -1,9 +1,9 @@
 import { TmdbMovie } from '../../models/dashboard';
 
-export interface WatchList {
+export interface WatchListState {
   favorite: TmdbMovie[];
 }
 
-export const InitialWachlistState: WatchList = {
+export const InitialWachlistState: WatchListState = {
   favorite: [],
 };

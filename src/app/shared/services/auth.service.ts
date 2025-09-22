@@ -12,7 +12,7 @@ export class AuthService {
   private router = inject(Router);
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
-  private authenticatedSubject: BehaviorSubject<boolean> =
+  authenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   setUser(user: User) {
