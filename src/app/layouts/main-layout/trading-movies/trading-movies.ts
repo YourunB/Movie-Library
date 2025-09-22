@@ -13,6 +13,8 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight } from '@coreui/icons';
 import { SideSlider } from '../side-slider/side-slider';
 import { SideSlide, TmdbMovie, TmdbPerson } from '../../../../models/dashboard';
+import { MatDialog } from '@angular/material/dialog';
+import { TrailerModal, TrailerModalData } from '../../../shared/components/trailer-modal/trailer-modal';
 
 type Intent = 'none' | 'next' | 'prev' | 'side';
 type Slot = 'left' | 'mid' | 'right';
@@ -29,9 +31,8 @@ interface SideSlideView {
   sourceIndex: number;
   slot: Slot;
   vmKey: string;
-  rating?: number; // <-- add this
+  rating?: number;
 }
-
 
 @Component({
   selector: 'app-trading-movies',
@@ -49,6 +50,7 @@ export class TradingMovies {
   private store = inject(Store);
   private tmdb = inject(TmdbService);
   public iconSet = inject(IconSetService);
+  private dialog = inject(MatDialog);
 
   @ViewChild(CarouselComponent) carouselComponent?: CarouselComponent;
   @ViewChild('control') nextControl!: CarouselControlComponent;
@@ -114,7 +116,7 @@ export class TradingMovies {
     this.slides$
       .pipe(
         filter(slides => slides.length > 0),
-        take(1)                           
+        take(1)
       )
       .subscribe(slides => {
         this.slidesCount = slides.length;
@@ -188,8 +190,18 @@ export class TradingMovies {
     };
   }
 
-  onSideSelect(index: number): void {
-    this.intent = 'side';
-    this.activeIndex$.next(index);
+    openTrailerModal(payload: { title: string; id?: number | string }): void {
+    const dialogData: TrailerModalData = {
+      movieTitle: payload.title,
+      movieId: typeof payload.id === 'number' ? payload.id : undefined
+    };
+
+    this.dialog.open(TrailerModal, {
+      data: dialogData,
+      width: '90vw',
+      maxWidth: '900px',
+      maxHeight: '80vh',
+      panelClass: 'trailer-modal-panel'
+    });
   }
 }

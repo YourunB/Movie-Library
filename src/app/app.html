@@ -1,5 +1,8 @@
 <div class="app-wrapper">
   <app-header></app-header>
+  @defer (when (showVpnInfo$ | async)) {
+  <app-vpn-info-banner></app-vpn-info-banner>
+  }
   <div class="container">
     <router-outlet></router-outlet>
   </div>

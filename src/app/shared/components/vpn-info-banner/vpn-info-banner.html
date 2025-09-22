@@ -1,0 +1,15 @@
+@if (showVpnInfo$ | async) {
+<div class="vpn-banner">
+  <div class="banner-content">
+    <mat-icon class="info-icon">info</mat-icon>
+    <div class="banner-text">
+      <strong>Having trouble logging in or playing trailers?</strong>
+      Some content may be restricted in your region. Try turning off your VPN or connecting through an EU/US location,
+      then retry.
+    </div>
+    <button mat-icon-button (click)="hideBanner()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+}

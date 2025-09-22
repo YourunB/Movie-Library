@@ -15,6 +15,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { SigninService } from '../../shared/services/signin.service';
 import { ErrorDialog } from '../shared/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import { VpnInfoBanner } from '../../shared/components/vpn-info-banner/vpn-info-banner';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -27,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatIconModule,
     CommonModule,
     RouterLink,
+    VpnInfoBanner,
   ],
   templateUrl: './signin.page.html',
   styleUrl: './signin.page.scss',

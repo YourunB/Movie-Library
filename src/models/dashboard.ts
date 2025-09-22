@@ -31,6 +31,15 @@ export interface TmdbReview {
   url: string;
 }
 
+export interface TmdbVideo {
+  key: string;
+  site: string;
+  type: string;
+  name: string;
+  official?: boolean;
+  published_at?: string;
+};
+
 export interface SideSlide {
   key: string;
   sourceIndex: number;

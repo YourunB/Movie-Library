@@ -2,9 +2,7 @@
   <h2 class="h2-side">Up next</h2>
   <div class="wrapper-side">
     @for (s of slides; track s.key) {
-    <div #card class="side-card" role="button" tabindex="0" (click)="onSelect(s.sourceIndex)"
-      (keydown.enter)="onSelect(s.sourceIndex)" (keydown.space)="onSelect(s.sourceIndex)"
-      [attr.aria-label]="'Open ' + (s.title || 'movie')">
+    <div #card class="side-card" role="button" tabindex="0" [attr.aria-label]="'Open ' + (s.title || 'movie')">
       <div class="thumb">
         <img [src]="s.imgSrc || 'assets/placeholder.jpg'" [alt]="s.title || ''" />
       </div>
@@ -27,11 +25,10 @@
         </div>
         }
 
-        <a class="youtube-link" [href]="'https://www.youtube.com/results?search_query=' + (s.title || s.name)"
-          target="_blank" rel="noopener noreferrer" aria-label="Watch {{ s.title || s.name }} on YouTube"
-          (click)="$event.stopPropagation()">
+        <button type="button" class="youtube-link" (click)="onPlay(s); $event.stopPropagation()"
+          [attr.aria-label]="'Play trailer for ' + (s.title || s.name)">
           ▶
-        </a>
+        </button>
       </div>
     </div>
     }

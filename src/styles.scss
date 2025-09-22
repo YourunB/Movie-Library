@@ -24,6 +24,8 @@
   --input-background: #ffffff;
   --button-background: #2196f3;
   --button-text: #ffffff;
+  --header-color: #212121;
+  --paragraph-color: var(--header-color);
 }
 
 // Dark theme colors
@@ -43,6 +45,7 @@
   --input-background: #2a2a2a;
   --button-background: #2196f3;
   --button-text: #ffffff;
+  --paragraph-color: var(--text-primary);
 }
 
 html {
@@ -92,6 +95,7 @@ html, body {
   &:hover {
     background-color: var(--hover-background);
   }
+
 }
 
 .input {
@@ -99,6 +103,8 @@ html, body {
   color: var(--text-primary);
   border: 1px solid var(--border-color);
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 }
 
 .text-primary {
@@ -112,3 +118,20 @@ html, body {
 .surface {
   background-color: var(--surface-color);
 }
+
+.trailer-modal-panel {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+}
+
+p {
+  color: var(--paragraph-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+

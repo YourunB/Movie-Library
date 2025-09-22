@@ -11,9 +11,9 @@ import { routes } from './app.routes';
 import { uiReducer } from '../store/ui.reducer';
 import { dashboardReducer } from '../store/dashboard.reducer';
 import { DashboardEffects } from '../store/dashboard.effects';
-import { TmdbService } from './shared/services/dashboard/tmdb.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { tmdbAuthInterceptor } from '../interceptors/tmdb-auth.interceptor';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 
 
@@ -31,9 +31,16 @@ export const appConfig: ApplicationConfig = {
       ui: uiReducer,
       dashboard: dashboardReducer,
     }),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+      trace: false,
+      traceLimit: 75,
+      connectInZone: true
+    }),
     provideEffects([DashboardEffects]),
     provideAnimations(),
     provideRouter(routes),
-    ...(environment ? [{ provide: TmdbService, useClass: TmdbService }] : []),
   ]
 };

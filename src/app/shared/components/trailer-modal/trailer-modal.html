@@ -1,0 +1,56 @@
+<div class="trailer-modal">
+  <div class="modal-header">
+    <h2>{{ data.movieTitle }} - Trailer</h2>
+    <button mat-icon-button (click)="closeModal()" class="close-button" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="modal-content">
+    @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading trailer...</p>
+    </div>
+    } @else if (error) {
+    <div class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-button color="primary" (click)="openYouTubeSearch()">
+        Search on YouTube
+      </button>
+    </div>
+    } @else if (safeUrl) {
+    <div class="video-container">
+      <iframe class="youtube-iframe" [src]="safeUrl" title="YouTube trailer player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+
+    <div class="video-actions">
+      @if (videoName || publishedAt) {
+      <span>{{ videoName }}</span>
+      <span> • </span>
+      <span>{{ publishedAt | date:'mediumDate' }}</span>
+      }
+    </div>
+
+    <div class="video-description">
+      @if (movieTagline || movieOverview) {
+      @if (movieTagline) { <div class="tagline">“{{ movieTagline }}”</div> }
+      <div class="desc-text" [class.clamp]="!descExpanded">
+        {{ movieOverview }}
+      </div>
+      }
+    </div>
+
+    <div class="video-actions">
+      <button mat-button color="primary" (click)="openInYouTube()">
+        <mat-icon>open_in_new</mat-icon>
+        Open in YouTube
+      </button>
+    </div>
+    }
+  </div>
+</div>
