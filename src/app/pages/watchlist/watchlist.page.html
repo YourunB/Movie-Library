@@ -1,1 +1,37 @@
-<p>watchlist.page works!</p>
+<main>
+  <h2>My  movies for watching</h2>
+
+  <!-- @if (movies$ | async; as movies) { @if (movies.length > 0) {
+  <div class="gallery-grid">
+    @for (movie of movies; track movie.id) {
+    <a [routerLink]="['/movie', movie.id]" class="movie-link">
+      <mat-card class="movie-card">
+        <div class="img-wrapper">
+          <img
+            mat-card-image
+            [src]="
+              movie.poster_path
+                ? tmdb.img(movie.poster_path, 'w342')
+                : 'images/placeholder.jpg'
+            "
+            [alt]="movie.title"
+          />
+        </div>
+        <mat-card-content class="content">
+          @if(authService.isAuthenticated()) {
+          <mat-icon class="favorite-icon">favorite</mat-icon>
+          }
+          <h3 class="title">{{ movie.title }}</h3>
+          <p class="release">{{ movie.release_date | date : "longDate" }}</p>
+        </mat-card-content>
+      </mat-card>
+    </a>
+    }
+  </div>
+  } @else {
+  <p class="no-results">I haven`t got any movies to watch yet</p>
+  <a  class="watchlist-link" [routerLink]="['/']">
+    <mat-icon class="watchlist-icon">home</mat-icon>
+  </a>
+  } } -->
+</main>

@@ -9,6 +9,7 @@ declare interface Env {
   NG_APP_FIREBASE_STORAGE_BUCKET: string;
   NG_APP_FIREBASE_MESSAGE_SENDER_ID: string;
   NG_APP_FIREBASE_APP_ID: string;
+  NG_APP_FIREBASE_DATABASE_NAME: string;
 }
 
 // Choose how to access the environment variables.

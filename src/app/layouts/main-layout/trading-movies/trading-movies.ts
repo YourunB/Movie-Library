@@ -1,20 +1,39 @@
 import { Component, inject, ViewChild, WritableSignal } from '@angular/core';
 import {
-  CarouselCaptionComponent, CarouselComponent, CarouselControlComponent,
-  CarouselInnerComponent, CarouselItemComponent
+  CarouselCaptionComponent,
+  CarouselComponent,
+  CarouselControlComponent,
+  CarouselInnerComponent,
+  CarouselItemComponent,
 } from '@coreui/angular';
 import { Store } from '@ngrx/store';
-import { selectTrending } from '../../../../store/dashboard.selectors';
-import { loadDashboard } from '../../../../store/dashboard.actions';
-import { BehaviorSubject, combineLatest, filter, map, startWith, take } from 'rxjs';
+import { selectTrending } from '../../../../store/dashboard/dashboard.selectors';
+import { loadDashboard } from '../../../../store/dashboard/dashboard.actions';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  map,
+  startWith,
+  take,
+} from 'rxjs';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight } from '@coreui/icons';
+import {
+  cilArrowLeft,
+  cilArrowRight,
+  cilCalendar,
+  cilStar,
+  cilCaretRight,
+} from '@coreui/icons';
 import { SideSlider } from '../side-slider/side-slider';
 import { SideSlide, TmdbMovie, TmdbPerson } from '../../../../models/dashboard';
 import { MatDialog } from '@angular/material/dialog';
-import { TrailerModal, TrailerModalData } from '../../../shared/components/trailer-modal/trailer-modal';
+import {
+  TrailerModal,
+  TrailerModalData,
+} from '../../../shared/components/trailer-modal/trailer-modal';
 
 type Intent = 'none' | 'next' | 'prev' | 'side';
 type Slot = 'left' | 'mid' | 'right';
@@ -38,13 +57,20 @@ interface SideSlideView {
   selector: 'app-trading-movies',
   standalone: true,
   imports: [
-    CarouselComponent, CarouselInnerComponent, CarouselItemComponent,
-    CarouselCaptionComponent, CarouselControlComponent,
-    AsyncPipe, IconModule, DatePipe, DecimalPipe, SideSlider
+    CarouselComponent,
+    CarouselInnerComponent,
+    CarouselItemComponent,
+    CarouselCaptionComponent,
+    CarouselControlComponent,
+    AsyncPipe,
+    IconModule,
+    DatePipe,
+    DecimalPipe,
+    SideSlider,
   ],
   templateUrl: './trading-movies.html',
   styleUrl: './trading-movies.scss',
-  providers: [IconSetService]
+  providers: [IconSetService],
 })
 export class TradingMovies {
   private store = inject(Store);
@@ -63,10 +89,12 @@ export class TradingMovies {
   private slidesCount = 0;
 
   slides$ = this.trending$.pipe(
-    map(movies =>
-      movies.map(movie => ({
+    map((movies) =>
+      movies.map((movie) => ({
         id: movie.id,
-        imgSrc: this.tmdb.img(movie.poster_path, 'w342') ?? 'assets/placeholder-poster.jpg',
+        imgSrc:
+          this.tmdb.img(movie.poster_path, 'w342') ??
+          'assets/placeholder-poster.jpg',
         backgroundImgSrc:
           this.tmdb.img(movie.backdrop_path, 'w1280') ??
           this.tmdb.img(movie.poster_path, 'w780') ??
@@ -111,23 +139,31 @@ export class TradingMovies {
 
   constructor() {
     this.store.dispatch(loadDashboard());
-    this.iconSet.icons = { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight };
+    this.iconSet.icons = {
+      cilArrowLeft,
+      cilArrowRight,
+      cilCalendar,
+      cilStar,
+      cilCaretRight,
+    };
 
     this.slides$
       .pipe(
-        filter(slides => slides.length > 0),
+        filter((slides) => slides.length > 0),
         take(1)
       )
-      .subscribe(slides => {
+      .subscribe((slides) => {
         this.slidesCount = slides.length;
         this.intent = 'next';
         this.clickNextItem();
       });
   }
 
-
   private getCarouselIndex(): number {
-    const val = this.carouselComponent?.activeIndex as unknown as number | WritableSignal<number> | undefined;
+    const val = this.carouselComponent?.activeIndex as unknown as
+      | number
+      | WritableSignal<number>
+      | undefined;
 
     if (isWritableSignalNumber(val)) {
       return val();
@@ -144,13 +180,14 @@ export class TradingMovies {
   }
 
   onItemChange(ev: unknown): void {
-    const newIndex: number = typeof ev === 'number' ? ev : this.getCarouselIndex();
+    const newIndex: number =
+      typeof ev === 'number' ? ev : this.getCarouselIndex();
 
     const n = this.slidesCount || 1;
     const prev = this.lastActiveIndex;
 
-    const movedForwardByOne = ((prev + 1) % n) === newIndex;
-    const movedBackwardByOne = ((prev - 1 + n) % n) === newIndex;
+    const movedForwardByOne = (prev + 1) % n === newIndex;
+    const movedBackwardByOne = (prev - 1 + n) % n === newIndex;
     this.activeIndex$.next(newIndex);
 
     if (
@@ -166,8 +203,12 @@ export class TradingMovies {
     this.intent = 'none';
   }
 
-  onNextClick(): void { this.intent = 'next'; }
-  onPrevClick(): void { this.intent = 'prev'; }
+  onNextClick(): void {
+    this.intent = 'next';
+  }
+  onPrevClick(): void {
+    this.intent = 'prev';
+  }
 
   toSideSlideFromMovie(m: TmdbMovie, idx: number): SideSlide {
     return {
@@ -190,10 +231,10 @@ export class TradingMovies {
     };
   }
 
-    openTrailerModal(payload: { title: string; id?: number | string }): void {
+  openTrailerModal(payload: { title: string; id?: number | string }): void {
     const dialogData: TrailerModalData = {
       movieTitle: payload.title,
-      movieId: typeof payload.id === 'number' ? payload.id : undefined
+      movieId: typeof payload.id === 'number' ? payload.id : undefined,
     };
 
     this.dialog.open(TrailerModal, {
@@ -201,7 +242,7 @@ export class TradingMovies {
       width: '90vw',
       maxWidth: '900px',
       maxHeight: '80vh',
-      panelClass: 'trailer-modal-panel'
+      panelClass: 'trailer-modal-panel',
     });
   }
 }

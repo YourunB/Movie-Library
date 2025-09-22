@@ -3,8 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as DashboardActions from './dashboard.actions';
 import { map, catchError, of, switchMap } from 'rxjs';
 import { forkJoin } from 'rxjs';
-import { TmdbService } from '../services//dashboard/tmdb.service';
-import { TmdbMovie } from '../models/dashboard';
+import { TmdbService } from '../../services/dashboard/tmdb.service';
+import { TmdbMovie } from '../../models/dashboard';
 
 @Injectable()
 export class DashboardEffects {
@@ -60,12 +60,11 @@ export class DashboardEffects {
           map((movie: TmdbMovie) =>
             DashboardActions.loadMovieByIdSuccess({ movie })
           ),
-          catchError(err =>
+          catchError((err) =>
             of(DashboardActions.loadMovieByIdFailure({ error: String(err) }))
           )
         )
       )
     )
   );
-  
 }

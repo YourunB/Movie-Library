@@ -5,7 +5,7 @@ import { PopularPeopleSlider } from '../../layouts/main-layout/popular-slider/po
 import { UpcomingMovies } from '../../layouts/main-layout/upcoming-movies/upcoming-movies';
 import { TodaysHighlights } from '../../layouts/main-layout/todays-highlights/todays-highlights';
 import { Store } from '@ngrx/store';
-import { loadDashboard } from '../../../store/dashboard.actions';
+import { loadDashboard } from '../../../store/dashboard/dashboard.actions';
 
 @Component({
   selector: 'app-home',
