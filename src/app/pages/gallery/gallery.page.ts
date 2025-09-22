@@ -7,17 +7,20 @@ import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule],
+  imports: [CommonModule, RouterModule, MatCardModule, MatIcon],
   templateUrl: './gallery.page.html',
   styleUrls: ['./gallery.page.scss'],
 })
 export class GalleryPage {
   public route = inject(ActivatedRoute);
   public tmdb = inject(TmdbService);
+  authService = inject(AuthService);
 
   movies$: Observable<TmdbMovie[]> = this.route.queryParamMap.pipe(
     map(params => params.get('q') ?? ''),

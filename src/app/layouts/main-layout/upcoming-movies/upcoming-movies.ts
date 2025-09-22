@@ -14,6 +14,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../shared/services/auth.service';
 
 interface UpcomingMovie {
   id: number;
@@ -31,7 +32,7 @@ interface UpcomingMovie {
     MatButtonModule,
     MatIconModule,
     DatePipe,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './upcoming-movies.html',
   styleUrls: ['./upcoming-movies.scss'],
@@ -39,7 +40,9 @@ interface UpcomingMovie {
 export class UpcomingMovies implements OnInit {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
+  authService = inject(AuthService);
   movies$!: Observable<UpcomingMovie[]>;
+  
 
   @ViewChild('slider', { static: false })
   sliderRef!: ElementRef<HTMLDivElement>;

@@ -117,3 +117,16 @@
     }
   }
 }
+
+
+.content {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favorite-icon {
+  color: white;
+  cursor: pointer;
+}

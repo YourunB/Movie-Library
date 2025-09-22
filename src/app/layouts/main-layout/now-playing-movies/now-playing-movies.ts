@@ -14,6 +14,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../shared/services/auth.service';
 
 interface NowPlayingMovie {
   id: number;
@@ -31,7 +32,7 @@ interface NowPlayingMovie {
     MatButtonModule,
     MatIconModule,
     DatePipe,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './now-playing-movies.html',
   styleUrls: ['./now-playing-movies.scss'],
@@ -39,6 +40,7 @@ interface NowPlayingMovie {
 export class NowPlayingMovies implements OnInit {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
+  authService = inject(AuthService);
   movies$!: Observable<NowPlayingMovie[]>;
   cardWidth = 200;
 

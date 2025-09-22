@@ -12,7 +12,7 @@
 
     <div class="right-section">
       <app-theme-toggle></app-theme-toggle>
-      <a routerLink="/materials">Watchlist</a>
+      <a routerLink="/watchlist">Watchlist</a>
       @if (!isAuthenticated) {
       <a [routerLink]="['/signin']">SignIn</a>
       } @else {
