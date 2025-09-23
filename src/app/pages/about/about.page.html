@@ -1,1 +1,27 @@
-<p>about.page works!</p>
+<main>
+  <h1>About the Project</h1>
+  <p><strong>Created:</strong> {{ creationDate }}</p>
+  <p>
+    This project is an IMDb clone built using the 
+    <a href="https://www.themoviedb.org/documentation/api" target="_blank">TMDB API</a>.
+    Firebase is used for authentication and database storage.
+  </p>
+
+  <h2>Developers</h2>
+  <div class="dev-cards">
+    <div class="dev-cards__card" *ngFor="let dev of developers">
+      <a [href]="dev.githubUrl" target="_blank">
+        <img [src]="'https://github.com/' + dev.githubUsername + '.png'" alt="{{ dev.name }}" />
+        <h3>{{ dev.name }}</h3>
+        <p>GitHub: {{ dev.githubUsername }}</p>
+      </a>
+    </div>
+  </div>
+
+  <h2><a href="https://rs.school/" target="_blank">RS School</a> Angular Course</h2>
+  <p>
+    This project was created as part of the 
+    <a href="https://rs.school/courses/angular" target="_blank">RS School Angular</a> course.
+    The course covers Angular fundamentals, RxJS, routing, API integration, and application architecture.
+  </p>
+</main>
