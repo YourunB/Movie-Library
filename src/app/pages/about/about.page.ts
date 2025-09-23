@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./about.page.scss']
 })
 export class AboutPage {
-  creationDate = 'September 2025';
+  creationDate = '2025';
 
   projectDescription = `
     This project is an IMDb clone built using the TMDB API.
