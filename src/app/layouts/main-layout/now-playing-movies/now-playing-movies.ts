@@ -10,18 +10,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, take } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
+import { WatchlistService } from '../../../shared/services/watchlist.service';
 
-interface NowPlayingMovie {
-  id: number;
-  title: string;
-  imgSrc: string | null;
-  releaseDate: string;
-}
 
 @Component({
   selector: 'app-now-playing-movies',
@@ -41,11 +36,17 @@ export class NowPlayingMovies implements OnInit {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
   authService = inject(AuthService);
-  movies$!: Observable<NowPlayingMovie[]>;
+  movies$!: Observable<TmdbMovie[]>;
   cardWidth = 200;
+  watchListService = inject(WatchlistService);
+  isAuth$: Observable<boolean>;
 
   @ViewChild('slider', { static: false })
   sliderRef!: ElementRef<HTMLDivElement>;
+
+  constructor() {
+    this.isAuth$ = this.authService.authenticatedSubject;
+  }
 
   ngOnInit(): void {
     this.movies$ = this.tmdb.getNowPlayingMovies().pipe(
@@ -53,9 +54,9 @@ export class NowPlayingMovies implements OnInit {
         res.results.slice(0, 12).map((m: TmdbMovie) => ({
           id: m.id,
           title: m.title,
-          imgSrc:
+          poster_path:
             this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
-          releaseDate: m.release_date ?? '',
+          release_date: m.release_date ?? '',
         }))
       )
     );
@@ -88,5 +89,20 @@ export class NowPlayingMovies implements OnInit {
       left: direction === 'next' ? cardWidth * 3 : -cardWidth * 3,
       behavior: 'smooth',
     });
+  }
+
+  toggleFavorite(event: Event, movie: TmdbMovie): void {
+    event.stopPropagation();
+    event.preventDefault();
+    this.watchListService
+      .isMovieInWatchlist(movie.id)
+      .pipe(take(1))
+      .subscribe((isInWatchlist) => {
+        if (isInWatchlist) {
+          this.watchListService.removeMovie(movie.id);
+        } else {
+          this.watchListService.addMovie(movie);
+        }
+      });
   }
 }

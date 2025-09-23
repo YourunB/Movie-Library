@@ -17,3 +17,22 @@ main {
 .favorite-icon:hover {
  color:#f5c518 ; 
 }
+
+.favorite-icon {
+  color: white;
+  cursor: pointer;
+  height: 50px;
+  font-size: 32px;
+  width: 32px;
+}
+
+.favorite-icon:hover {
+  color: #f5c518;
+}
+
+.in-watchlist {
+  color: red;
+}
+.title:hover {
+  color: #f5c518;
+}

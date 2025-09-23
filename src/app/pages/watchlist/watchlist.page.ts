@@ -27,9 +27,6 @@ export class WatchlistPage implements OnInit {
 
   ngOnInit(): void {
     this.movies$ = this.watchListService.watchlist$;
-    this.movies$.subscribe((val) => {
-      console.log(val);
-    });
   }
 
   toggleFavorite(event: Event, movie: TmdbMovie): void {

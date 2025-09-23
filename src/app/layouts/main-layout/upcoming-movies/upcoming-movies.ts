@@ -53,7 +53,7 @@ export class UpcomingMovies implements OnInit {
         id: m.id,
         title: m.title,
         poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
-        release_date: m.release_date ?? undefined, // Change to undefined
+        release_date: m.release_date ?? undefined,
       }))
     )
   );

@@ -102,7 +102,7 @@ export class TradingMovies {
         title: movie.title,
         overview: movie.overview,
         rating: movie.vote_average,
-        rating5: Math.round((movie.vote_average / 2) * 10) / 10,
+        rating5: Math.round((movie.vote_average! / 2) * 10) / 10,
         reactions: 0,
         likes: 100,
         releaseDate: movie.release_date,
@@ -121,7 +121,10 @@ export class TradingMovies {
         id: slides[idx].id,
         imgSrc: slides[idx].imgSrc,
         title: slides[idx].title,
-        releaseDate: slides[idx].releaseDate,
+        releaseDate:
+          slides[idx].releaseDate !== null
+            ? slides[idx].releaseDate
+            : undefined,
         rating: slides[idx].rating,
         sourceIndex: idx,
         slot,
@@ -216,7 +219,7 @@ export class TradingMovies {
       sourceIndex: idx,
       title: m.title || m.name || 'Untitled',
       imgSrc: this.tmdb.img(m.poster_path, 'w154'),
-      releaseDate: m.release_date,
+      releaseDate: m.release_date !== null ? m.release_date : undefined,
       rating: m.vote_average,
     };
   }

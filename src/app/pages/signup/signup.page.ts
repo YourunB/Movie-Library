@@ -95,7 +95,6 @@ export class SignupPage {
         .then((userCredential) => {
           localStorage.setItem('userUID', userCredential.user.uid);
           this.authService.setUser(userCredential.user);
-
           this.router.navigate(['/']);
         })
         .catch((error: HttpErrorResponse) => {

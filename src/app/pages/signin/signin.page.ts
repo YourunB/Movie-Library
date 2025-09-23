@@ -16,6 +16,7 @@ import { SigninService } from '../../shared/services/signin.service';
 import { ErrorDialog } from '../shared/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { WatchlistService } from '../../shared/services/watchlist.service';
 
 @Component({
   selector: 'app-signin.page',
@@ -38,6 +39,7 @@ export class SigninPage {
   private authService = inject(AuthService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
+  watchListService = inject(WatchlistService);
   isHide = true;
 
   constructor() {
@@ -51,15 +53,11 @@ export class SigninPage {
     });
   }
 
-  
   hidePassword(event: MouseEvent) {
     event.stopPropagation();
     this.isHide = !this.isHide;
     event.preventDefault();
-    
-    
   }
- 
 
   markEmailAsTouched() {
     const control = this.singinForm.get('email');
@@ -99,7 +97,7 @@ export class SigninPage {
       this.signinService
         .signin(loginData.email, loginData.password)
         .then((userCredential) => {
-          this.authService.setUser(userCredential.user);
+          this.authService.setUser(userCredential.user);     
           this.router.navigate(['./']);
         })
         .catch((error: HttpErrorResponse) => {

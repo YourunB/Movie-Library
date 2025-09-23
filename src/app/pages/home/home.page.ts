@@ -21,6 +21,7 @@ import { loadDashboard } from '../../../store/dashboard/dashboard.actions';
   styleUrl: './home.page.scss',
 })
 export class HomePage {
+
   counter = 0;
 
   onCounterIncreased() {

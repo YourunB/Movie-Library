@@ -18,5 +18,9 @@ export const watchlistReducer = createReducer(
   on(WatchListActions.deleteMovieById, (state, { movieId }) => ({
     ...state,
     favorite: state.favorite.filter((favMovie) => favMovie.id !== movieId),
+  })),
+  on(WatchListActions.loadListOfMovies, (state, { movies }) => ({
+    ...state,
+    favorite: movies,
   }))
 );
