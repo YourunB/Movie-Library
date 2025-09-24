@@ -7,14 +7,15 @@ import { map, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
+import { MovieCardComponent, MovieCardModel } from '../../shared/components/movie-card/movie-card';
+import { PosterUrlPipe } from '../../shared/pipes/poster-url.pipe';
 import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatIcon],
+  imports: [CommonModule, RouterModule, MatCardModule, MovieCardComponent, PosterUrlPipe],
   templateUrl: './gallery.page.html',
   styleUrls: ['./gallery.page.scss'],
 })
@@ -24,26 +25,32 @@ export class GalleryPage {
   watchListService = inject(WatchlistService);
   authService = inject(AuthService);
   isAuth$: Observable<boolean>;
+
   constructor() {
     this.isAuth$ = this.authService.authenticatedSubject;
   }
+
   movies$: Observable<TmdbMovie[]> = this.route.queryParamMap.pipe(
     map((params) => params.get('q') ?? ''),
     switchMap((query) => this.tmdb.searchMovies(query)),
     map((res: TmdbPage<TmdbMovie>) => res.results ?? [])
   );
 
-  toggleFavorite(event: Event, movie: TmdbMovie): void {
-    event.stopPropagation();
-    event.preventDefault();
+  toggleFavorite(movie: MovieCardModel): void {
     this.watchListService
       .isMovieInWatchlist(movie.id)
       .pipe(take(1))
       .subscribe((isInWatchlist) => {
         if (isInWatchlist) {
-          this.watchListService.removeMovie(movie.id); 
+          this.watchListService.removeMovie(movie.id);
         } else {
-          this.watchListService.addMovie(movie);
+          const normalized = {
+            ...movie,
+            poster_path: movie.poster_path ?? null,
+            release_date: movie.release_date ?? null,
+          } as unknown as TmdbMovie;
+
+          this.watchListService.addMovie(normalized);
         }
       });
   }

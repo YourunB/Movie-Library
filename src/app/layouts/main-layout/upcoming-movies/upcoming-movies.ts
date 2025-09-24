@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,15 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
+import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
+
+// ---- NEW: view-model interface ----
+export interface MovieVM {
+  id: number;
+  title: string;
+  poster_path: string;
+  release_date: string;
+}
 
 @Component({
   selector: 'app-upcoming-movies',
@@ -25,8 +34,8 @@ import { WatchlistService } from '../../../shared/services/watchlist.service';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    DatePipe,
     RouterModule,
+    MovieCardComponent,
   ],
   templateUrl: './upcoming-movies.html',
   styleUrls: ['./upcoming-movies.scss'],
@@ -35,30 +44,28 @@ export class UpcomingMovies implements OnInit {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
   authService = inject(AuthService);
-  movies$!: Observable<TmdbMovie[]>;
-
   watchListService = inject(WatchlistService);
-  isAuth$: Observable<boolean>;
-  constructor() {
-    this.isAuth$ = this.authService.authenticatedSubject;
-  }
+
+  isAuth$: Observable<boolean> = this.authService.authenticatedSubject;
+
+  // ---- typed with the VM ----
+  movies$!: Observable<MovieVM[]>;
 
   @ViewChild('slider', { static: false })
   sliderRef!: ElementRef<HTMLDivElement>;
 
   ngOnInit(): void {
-  this.movies$ = this.tmdb.getUpcomingMovies().pipe(
-    map((res: TmdbPage<TmdbMovie>) =>
-      res.results.slice(0, 10).map((m: TmdbMovie) => ({
-        id: m.id,
-        title: m.title,
-        poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
-        release_date: m.release_date ?? undefined,
-      }))
-    )
-  );
-}
-
+    this.movies$ = this.tmdb.getUpcomingMovies().pipe(
+      map((res: TmdbPage<TmdbMovie>) =>
+        res.results.slice(0, 10).map<MovieVM>((m) => ({
+          id: m.id,
+          title: m.title,
+          poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+          release_date: m.release_date ?? '',
+        }))
+      )
+    );
+  }
 
   cardWidth$: Observable<number> = this.breakpoint
     .observe([
@@ -77,7 +84,7 @@ export class UpcomingMovies implements OnInit {
         if (result.breakpoints['(max-width: 1200px)']) return 220;
         return 240;
       }),
-      startWith(200) // default
+      startWith(200)
     );
 
   scroll(direction: 'prev' | 'next', cardWidth: number): void {
@@ -89,9 +96,7 @@ export class UpcomingMovies implements OnInit {
     });
   }
 
-  toggleFavorite(event: Event, movie: TmdbMovie): void {
-    event.stopPropagation();
-    event.preventDefault();
+  toggleFavorite(movie: MovieVM): void {
     this.watchListService
       .isMovieInWatchlist(movie.id)
       .pipe(take(1))
@@ -99,7 +104,7 @@ export class UpcomingMovies implements OnInit {
         if (isInWatchlist) {
           this.watchListService.removeMovie(movie.id);
         } else {
-          this.watchListService.addMovie(movie);
+          this.watchListService.addMovie(movie as unknown as TmdbMovie);
         }
       });
   }

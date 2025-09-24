@@ -4,38 +4,14 @@
   @if (movies$ | async; as movies) { @if (movies.length > 0) {
   <div class="gallery-grid">
     @for (movie of movies; track movie.id) {
-    <a [routerLink]="['/movie', movie.id]" class="movie-link">
-      <mat-card class="movie-card">
-        <div class="img-wrapper">
-          <img
-            mat-card-image
-            [src]="
-              movie.poster_path
-                ? tmdb.img(movie.poster_path, 'w342')
-                : 'images/placeholder.jpg'
-            "
-            [alt]="movie.title"
-          />
-        </div>
-        <mat-card-content class="content">
-          @if(isAuth$ | async) {
-          <mat-icon
-            [ngClass]="{
-              'in-watchlist':
-                watchListService.isMovieInWatchlist(movie.id) | async
-            }"
-            class="favorite-icon"
-            (click)="toggleFavorite($event, movie)"
-            >favorite</mat-icon
-          >
-          }
-
-          <h3 class="title">{{ movie.title }}</h3>
-
-          <p class="release">{{ movie.release_date | date : "longDate" }}</p>
-        </mat-card-content>
-      </mat-card>
-    </a>
+    <app-movie-card [movie]="{
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+        inWatchlist: (watchListService.isMovieInWatchlist(movie.id) | async) ?? false
+      }" [posterUrl]="movie.poster_path | posterUrl : 'w342'" [showFavorite]="(isAuth$ | async) ?? false"
+      (favorite)="toggleFavorite($event)"></app-movie-card>
     }
   </div>
   } @else {
