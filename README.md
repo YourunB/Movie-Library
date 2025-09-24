@@ -1,6 +1,6 @@
 ## 🚀 Performance Budget & Lighthouse Gains
 
-This project includes a performance optimization pass focused on improving load times, responsiveness, and perceived UX for the `movie/:id` and `collection` pages.
+This project includes a performance optimization pass focused on improving load times, responsiveness, and perceived UX for the `movie/:id` and `about` pages.
 
 ### ✅ Key Improvements
 
