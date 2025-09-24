@@ -1,27 +1,27 @@
 import { TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ThemeService } from './theme.service';
 
 describe('ThemeService', () => {
   let service: ThemeService;
-  let mockStore: any;
+  let mockStore: MockStore;
 
   beforeEach(() => {
-    mockStore = provideMockStore({
-      initialState: {
-        ui: {
-          menuOpen: false,
-          theme: 'dark'
-        }
-      }
-    });
-
     TestBed.configureTestingModule({
       providers: [
         ThemeService,
-        mockStore
+        provideMockStore({
+          initialState: {
+            ui: {
+              menuOpen: false,
+              theme: 'dark'
+            }
+          }
+        })
       ]
     });
+
+    mockStore = TestBed.inject(MockStore);
     service = TestBed.inject(ThemeService);
   });
 
@@ -34,13 +34,13 @@ describe('ThemeService', () => {
   });
 
   it('should toggle theme correctly', () => {
-    const dispatchSpy = spyOn(mockStore.dispatch, 'dispatch');
+    const dispatchSpy = spyOn(mockStore, 'dispatch');
     service.toggleTheme();
     expect(dispatchSpy).toHaveBeenCalled();
   });
 
   it('should set theme correctly', () => {
-    const dispatchSpy = spyOn(mockStore.dispatch, 'dispatch');
+    const dispatchSpy = spyOn(mockStore, 'dispatch');
     service.setTheme('light');
     expect(dispatchSpy).toHaveBeenCalled();
   });
