@@ -16,7 +16,7 @@
   }
 
   .section-title {
-    align-self: end;
+    align-self: center;
     color: #f5c518;
     margin-bottom: 20px;
     font-size: 1.5rem;
@@ -30,37 +30,45 @@
 
     .slider {
       display: flex;
+      flex-wrap: nowrap;
       gap: 16px;
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-behavior: smooth;
       padding: 8px 0;
       scroll-snap-type: x mandatory;
+      white-space: nowrap;
 
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
       &::-webkit-scrollbar {
-        display: none;
+        height: 8px;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        transition: background 0.3s ease;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: #f5c518;
       }
     }
 
     .movie-card {
       flex: 0 0 auto;
+      min-width: auto;
       scroll-snap-align: start;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-background);
       transition: transform 0.2s ease, box-shadow 0.3s ease;
-
-      min-width: clamp(140px, 20vw, 240px);
 
       &:hover {
         transform: scale(1.05);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-      }
-
-      img {
-        height: clamp(200px, 30vw, 300px);
-        object-fit: cover;
-        border-radius: 12px 12px 0 0;
+        box-shadow: 0 6px 16px var(--shadow-color);
       }
     }
 

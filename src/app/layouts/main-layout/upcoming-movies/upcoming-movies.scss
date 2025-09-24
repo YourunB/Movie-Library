@@ -23,15 +23,15 @@
     align-items: center;
 
     .slider {
-      display: flex; /* ✅ force horizontal row */
-      flex-wrap: nowrap; /* ✅ don’t allow wrapping */
+      display: flex;
+      flex-wrap: nowrap;
       gap: 16px;
       overflow-x: auto;
-      overflow-y: hidden; /* ✅ prevent vertical scroll */
+      overflow-y: hidden;
       scroll-behavior: smooth;
       padding: 8px 0;
       scroll-snap-type: x mandatory;
-      white-space: nowrap; /* ✅ extra safety for inline flow */
+      white-space: nowrap;
 
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
@@ -53,36 +53,17 @@
     }
 
     .movie-card {
-      flex: 0 0 auto; /* ✅ card stays fixed size horizontally */
-      min-width: 180px; /* base width */
+      flex: 0 0 auto; 
+      min-width: auto;
       scroll-snap-align: start;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-background);
       transition: transform 0.2s ease, box-shadow 0.3s ease;
       cursor: pointer;
 
       &:hover {
         transform: scale(1.05);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-      }
-
-      img {
-        height: 270px;
-        object-fit: cover;
-        border-radius: 12px 12px 0 0;
-      }
-
-      .title {
-        font-size: 0.95rem;
-        margin: 6px 0 2px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .release {
-        font-size: 0.85rem;
-        opacity: 0.75;
+        box-shadow: 0 6px 16px var(--shadow-color);
       }
     }
 

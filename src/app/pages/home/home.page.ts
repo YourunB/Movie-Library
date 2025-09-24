@@ -4,6 +4,7 @@ import { NowPlayingMovies } from '../../layouts/main-layout/now-playing-movies/n
 import { PopularPeopleSlider } from '../../layouts/main-layout/popular-slider/popular-slider';
 import { UpcomingMovies } from '../../layouts/main-layout/upcoming-movies/upcoming-movies';
 import { TodaysHighlights } from '../../layouts/main-layout/todays-highlights/todays-highlights';
+import { ToggleSectionComponent } from '../../shared/components/toggle-section/toggle-section';
 import { Store } from '@ngrx/store';
 import { loadDashboard } from '../../../store/dashboard/dashboard.actions';
 
@@ -16,6 +17,7 @@ import { loadDashboard } from '../../../store/dashboard/dashboard.actions';
     PopularPeopleSlider,
     UpcomingMovies,
     TodaysHighlights,
+    ToggleSectionComponent,
   ],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',

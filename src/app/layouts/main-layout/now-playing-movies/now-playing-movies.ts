@@ -5,7 +5,7 @@ import {
   ElementRef,
   OnInit,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +16,12 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
+import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
 
+type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
+  poster_path: string;
+  release_date: string;
+};
 
 @Component({
   selector: 'app-now-playing-movies',
@@ -26,8 +31,8 @@ import { WatchlistService } from '../../../shared/services/watchlist.service';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    DatePipe,
     RouterModule,
+    MovieCardComponent,
   ],
   templateUrl: './now-playing-movies.html',
   styleUrls: ['./now-playing-movies.scss'],
@@ -36,10 +41,11 @@ export class NowPlayingMovies implements OnInit {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
   authService = inject(AuthService);
-  movies$!: Observable<TmdbMovie[]>;
-  cardWidth = 200;
   watchListService = inject(WatchlistService);
+
   isAuth$: Observable<boolean>;
+  movies$!: Observable<ViewMovie[]>;
+  cardWidth = 200;
 
   @ViewChild('slider', { static: false })
   sliderRef!: ElementRef<HTMLDivElement>;
@@ -51,11 +57,9 @@ export class NowPlayingMovies implements OnInit {
   ngOnInit(): void {
     this.movies$ = this.tmdb.getNowPlayingMovies().pipe(
       map((res: TmdbPage<TmdbMovie>) =>
-        res.results.slice(0, 12).map((m: TmdbMovie) => ({
-          id: m.id,
-          title: m.title,
-          poster_path:
-            this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+        res.results.slice(0, 12).map((m): ViewMovie => ({
+          ...m,
+          poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
           release_date: m.release_date ?? '',
         }))
       )
@@ -79,7 +83,7 @@ export class NowPlayingMovies implements OnInit {
         if (result.breakpoints['(max-width: 1200px)']) return 220;
         return 240;
       }),
-      startWith(200) // default before first detection
+      startWith(200)
     );
 
   scroll(direction: 'prev' | 'next', cardWidth: number): void {
@@ -90,10 +94,7 @@ export class NowPlayingMovies implements OnInit {
       behavior: 'smooth',
     });
   }
-
-  toggleFavorite(event: Event, movie: TmdbMovie): void {
-    event.stopPropagation();
-    event.preventDefault();
+  toggleFavorite(movie: ViewMovie): void {
     this.watchListService
       .isMovieInWatchlist(movie.id)
       .pipe(take(1))
@@ -101,7 +102,7 @@ export class NowPlayingMovies implements OnInit {
         if (isInWatchlist) {
           this.watchListService.removeMovie(movie.id);
         } else {
-          this.watchListService.addMovie(movie);
+          this.watchListService.addMovie(movie as unknown as TmdbMovie);
         }
       });
   }

@@ -1,0 +1,113 @@
+.movie-card {
+  position: relative;
+  background: var(--card-background);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.img-wrapper {
+  display: block;
+  background: var(--surface-color);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.favorite-icon {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto 0;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.favorite-icon.in-watchlist {
+  color: #ff5252;
+}
+
+.title {
+  margin: 8px 0 0;
+}
+
+.release {
+  margin: 4px 0 0;
+  opacity: 0.8;
+}
+
+.movie-card.movie-card--compact {
+  --card-radius: 8px;
+  --title-size: 1rem;
+  --meta-size: 0.8rem;
+  width: 200px;
+}
+
+.movie-card.movie-card--compact .img-wrapper img {
+  border-radius: var(--card-radius);
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.movie-card.movie-card--compact .title {
+  font-size: var(--title-size);
+  line-height: 1.2;
+  text-align: center;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.4em;
+}
+
+.movie-card.movie-card--compact .release {
+  font-size: var(--meta-size);
+  text-align: center;
+  min-height: 1.2em;
+}
+
+.movie-card.movie-card--compact .content {
+  min-height: 96px;
+}
+
+.movie-card.movie-card--compact .favorite-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+.movie-card.movie-card--watchlist {
+  --card-radius: 12px;
+  width: 340px;
+  box-shadow: 0 6px 18px var(--shadow-color);
+}
+
+.movie-card.movie-card--watchlist .img-wrapper img {
+  border-radius: var(--card-radius);
+  height: 510px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.movie-card.movie-card--watchlist .favorite-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 28px;
+}
+
+.movie-card.movie-card--watchlist .favorite-icon.in-watchlist {
+  color: #ff5252;
+}
+
+
+
+
