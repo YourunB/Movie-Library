@@ -42,7 +42,6 @@
   opacity: 0.8;
 }
 
-/* Variant: compact (for main page sliders) */
 .movie-card.movie-card--compact {
   --card-radius: 8px;
   --title-size: 1rem;
@@ -66,7 +65,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 2.4em; /* two lines at 1.2 line-height */
+  min-height: 2.4em;
 }
 
 .movie-card.movie-card--compact .release {
@@ -76,7 +75,7 @@
 }
 
 .movie-card.movie-card--compact .content {
-  min-height: 96px; /* title + date + heart area */
+  min-height: 96px;
 }
 
 .movie-card.movie-card--compact .favorite-icon {
@@ -85,7 +84,6 @@
   font-size: 24px;
 }
 
-/* Variant: watchlist (bigger visuals, strong focus) */
 .movie-card.movie-card--watchlist {
   --card-radius: 12px;
   width: 340px;
