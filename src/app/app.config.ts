@@ -1,22 +1,26 @@
 import { ApplicationConfig } from '@angular/core';
 import {
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection
+  provideZoneChangeDetection,
 } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi, withFetch, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { uiReducer } from '../store/ui.reducer';
-import { dashboardReducer } from '../store/dashboard.reducer';
-import { DashboardEffects } from '../store/dashboard.effects';
+import { uiReducer } from '../store/ui/ui.reducer';
+import { dashboardReducer } from '../store/dashboard/dashboard.reducer';
+import { DashboardEffects } from '../store/dashboard/dashboard.effects';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { tmdbAuthInterceptor } from '../interceptors/tmdb-auth.interceptor';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-
-
+import { watchlistReducer } from '../store/watchlist/watchlist.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       ui: uiReducer,
       dashboard: dashboardReducer,
+      watchlist: watchlistReducer,
     }),
     provideStoreDevtools({
       maxAge: 25,
@@ -37,10 +42,10 @@ export const appConfig: ApplicationConfig = {
       autoPause: true,
       trace: false,
       traceLimit: 75,
-      connectInZone: true
+      connectInZone: true,
     }),
     provideEffects([DashboardEffects]),
     provideAnimations(),
     provideRouter(routes),
-  ]
+  ],
 };

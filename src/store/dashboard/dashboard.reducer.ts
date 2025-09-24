@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { TmdbMovie, TmdbPerson, TmdbReview } from '../models/dashboard';
+import { TmdbMovie, TmdbPerson, TmdbReview } from '../../models/dashboard';
 import * as DashboardActions from './dashboard.actions';
 
 export interface DashboardState {
@@ -26,15 +26,19 @@ export const initialState: DashboardState = {
 
 export const dashboardReducer = createReducer(
   initialState,
-  on(DashboardActions.loadDashboard, (state) => ({ ...state, loading: true, error: null })),
-  
+  on(DashboardActions.loadDashboard, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
   on(DashboardActions.loadDashboardSuccess, (state, payload) => ({
     ...state,
     ...payload,
     loading: false,
     error: null,
   })),
-  
+
   on(DashboardActions.loadDashboardFailure, (state, { error }) => ({
     ...state,
     loading: false,
@@ -46,13 +50,13 @@ export const dashboardReducer = createReducer(
     loadingMovie: true,
     selectedMovie: null,
   })),
-  
+
   on(DashboardActions.loadMovieByIdSuccess, (state, { movie }) => ({
     ...state,
     loadingMovie: false,
     selectedMovie: movie,
   })),
-  
+
   on(DashboardActions.loadMovieByIdFailure, (state, { error }) => ({
     ...state,
     loadingMovie: false,

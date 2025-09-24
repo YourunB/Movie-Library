@@ -10,7 +10,7 @@
         autocomplete="email"
         (input)="markEmailAsTouched()"
       />
-      @if ( signupForm.get("email")?.invalid && signupForm.get("email")?.touched
+      @if ( signupForm.get("email")?.invalid
       ) {
       <mat-error>
         {{ userEmailErrors() }}
@@ -21,7 +21,7 @@
       <mat-label>Enter your password</mat-label>
       <input
         matInput
-        [type]="hide() ? 'password' : 'text'"
+        [type]="isHide ? 'password' : 'text'"
         formControlName="password"
         autocomplete="current-password"
         (input)="markPasswordAsTouched()"
@@ -31,12 +31,11 @@
         matSuffix
         (click)="hidePassword($event)"
         [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide()"
+        [attr.aria-pressed]="isHide"
       >
-        <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        <mat-icon>{{ isHide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-      @if (signupForm.get("password")?.invalid &&
-      signupForm.get("password")?.touched) {
+      @if (signupForm.get("password")?.invalid) {
       <mat-error>
         {{ passWordErrors() }}
       </mat-error>

@@ -9,7 +9,7 @@ import { forkJoin, map, Observable, switchMap } from 'rxjs';
 interface HighlightText {
   id: number;
   title: string;
-  overview: string;
+  overview?: string;
   trailerUrl: string | null;
 }
 
