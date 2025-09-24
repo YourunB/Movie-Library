@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { HistoryService } from '../../services/history.service';
@@ -21,7 +21,7 @@ import {
         <p>Can Redo: {{ canRedo$ | async }}</p>
       </div>
       <div class="history-actions">
-        <button [disabled]="!(canUndo$ | async)" (click)="toggleDebug()">
+        <button [disabled]="(canUndo$ | async) === false" (click)="toggleDebug()">
           Toggle Debug
         </button>
       </div>
@@ -81,7 +81,7 @@ import {
     `,
   ],
 })
-export class HistoryDebug {
+export class HistoryDebug implements OnInit {
   private store = inject(Store);
   private historyService = inject(HistoryService);
 
