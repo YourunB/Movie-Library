@@ -1,5 +1,6 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface SideSlide {
   key: string;
@@ -30,6 +31,8 @@ export class SideSlider implements AfterViewInit, OnChanges {
   @ViewChildren('card') cards!: QueryList<ElementRef<HTMLDivElement>>;
   trackByVmKey = (_: number, s: SideSlide) => s.vmKey;
 
+  constructor(private router: Router) {}
+
 
   ngAfterViewInit(): void {
     this.scrollToActive();
@@ -48,6 +51,12 @@ export class SideSlider implements AfterViewInit, OnChanges {
       title: s.title ?? s.name ?? 'Untitled',
       id: typeof s.id === 'number' ? s.id : undefined,
     });
+  }
+
+  onOpen(s: SideSlide): void {
+    if (typeof s.id === 'number') {
+      this.router.navigate(['/movie', s.id]);
+    }
   }
 
   private scrollToActive(): void {

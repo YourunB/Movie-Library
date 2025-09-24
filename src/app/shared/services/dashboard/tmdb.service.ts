@@ -58,7 +58,7 @@ export class TmdbService {
 
   searchMovies(query: string, page = 1) {
     return this.get<TmdbPage<TmdbMovie>>('/search/movie', { query, page });
-  }  
+  }
 
   getMovieVideos(movieId: number) {
   return this.get<{ id: number; results: { key: string; site: string; type: string; name: string }[] }>(
@@ -102,5 +102,13 @@ export class TmdbService {
         };
       })
     );
+  }
+
+  getMovieCredits(movieId: number) {
+    return this.get<{
+      id: number;
+      cast: { id: number; name: string; character?: string; profile_path: string | null }[];
+      crew: unknown[];
+    }>(`/movie/${movieId}/credits`);
   }
 }
