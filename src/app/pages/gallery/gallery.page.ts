@@ -7,15 +7,26 @@ import { map, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MovieCardComponent, MovieCardModel } from '../../shared/components/movie-card/movie-card';
+import {
+  MovieCardComponent,
+  MovieCardModel,
+} from '../../shared/components/movie-card/movie-card';
 import { PosterUrlPipe } from '../../shared/pipes/poster-url.pipe';
 import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MovieCardComponent, PosterUrlPipe],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatCardModule,
+    MovieCardComponent,
+    PosterUrlPipe,
+    TranslatePipe,
+  ],
   templateUrl: './gallery.page.html',
   styleUrls: ['./gallery.page.scss'],
 })

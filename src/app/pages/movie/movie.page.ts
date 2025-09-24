@@ -16,6 +16,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map, switchMap } from 'rxjs/operators';
 import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-movie',
@@ -24,6 +25,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CommonModule,
     MatIcon,
     ScrollingModule,
+    TranslatePipe
   ],
   templateUrl: './movie.page.html',
   styleUrls: ['./movie.page.scss'],

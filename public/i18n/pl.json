@@ -58,5 +58,18 @@
     "course-info-1": "Ten projekt powstał w ramach",
     "course-info-2": "kurs.",
     "course-info-3": "Kurs obejmuje podstawy Angular, RxJS, routing, integrację API i architekturę aplikacji"
-  }
+  },
+  "gallery-page": {
+    "title": "Galeria filmów",
+    "empty": "Nic nie znaleziono"
+  },
+  "movie-page": {
+    "release": "Wydanie",
+    "trailer": "Przyczepa",
+    "trailer-none": "Przyczepa niedostępna.",
+    "cast": "Obsada",
+    "cast-empty": "Brak dostępnych informacji o obsadzie.",
+    "loading": "Ładowanie tytułu..."
+  },
+  "notfound-page": "Strona nie została znaleziona"
 }

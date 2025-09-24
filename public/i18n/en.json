@@ -58,5 +58,18 @@
     "course-info-1": "This project was created as part of the ",
     "course-info-2": "course.",
     "course-info-3": "The course covers Angular fundamentals, RxJS, routing, API integration, and application architecture."
-  }
+  },
+  "gallery-page": {
+    "title": "Movies Gallery",
+    "empty": "Nothing was found"
+  },
+  "movie-page": {
+    "release": "Release",
+    "trailer": "Trailer",
+    "trailer-none": "Trailer not available.",
+    "cast": "Cast",
+    "cast-empty": "No cast information available.",
+    "loading": "Loading title..."
+  },
+  "notfound-page": "Page hasn't been found"
 }
