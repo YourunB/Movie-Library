@@ -13,7 +13,7 @@
             decoding="async" />
           <c-carousel-caption class="d-none d-md-block">
             <div class="wrapper-info">
-              <button class="youtube-link" (click)="openTrailerModal(slide)"
+              <button class="youtube-link" (click)="$event.stopPropagation(); openTrailerModal(slide)"
                 aria-label="Watch {{ slide.title }} trailer">
                 <c-icon name="cilCaretRight" size="xl" class="play-icon"></c-icon>
               </button>
