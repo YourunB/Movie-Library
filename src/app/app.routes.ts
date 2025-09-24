@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './shared/guards/auth.guard';
+import { MovieResolver } from '../store/movie/movie.resolver';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,9 @@ export const routes: Routes = [
     path: 'movie/:id',
     loadComponent: () =>
       import('./pages/movie/movie.page').then(m => m.MoviePage),
+    resolve: {
+      preload: MovieResolver,
+    },
   },
   {
     path: 'gallery',
