@@ -10,9 +10,9 @@ This project includes a performance optimization pass focused on improving load 
 - **Data prefetching**: Movie data is preloaded via route resolver before component initialization, improving perceived responsiveness.
 
 ### 📉 Before Optimization
-![Lighthouse Before](docs/performance/lighthouse-before.jpg)
+![Lighthouse Before](docs/lighthouse-before.jpg)
 
 ### 📈 After Optimization
-![Lighthouse After](docs/performance/lighthouse-after.jpg)
+![Lighthouse After](docs/lighthouse-after.jpg)
 
 > ⚠️ **Note:** API responses depend on VPN connectivity, which may introduce latency during audits. All measurements were taken under VPN conditions, which reflect real-world usage for this project.
