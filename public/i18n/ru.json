@@ -1,0 +1,14 @@
+{
+  "footer": {
+    "box__title_1": "Разработчики на Github",
+    "box__link": {
+      "yury": "Юрий",
+      "anastasiya": "Анастасия",
+      "roman": "Роман",
+      "school": "RS школа",
+      "course": "Angular курс"
+    },
+    "box__title_2": "Об обучении",
+    "main-info__text": "учебный проект"
+  }
+}

@@ -1,8 +1,14 @@
 {
-  "navbar": {
-    "technology": "Technology",
-    "projects": "Projects",
-    "career": "Career",
-    "contacts": "Contacts"
+  "footer": {
+    "box__title_1": "Developers on Github",
+    "box__link": {
+      "yury": "Yury",
+      "anastasiya": "Anastasiya",
+      "roman": "Roman",
+      "school": "RS School",
+      "course": "Angular Course"
+    },
+    "box__title_2": "About study",
+    "main-info__text": "training project"
   }
 }
