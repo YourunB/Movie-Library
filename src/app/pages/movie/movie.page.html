@@ -5,7 +5,8 @@
     <div class="hero-content">
       <img class="poster"
         [src]="movie.poster_path ? ('https://image.tmdb.org/t/p/w500' + movie.poster_path) : 'images/placeholder.jpg'"
-        [alt]="movie.title" />
+        [alt]="movie.title"
+        loading="lazy" />
       <div class="details">
         <h1 class="title">{{ movie.title }}</h1>
         <div class="meta">
@@ -37,7 +38,8 @@
     <div class="cast-grid">
       <div class="cast-card" *ngFor="let c of (cast$ | async)">
         <img [src]="c.profile_path ? ('https://image.tmdb.org/t/p/w185' + c.profile_path) : 'images/placeholder.jpg'"
-          [alt]="c.name" />
+          [alt]="c.name"
+          loading="lazy" />
         <div class="cast-meta">
           <div class="name">{{ c.name }}</div>
           <div class="character" *ngIf="c.character">as {{ c.character }}</div>
