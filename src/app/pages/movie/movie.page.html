@@ -1,22 +1,47 @@
 <main>
-  <section class="movie-section" *ngIf="movie$ | async as movie; else loading">
-    <h1>{{ movie.title }}</h1>
-    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-    <p><strong>Overview:</strong> {{ movie.overview }}</p>
-    @if(isAuth$ | async) {
-    <mat-icon
-      [ngClass]="{
-        'in-watchlist': watchListService.isMovieInWatchlist(movie.id) | async
-      }"
-      class="favorite-icon"
-      (click)="toggleFavorite($event, movie)"
-      >favorite</mat-icon
-    >
-    }
-    <img
-      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-      [alt]="movie.title"
-    />
+  <section *ngIf="movie$ | async as movie; else loading" class="movie-hero"
+    [style.--backdrop]="movie.backdrop_path ? 'url(' + ('https://image.tmdb.org/t/p/w1280' + movie.backdrop_path) + ')' : 'none'">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" />
+      <div class="details">
+        <h1 class="title">{{ movie.title }}</h1>
+        <div class="meta">
+          <span class="label">Release:</span>
+          <span>{{ movie.release_date }}</span>
+        </div>
+        <p class="overview">{{ movie.overview }}</p>
+        @if(isAuth$ | async) {
+        <mat-icon [ngClass]="{ 'in-watchlist': watchListService.isMovieInWatchlist(movie.id) | async }"
+          class="favorite-icon" (click)="toggleFavorite($event, movie)">favorite</mat-icon>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="trailerUrl$ | async as trailerUrl" class="trailer-block">
+    <h2>Trailer</h2>
+    <div class="video-aspect">
+      <iframe *ngIf="trailerUrl" [src]="trailerUrl" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen title="Trailer for {{ (movie$ | async)?.title }}">
+      </iframe>
+      <p *ngIf="!trailerUrl">Trailer not available.</p>
+    </div>
+  </section>
+
+  <section class="cast-section">
+    <h2>Cast</h2>
+    <div class="cast-grid">
+      <div class="cast-card" *ngFor="let c of (cast$ | async)">
+        <img [src]="c.profile_path ? 'https://image.tmdb.org/t/p/w185' + c.profile_path : 'assets/placeholder.jpg'"
+          [alt]="c.name" />
+        <div class="cast-meta">
+          <div class="name">{{ c.name }}</div>
+          <div class="character" *ngIf="c.character">as {{ c.character }}</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <ng-template #loading>

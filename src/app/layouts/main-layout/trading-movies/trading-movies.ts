@@ -34,6 +34,7 @@ import {
   TrailerModal,
   TrailerModalData,
 } from '../../../shared/components/trailer-modal/trailer-modal';
+import { Router } from '@angular/router';
 
 type Intent = 'none' | 'next' | 'prev' | 'side';
 type Slot = 'left' | 'mid' | 'right';
@@ -77,6 +78,7 @@ export class TradingMovies {
   private tmdb = inject(TmdbService);
   public iconSet = inject(IconSetService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
 
   @ViewChild(CarouselComponent) carouselComponent?: CarouselComponent;
   @ViewChild('control') nextControl!: CarouselControlComponent;
@@ -247,5 +249,11 @@ export class TradingMovies {
       maxHeight: '80vh',
       panelClass: 'trailer-modal-panel',
     });
+  }
+
+  goToMovie(id: number | string | undefined): void {
+    if (typeof id === 'number') {
+      this.router.navigate(['/movie', id]);
+    }
   }
 }

@@ -11,7 +11,10 @@ import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TmdbMovie } from '../../../models/dashboard';
-import { Observable, take } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { map, switchMap } from 'rxjs/operators';
+import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
 
 @Component({
   selector: 'app-movie',
@@ -24,6 +27,8 @@ export class MoviePage implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
   private store = inject(Store);
   authService = inject(AuthService);
+  private tmdb = inject(TmdbService);
+  private sanitizer = inject(DomSanitizer);
 
   movie$ = this.store.select(selectSelectedMovie);
   loading$ = this.store.select(selectLoadingMovie);
@@ -51,6 +56,34 @@ export class MoviePage implements OnInit, OnChanges {
       }
     });
   }
+
+  trailerUrl$: Observable<SafeResourceUrl | null> = this.route.paramMap.pipe(
+    switchMap((params) => {
+      const id = params.get('id');
+      if (!id) return of(null);
+      return this.tmdb.getMovieVideos(Number(id)).pipe(
+        map((resp) => {
+          const yt = resp.results.find(
+            (v) => v.site === 'YouTube' && (v.type === 'Trailer' || v.type === 'Teaser')
+          );
+          if (!yt) return null;
+          return this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://www.youtube.com/embed/${yt.key}`
+          );
+        })
+      );
+    })
+  );
+
+  cast$ = this.route.paramMap.pipe(
+    switchMap((params) => {
+      const id = params.get('id');
+      if (!id) return of([]);
+      return this.tmdb
+        .getMovieCredits(Number(id))
+        .pipe(map((r) => r.cast.slice(0, 12)));
+    })
+  );
 
   toggleFavorite(event: Event, movie: TmdbMovie): void {
     event.stopPropagation();

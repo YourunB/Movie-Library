@@ -3,16 +3,15 @@
 
   <div class="news-list">
     @for (h of highlights$ | async; track h.id) {
-    <mat-card class="news-card">
+    <mat-card class="news-card" (click)="openMovie(h)">
       <mat-card-content>
         <h3 class="title">{{ h.title }}</h3>
         <p class="overview">{{ h.overview }}</p>
       </mat-card-content>
 
       <mat-card-actions>
-        @if (h.trailerUrl) {
-        <a mat-button color="primary" [href]="h.trailerUrl" target="_blank">▶ Watch Trailer</a>
-        }
+        <button mat-button color="primary" (click)="$event.stopPropagation(); openTrailerModal(h)">▶ Watch
+          Trailer</button>
       </mat-card-actions>
     </mat-card>
     }

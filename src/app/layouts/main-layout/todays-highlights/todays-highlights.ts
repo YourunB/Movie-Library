@@ -5,6 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { TrailerModal, TrailerModalData } from '../../../shared/components/trailer-modal/trailer-modal';
+import { Router } from '@angular/router';
 
 interface HighlightText {
   id: number;
@@ -22,6 +25,8 @@ interface HighlightText {
 })
 export class TodaysHighlights implements OnInit {
   private tmdb = inject(TmdbService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
   highlights$!: Observable<HighlightText[]>;
   ngOnInit(): void {
     this.highlights$ = this.tmdb.getNowPlayingMovies().pipe(
@@ -48,5 +53,23 @@ export class TodaysHighlights implements OnInit {
         );
       })
     );
+  }
+
+  openTrailerModal(h: HighlightText): void {
+    const data: TrailerModalData = {
+      movieTitle: h.title,
+      movieId: h.id,
+    };
+    this.dialog.open(TrailerModal, {
+      data,
+      width: '90vw',
+      maxWidth: '900px',
+      maxHeight: '80vh',
+      panelClass: 'trailer-modal-panel',
+    });
+  }
+
+  openMovie(h: HighlightText): void {
+    this.router.navigate(['/movie', h.id]);
   }
 }
