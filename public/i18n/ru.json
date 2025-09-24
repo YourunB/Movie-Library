@@ -14,5 +14,29 @@
   "header": {
     "watchlist": "Посмотреть",
     "signin": "Войти"
+  },
+  "menu": {
+    "home": "Главная страница",
+    "about": "O нас",
+    "popular": "Самые популярные",
+    "winners": "Победители премии",
+    "animation": "Семья и мультики",
+    "popular-films": {
+      "matrix": "Матрица",
+      "inception": "Начало",
+      "interstellar": "Интерстеллар",
+      "fight-club": "Бойцовский клуб"
+    },
+    "winners-films": {
+      "godfather": "Крестный отец",
+      "parasite": "Паразиты",
+      "schindler": "Список Шиндлера"
+    },
+    "animation-films": {
+      "toystory": "История игрушек",
+      "frozen": "Замерзшие",
+      "shrek": "Шрек",
+      "moana": "Моана"
+    }
   }
 }

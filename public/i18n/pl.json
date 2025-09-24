@@ -14,5 +14,29 @@
   "header": {
     "watchlist": "Lista obserwowanych",
     "signin": "Zaloguj się"
+  },
+  "menu": {
+    "home": "Strona główna",
+    "about": "O nas",
+    "popular": "Najpopularniejszy",
+    "winners": "Zwycięzcy nagród",
+    "animation": "Rodzina i animacja",
+    "popular-films": {
+      "matrix": "Matryca",
+      "inception": "Początek",
+      "interstellar": "Międzygwiezdny",
+      "fight-club": "Klub walki"
+    },
+    "winners-films": {
+      "godfather": "Ojciec chrzestny",
+      "parasite": "Pasożyt",
+      "schindler": "Lista Schindlera"
+    },
+    "animation-films": {
+      "toystory": "Historia zabawki",
+      "frozen": "Zamrożone",
+      "shrek": "Shrek",
+      "moana": "Moana"
+    }
   }
 }

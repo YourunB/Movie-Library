@@ -14,5 +14,29 @@
   "header": {
     "watchlist": "Watchlist",
     "signin": "SignIn"
+  },
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "popular": "Most Popular",
+    "winners": "Award Winners",
+    "animation": "Family & Animation",
+    "popular-films": {
+      "matrix": "Matrix",
+      "inception": "Inception",
+      "interstellar": "Interstellar",
+      "fight-club": "Fight Club"
+    },
+    "winners-films": {
+      "godfather": "The Godfather",
+      "parasite": "Parasite",
+      "schindler": "Schindler's List"
+    },
+    "animation-films": {
+      "toystory": "Toy Story",
+      "frozen": "Frozen",
+      "shrek": "Shrek",
+      "moana": "Moana"
+    }
   }
 }
