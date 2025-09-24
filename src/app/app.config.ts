@@ -21,6 +21,20 @@ import { tmdbAuthInterceptor } from '../interceptors/tmdb-auth.interceptor';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { watchlistReducer } from '../store/watchlist/watchlist.reducer';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: 'https://6f9f051afc78ec016604474bda76db2e@o4510075404943360.ingest.de.sentry.io/4510075406647376',
+  tracesSampleRate: 1.0,
+});
+
+window.addEventListener('error', (event) => {
+  Sentry.captureException(event.error);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  Sentry.captureException(event.reason);
+});
 
 export const appConfig: ApplicationConfig = {
   providers: [
