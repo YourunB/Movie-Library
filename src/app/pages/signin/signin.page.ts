@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -16,6 +16,7 @@ import { SigninService } from '../../shared/services/signin.service';
 import { ErrorDialog } from '../shared/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { WatchlistService } from '../../shared/services/watchlist.service';
 
 @Component({
   selector: 'app-signin.page',
@@ -38,6 +39,8 @@ export class SigninPage {
   private authService = inject(AuthService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
+  watchListService = inject(WatchlistService);
+  isHide = true;
 
   constructor() {
     this.singinForm = new FormGroup({
@@ -50,12 +53,11 @@ export class SigninPage {
     });
   }
 
-  hide = signal(true);
   hidePassword(event: MouseEvent) {
-    this.hide.set(!this.hide());
     event.stopPropagation();
+    this.isHide = !this.isHide;
+    event.preventDefault();
   }
-  protected readonly value = signal('');
 
   markEmailAsTouched() {
     const control = this.singinForm.get('email');
@@ -95,7 +97,7 @@ export class SigninPage {
       this.signinService
         .signin(loginData.email, loginData.password)
         .then((userCredential) => {
-          this.authService.setUser(userCredential.user);
+          this.authService.setUser(userCredential.user);     
           this.router.navigate(['./']);
         })
         .catch((error: HttpErrorResponse) => {

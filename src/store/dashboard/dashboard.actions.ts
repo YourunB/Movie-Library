@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { TmdbMovie, TmdbPerson, TmdbReview } from '../models/dashboard';
+import { TmdbMovie, TmdbPerson, TmdbReview } from '../../models/dashboard';
 
 export const loadDashboard = createAction('[Dashboard] Load');
 export const loadDashboardSuccess = createAction(
@@ -16,7 +16,15 @@ export const loadDashboardFailure = createAction(
   props<{ error: string }>()
 );
 
-export const loadMovieById = createAction('[Dashboard] Load Movie By ID', props<{ id: string }>());
-export const loadMovieByIdSuccess = createAction('[Dashboard] Load Movie By ID Success', props<{ movie: TmdbMovie }>());
-export const loadMovieByIdFailure = createAction('[Dashboard] Load Movie By ID Failure', props<{ error: string }>());
-
+export const loadMovieById = createAction(
+  '[Dashboard] Load Movie By ID',
+  props<{ id: string }>()
+);
+export const loadMovieByIdSuccess = createAction(
+  '[Dashboard] Load Movie By ID Success',
+  props<{ movie: TmdbMovie }>()
+);
+export const loadMovieByIdFailure = createAction(
+  '[Dashboard] Load Movie By ID Failure',
+  props<{ error: string }>()
+);

@@ -2,17 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 import { auth } from '../api/farebase';
-import { Router } from '@angular/router';
+import { WatchlistService } from './watchlist.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private auth = auth;
-  private router = inject(Router);
+   watchListService = inject(WatchlistService);
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
-  private authenticatedSubject: BehaviorSubject<boolean> =
+  authenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
   setUser(user: User) {
@@ -43,7 +42,7 @@ export class AuthService {
       if (user?.uid) {
         this.authenticatedSubject.next(true);
         this.userSubject.next(user);
-        // this.router.navigate(['/']);
+        this.watchListService.receiveDataBaseOfUserMovies();
       } else {
         console.log('No user is signed in.');
       }

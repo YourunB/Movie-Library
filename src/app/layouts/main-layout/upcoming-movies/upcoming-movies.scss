@@ -1,6 +1,6 @@
 :host {
   width: 100%;
-  padding: 10px
+  padding: 10px;
 }
 .upcoming-section {
   margin: 40px auto;
@@ -23,15 +23,15 @@
     align-items: center;
 
     .slider {
-      display: flex;              /* ✅ force horizontal row */
-      flex-wrap: nowrap;          /* ✅ don’t allow wrapping */
+      display: flex; /* ✅ force horizontal row */
+      flex-wrap: nowrap; /* ✅ don’t allow wrapping */
       gap: 16px;
       overflow-x: auto;
-      overflow-y: hidden;         /* ✅ prevent vertical scroll */
+      overflow-y: hidden; /* ✅ prevent vertical scroll */
       scroll-behavior: smooth;
       padding: 8px 0;
       scroll-snap-type: x mandatory;
-      white-space: nowrap;        /* ✅ extra safety for inline flow */
+      white-space: nowrap; /* ✅ extra safety for inline flow */
 
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
@@ -53,8 +53,8 @@
     }
 
     .movie-card {
-      flex: 0 0 auto;             /* ✅ card stays fixed size horizontally */
-      min-width: 180px;           /* base width */
+      flex: 0 0 auto; /* ✅ card stays fixed size horizontally */
+      min-width: 180px; /* base width */
       scroll-snap-align: start;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.05);
@@ -112,8 +112,38 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       }
 
-      &.prev { left: 12px; }
-      &.next { right: 12px; }
+      &.prev {
+        left: 12px;
+      }
+      &.next {
+        right: 12px;
+      }
     }
   }
+}
+
+.content {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favorite-icon {
+  color: white;
+  cursor: pointer;
+  height: 50px;
+  font-size: 32px;
+  width: 32px;
+}
+
+.favorite-icon:hover {
+  color: #f5c518;
+}
+
+.in-watchlist {
+  color: red;
+}
+.title:hover {
+  color: #f5c518;
 }

@@ -2,7 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { HistoryService } from '../../services/history.service';
-import { selectCanUndo, selectCanRedo, selectHistoryLength } from '../../../../store/ui.selectors';
+import {
+  selectCanUndo,
+  selectCanRedo,
+  selectHistoryLength,
+} from '../../../../store/ui/ui.selectors';
 
 @Component({
   selector: 'app-history-debug',
@@ -17,9 +21,7 @@ import { selectCanUndo, selectCanRedo, selectHistoryLength } from '../../../../s
         <p>Can Redo: {{ canRedo$ | async }}</p>
       </div>
       <div class="history-actions">
-        <button
-          [disabled]="!(canUndo$ | async)"
-          (click)="toggleDebug()">
+        <button [disabled]="!(canUndo$ | async)" (click)="toggleDebug()">
           Toggle Debug
         </button>
       </div>
@@ -28,54 +30,56 @@ import { selectCanUndo, selectCanRedo, selectHistoryLength } from '../../../../s
       </div>
     </div>
   `,
-  styles: [`
-    .history-debug {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: var(--card-background);
-      border: 1px solid var(--border-color);
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 12px;
-      z-index: 1000;
-      max-width: 300px;
-    }
+  styles: [
+    `
+      .history-debug {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: var(--card-background);
+        border: 1px solid var(--border-color);
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        z-index: 1000;
+        max-width: 300px;
+      }
 
-    .history-info p {
-      margin: 2px 0;
-    }
+      .history-info p {
+        margin: 2px 0;
+      }
 
-    .history-actions button {
-      background: var(--button-background);
-      color: var(--button-text);
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
-      cursor: pointer;
-      margin: 5px 0;
-    }
+      .history-actions button {
+        background: var(--button-background);
+        color: var(--button-text);
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        margin: 5px 0;
+      }
 
-    .history-actions button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+      .history-actions button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
 
-    .history-log {
-      margin-top: 10px;
-      max-height: 200px;
-      overflow-y: auto;
-      background: var(--surface-color);
-      padding: 5px;
-      border-radius: 3px;
-    }
+      .history-log {
+        margin-top: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        background: var(--surface-color);
+        padding: 5px;
+        border-radius: 3px;
+      }
 
-    pre {
-      margin: 0;
-      font-size: 10px;
-      white-space: pre-wrap;
-    }
-  `]
+      pre {
+        margin: 0;
+        font-size: 10px;
+        white-space: pre-wrap;
+      }
+    `,
+  ],
 })
 export class HistoryDebug {
   private store = inject(Store);

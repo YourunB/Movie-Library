@@ -6,12 +6,12 @@ import {
   selectHistoryIndex,
   selectCanUndo,
   selectCanRedo,
-  selectHistoryLength
-} from '../../../store/ui.selectors';
-import { UiState } from '../../../store/ui.reducer';
+  selectHistoryLength,
+} from '../../../store/ui/ui.selectors';
+import { UiState } from '../../../store/ui/ui.reducer';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HistoryService {
   private store = inject(Store);
@@ -26,13 +26,13 @@ export class HistoryService {
   // Get current state values
   getHistory(): UiState[] {
     let history: UiState[] = [];
-    this.history$.subscribe(h => history = h).unsubscribe();
+    this.history$.subscribe((h) => (history = h)).unsubscribe();
     return history;
   }
 
   getCurrentIndex(): number {
     let index = -1;
-    this.historyIndex$.subscribe(i => index = i).unsubscribe();
+    this.historyIndex$.subscribe((i) => (index = i)).unsubscribe();
     return index;
   }
 
@@ -65,14 +65,19 @@ export class HistoryService {
   }
 
   // Utility methods
-  getHistoryInfo(): { length: number; currentIndex: number; canUndo: boolean; canRedo: boolean } {
+  getHistoryInfo(): {
+    length: number;
+    currentIndex: number;
+    canUndo: boolean;
+    canRedo: boolean;
+  } {
     const history = this.getHistory();
     const index = this.getCurrentIndex();
     return {
       length: history.length,
       currentIndex: index,
       canUndo: this.canUndo(),
-      canRedo: this.canRedo()
+      canRedo: this.canRedo(),
     };
   }
 
@@ -81,9 +86,11 @@ export class HistoryService {
     const history = this.getHistory();
     const index = this.getCurrentIndex();
 
-    return history.map((state, i) => {
-      const marker = i === index ? '← current' : '';
-      return `${i}: theme=${state.theme}, menu=${state.menuOpen} ${marker}`;
-    }).join('\n');
+    return history
+      .map((state, i) => {
+        const marker = i === index ? '← current' : '';
+        return `${i}: theme=${state.theme}, menu=${state.menuOpen} ${marker}`;
+      })
+      .join('\n');
   }
 }

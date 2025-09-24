@@ -6,7 +6,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./pages/home/home.page').then(m => m.HomePage),
-      canActivate: [authGuard],
+      
   },
   {
     path: 'signup',
@@ -28,6 +28,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/gallery/gallery.page').then(m => m.GalleryPage),
   },
+   {
+    path: 'watchlist',
+    loadComponent: () =>
+      import('./pages/watchlist/watchlist.page').then(m => m.WatchlistPage),
+    canActivate: [authGuard],
+  },
   {
     path: 'about',
     loadComponent: () =>
@@ -36,6 +42,6 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () =>
-      import('./pages/not-found.page/not-found.page').then(m => m.NotFoundPage),
+      import('./pages/not-found/not-found.page').then(m => m.NotFoundPage),
   },
 ];
