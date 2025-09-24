@@ -1,5 +1,6 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 interface SideSlide {
   key: string;
@@ -17,7 +18,7 @@ interface SideSlide {
 @Component({
   selector: 'app-side-slider',
   standalone: true,
-  imports: [DatePipe, DecimalPipe],
+  imports: [DatePipe, DecimalPipe, RouterModule],
   templateUrl: './side-slider.html',
   styleUrls: ['./side-slider.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

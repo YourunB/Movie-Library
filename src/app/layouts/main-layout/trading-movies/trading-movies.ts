@@ -9,6 +9,7 @@ import { loadDashboard } from '../../../../store/dashboard.actions';
 import { BehaviorSubject, combineLatest, filter, map, startWith, take } from 'rxjs';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilArrowLeft, cilArrowRight, cilCalendar, cilStar, cilCaretRight } from '@coreui/icons';
 import { SideSlider } from '../side-slider/side-slider';
@@ -40,7 +41,7 @@ interface SideSlideView {
   imports: [
     CarouselComponent, CarouselInnerComponent, CarouselItemComponent,
     CarouselCaptionComponent, CarouselControlComponent,
-    AsyncPipe, IconModule, DatePipe, DecimalPipe, SideSlider
+    AsyncPipe, IconModule, DatePipe, DecimalPipe, SideSlider, RouterModule
   ],
   templateUrl: './trading-movies.html',
   styleUrl: './trading-movies.scss',

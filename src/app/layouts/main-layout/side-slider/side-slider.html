@@ -2,7 +2,8 @@
   <h2 class="h2-side">Up next</h2>
   <div class="wrapper-side">
     @for (s of slides; track s.key) {
-    <div #card class="side-card" role="button" tabindex="0" [attr.aria-label]="'Open ' + (s.title || 'movie')">
+    <a #card class="side-card" role="button" tabindex="0" [attr.aria-label]="'Open ' + (s.title || 'movie')"
+      [routerLink]="['/movie', s.id]">
       <div class="thumb">
         <img [src]="s.imgSrc || 'assets/placeholder.jpg'" [alt]="s.title || ''" />
       </div>
@@ -25,12 +26,13 @@
         </div>
         }
 
-        <button type="button" class="youtube-link" (click)="onPlay(s); $event.stopPropagation()"
+        <button type="button" class="youtube-link"
+          (click)="$event.preventDefault(); $event.stopPropagation(); onPlay(s)"
           [attr.aria-label]="'Play trailer for ' + (s.title || s.name)">
           ▶
         </button>
       </div>
-    </div>
+    </a>
     }
   </div>
 </div>

@@ -77,18 +77,21 @@
       line-height: 1.2;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: #fff;
     }
 
     .year {
       font-size: 0.85rem;
       opacity: 0.75;
       white-space: nowrap;
+      color: #ddd;
     }
 
     .sub {
       margin-top: 2px;
       font-size: 0.85rem;
       opacity: 0.85;
+      .rating { color: #f5c518; }
     }
   }
 
