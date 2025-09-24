@@ -6,8 +6,12 @@ import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { TrailerModal, TrailerModalData } from '../../../shared/components/trailer-modal/trailer-modal';
+import {
+  TrailerModal,
+  TrailerModalData,
+} from '../../../shared/components/trailer-modal/trailer-modal';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface HighlightText {
   id: number;
@@ -19,7 +23,7 @@ interface HighlightText {
 @Component({
   selector: 'app-todays-highlights',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, TranslatePipe],
   templateUrl: './todays-highlights.html',
   styleUrls: ['./todays-highlights.scss'],
 })

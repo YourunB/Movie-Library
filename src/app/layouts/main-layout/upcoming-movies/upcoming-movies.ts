@@ -17,6 +17,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
+import { TranslatePipe } from '@ngx-translate/core';
 
 // ---- NEW: view-model interface ----
 export interface MovieVM {
@@ -36,6 +37,7 @@ export interface MovieVM {
     MatIconModule,
     RouterModule,
     MovieCardComponent,
+    TranslatePipe,
   ],
   templateUrl: './upcoming-movies.html',
   styleUrls: ['./upcoming-movies.scss'],
@@ -60,7 +62,8 @@ export class UpcomingMovies implements OnInit {
         res.results.slice(0, 10).map<MovieVM>((m) => ({
           id: m.id,
           title: m.title,
-          poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+          poster_path:
+            this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
           release_date: m.release_date ?? '',
         }))
       )

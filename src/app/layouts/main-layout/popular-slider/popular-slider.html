@@ -1,6 +1,6 @@
 <div class="popular-slider" [style.--cards-per-slide]="itemsPerSlide">
   <div class="slider-header">
-    <h2 class="h2-section">Most popular celebrities</h2>
+    <h2 class="h2-section">{{ "popular-slider.title" | translate }}</h2>
   </div>
 
   <ng-container *ngIf="slides$ | async as slides">
@@ -19,7 +19,7 @@
                 <div class="sub" *ngIf="p.department || p.popularity">
                   <span *ngIf="p.department as d">{{ d }}</span>
                   <span *ngIf="p.department && p.popularity">&nbsp;•&nbsp;</span>
-                  <span *ngIf="p.popularity as pop">Popularity: {{ pop | number:'1.0-0' }}</span>
+                  <span *ngIf="p.popularity as pop">{{ "popular-slider.popularity" | translate }}: {{ pop | number:'1.0-0' }}</span>
                 </div>
               </div>
             </a>

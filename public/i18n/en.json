@@ -38,5 +38,25 @@
       "shrek": "Shrek",
       "moana": "Moana"
     }
+  },
+  "playing-theaters": "Now Playing in Theaters",
+  "popular-slider": {
+    "title": "Most popular celebrities",
+    "popularity": "Popularity"
+  },
+  "upnext-slider": "Up next",
+  "highlights": "Today’s Highlights",
+  "upcoming-movies": "Upcoming Movies",
+  "about-page": {
+    "title": "About the Project",
+    "created": "Created",
+    "created-text-1": "This project is an IMDb clone built using the",
+    "created-text-2": "Firebase is used for authentication and database storage.",
+    "developers": "Developers",
+    "school": "RS School",
+    "course": "Angular Course",
+    "course-info-1": "This project was created as part of the ",
+    "course-info-2": "course.",
+    "course-info-3": "The course covers Angular fundamentals, RxJS, routing, API integration, and application architecture."
   }
 }

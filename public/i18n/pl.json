@@ -2,9 +2,9 @@
   "footer": {
     "box__title_1": "Deweloperzy na Github",
     "box__link": {
-      "yury": "Юрий",
-      "anastasiya": "Анастасия",
-      "roman": "Роман",
+      "yury": "Yury",
+      "anastasiya": "Anastasiya",
+      "roman": "Roman",
       "school": "Szkoła RS",
       "course": "Angular Kurs "
     },
@@ -38,5 +38,25 @@
       "shrek": "Shrek",
       "moana": "Moana"
     }
+  },
+  "playing-theaters": "Teraz w kinach",
+  "popular-slider": {
+    "title": "Najpopularniejsze gwiazdy",
+    "popularity": "Popularność"
+  },
+  "upnext-slider": "Następny",
+  "highlights": "Najważniejsze wydarzenia dnia",
+  "upcoming-movies": "Nadchodzące filmy",
+  "about-page": {
+    "title": "O projekcie",
+    "created": "Stworzony",
+    "created-text-1": "Ten projekt jest klonem IMDb zbudowanym przy użyciu",
+    "created-text-2": "Firebase służy do uwierzytelniania i przechowywania bazy danych.",
+    "developers": "Deweloperzy",
+    "school": "RS Szkoła",
+    "course": "Angular Kurs",
+    "course-info-1": "Ten projekt powstał w ramach",
+    "course-info-2": "kurs.",
+    "course-info-3": "Kurs obejmuje podstawy Angular, RxJS, routing, integrację API i architekturę aplikacji"
   }
 }

@@ -17,6 +17,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
   poster_path: string;
@@ -33,6 +34,7 @@ type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
     MatIconModule,
     RouterModule,
     MovieCardComponent,
+    TranslatePipe
   ],
   templateUrl: './now-playing-movies.html',
   styleUrls: ['./now-playing-movies.scss'],

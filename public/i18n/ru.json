@@ -38,5 +38,25 @@
       "shrek": "Шрек",
       "moana": "Моана"
     }
+  },
+  "playing-theaters": "Сейчас в кинотеатрах",
+  "popular-slider": {
+    "title": "Самые популярные знаменитости",
+    "popularity": "Популярность"
+  },
+  "upnext-slider": "Следующие",
+  "highlights": "Актуальное сегодня",
+  "upcoming-movies": "Скоро в прокате",
+  "about-page": {
+    "title": "О проекте",
+    "created": "Создано",
+    "created-text-1": "Этот проект является клоном IMDb, построенным с помощью",
+    "created-text-2": "Firebase используется для аутентификации и хранения базы данных",
+    "developers": "Разработчики",
+    "school": "RS школа",
+    "course": "Angular курс",
+    "course-info-1": "Этот проект был создан в рамках",
+    "course-info-2": "курс.",
+    "course-info-3": "Курс охватывает основы Angular, RxJS, маршрутизацию, интеграцию API и архитектуру приложений."
   }
 }

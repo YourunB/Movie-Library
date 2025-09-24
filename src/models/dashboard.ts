@@ -56,3 +56,9 @@ export interface Languages {
   requestValue: string;
   image: string;
 }
+
+export interface Developer {
+  name: Record<string, string>;
+  githubUsername: string;
+  githubUrl: string;
+}
