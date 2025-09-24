@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { auth } from '../../../shared/api/farebase';
 import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggle';
 import { SelectLanguages } from '../../../shared/components/select-languages/select-languages';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +34,7 @@ import { SelectLanguages } from '../../../shared/components/select-languages/sel
     MatIconModule,
     ThemeToggle,
     SelectLanguages,
+    TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

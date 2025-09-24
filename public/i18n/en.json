@@ -10,5 +10,9 @@
     },
     "box__title_2": "About study",
     "main-info__text": "training project"
+  },
+  "header": {
+    "watchlist": "Watchlist",
+    "signin": "SignIn"
   }
 }

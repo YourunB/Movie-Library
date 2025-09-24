@@ -10,5 +10,9 @@
     },
     "box__title_2": "O nauce",
     "main-info__text": "projekt szkoleniowy"
+  },
+  "header": {
+    "watchlist": "Lista obserwowanych",
+    "signin": "Zaloguj się"
   }
 }

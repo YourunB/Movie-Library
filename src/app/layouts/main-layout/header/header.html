@@ -12,9 +12,9 @@
 
     <div class="right-section">
       <app-theme-toggle></app-theme-toggle>
-      <a routerLink="/watchlist">Watchlist</a>
+      <a routerLink="/watchlist">{{ "header.watchlist" | translate }}</a>
       @if (!isAuthenticated) {
-      <a [routerLink]="['/signin']">SignIn</a>
+      <a [routerLink]="['/signin']">{{ "header.signin" | translate }}</a>
       } @else {
       <div class="logout-menu">
         <p class="user-email">{{ user?.email }}</p>
