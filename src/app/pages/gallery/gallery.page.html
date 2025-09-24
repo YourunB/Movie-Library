@@ -1,20 +1,38 @@
 <main>
   <h2>Movies Gallery</h2>
 
-  @if (movies$ | async; as movies) { @if (movies.length > 0) {
-  <div class="gallery-grid">
-    @for (movie of movies; track movie.id) {
-    <app-movie-card [movie]="{
-        id: movie.id,
-        title: movie.title,
-        poster_path: movie.poster_path,
-        release_date: movie.release_date,
-        inWatchlist: (watchListService.isMovieInWatchlist(movie.id) | async) ?? false
-      }" [posterUrl]="movie.poster_path | posterUrl : 'w342'" [showFavorite]="(isAuth$ | async) ?? false"
-      (favorite)="toggleFavorite($event)"></app-movie-card>
+  @if (movies$ | async; as movies) {
+    @if (movies.length > 0) {
+      <div class="gallery-grid">
+        @for (movie of movies; track movie.id) {
+          <app-movie-card
+            [movie]="{
+              id: movie.id,
+              title: movie.title,
+              poster_path: movie.poster_path,
+              release_date: movie.release_date,
+              inWatchlist: (watchListService.isMovieInWatchlist(movie.id) | async) ?? false
+            }"
+            [posterUrl]="movie.poster_path | posterUrl : 'w342'"
+            [showFavorite]="(isAuth$ | async) ?? false"
+            (favorite)="toggleFavorite($event)">
+          </app-movie-card>
+        }
+      </div>
+    } @else {
+      <p class="no-results">Nothing was found</p>
     }
-  </div>
   } @else {
-  <p class="no-results">Nothing was found</p>
-  } }
+    <div class="gallery-grid">
+      @for (_ of skeletons; let i = $index; track i) {
+        <div class="movie-card skeleton-card">
+          <div class="img-wrapper skeleton-box"></div>
+          <div class="content">
+            <div class="skeleton-text short"></div>
+            <div class="skeleton-text short"></div>
+          </div>
+        </div>
+      }
+    </div>    
+  }
 </main>

@@ -15,11 +15,16 @@ import { Observable, of, take } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map, switchMap } from 'rxjs/operators';
 import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-movie',
   standalone: true,
-  imports: [CommonModule, MatIcon],
+  imports: [
+    CommonModule,
+    MatIcon,
+    ScrollingModule,
+  ],
   templateUrl: './movie.page.html',
   styleUrls: ['./movie.page.scss'],
 })
@@ -29,17 +34,17 @@ export class MoviePage implements OnInit, OnChanges {
   authService = inject(AuthService);
   private tmdb = inject(TmdbService);
   private sanitizer = inject(DomSanitizer);
+  watchListService = inject(WatchlistService);
 
   movie$ = this.store.select(selectSelectedMovie);
   loading$ = this.store.select(selectLoadingMovie);
-  watchListService = inject(WatchlistService);
-
   isAuth$: Observable<boolean>;
+
   constructor() {
     this.isAuth$ = this.authService.authenticatedSubject;
   }
 
-   ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     for (const inputName in changes) {
       const inputValues = changes[inputName];
       console.log(`Previous ${inputName} == ${inputValues.previousValue}`);
@@ -52,7 +57,7 @@ export class MoviePage implements OnInit, OnChanges {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
-        this.store.dispatch(loadMovieById({ id: id }));
+        this.store.dispatch(loadMovieById({ id }));
       }
     });
   }
@@ -79,9 +84,7 @@ export class MoviePage implements OnInit, OnChanges {
     switchMap((params) => {
       const id = params.get('id');
       if (!id) return of([]);
-      return this.tmdb
-        .getMovieCredits(Number(id))
-        .pipe(map((r) => r.cast.slice(0, 12)));
+      return this.tmdb.getMovieCredits(Number(id)).pipe(map((r) => r.cast));
     })
   );
 

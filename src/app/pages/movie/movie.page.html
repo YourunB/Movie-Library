@@ -5,7 +5,8 @@
     <div class="hero-content">
       <img class="poster"
         [src]="movie.poster_path ? ('https://image.tmdb.org/t/p/w500' + movie.poster_path) : 'images/placeholder.jpg'"
-        [alt]="movie.title" />
+        [alt]="movie.title"
+        loading="lazy" />
       <div class="details">
         <h1 class="title">{{ movie.title }}</h1>
         <div class="meta">
@@ -21,32 +22,49 @@
     </div>
   </section>
 
-  <section *ngIf="trailerUrl$ | async as trailerUrl" class="trailer-block">
+  <section class="trailer-block">
     <h2>Trailer</h2>
     <div class="video-aspect">
-      <iframe *ngIf="trailerUrl" [src]="trailerUrl" frameborder="0"
+      <iframe *ngIf="trailerUrl$ | async as trailerUrl" [src]="trailerUrl" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen title="Trailer for {{ (movie$ | async)?.title }}">
       </iframe>
-      <p *ngIf="!trailerUrl">Trailer not available.</p>
+      <p *ngIf="(trailerUrl$ | async) === null">Trailer not available.</p>
     </div>
   </section>
 
   <section class="cast-section">
     <h2>Cast</h2>
-    <div class="cast-grid">
-      <div class="cast-card" *ngFor="let c of (cast$ | async)">
-        <img [src]="c.profile_path ? ('https://image.tmdb.org/t/p/w185' + c.profile_path) : 'images/placeholder.jpg'"
-          [alt]="c.name" />
-        <div class="cast-meta">
-          <div class="name">{{ c.name }}</div>
-          <div class="character" *ngIf="c.character">as {{ c.character }}</div>
+    <div *ngIf="cast$ | async as cast">
+      <div *ngIf="cast.length === 0" class="empty-state">No cast information available.</div>
+      <div class="cast-grid" *ngIf="cast.length > 0">
+        <div class="cast-card" *ngFor="let c of cast">
+          <img [src]="c.profile_path ? ('https://image.tmdb.org/t/p/w185' + c.profile_path) : 'images/placeholder.jpg'"
+            [alt]="c.name"
+            loading="lazy" />
+          <div class="cast-meta">
+            <div class="name">{{ c.name }}</div>
+            <div class="character" *ngIf="c.character">as {{ c.character }}</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <ng-template #loading>
-    <p>Loading...</p>
+    <section class="movie-hero skeleton">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="poster skeleton-box"></div>
+        <div class="details">
+          <h1 class="title skeleton-text">Loading title...</h1>
+          <div class="meta">
+            <span class="label skeleton-text short"></span>
+            <span class="skeleton-text short"></span>
+          </div>
+          <p class="overview skeleton-text long"></p>
+        </div>
+      </div>
+    </section>
   </ng-template>
 </main>

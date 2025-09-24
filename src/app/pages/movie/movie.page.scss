@@ -152,3 +152,43 @@ main {
 .in-watchlist {
   color: #ff5252;
 }
+
+.skeleton {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-box {
+  width: 160px;
+  height: 240px;
+  background: #ccc;
+  border-radius: 8px;
+}
+
+.skeleton-text {
+  height: 20px;
+  background: #ccc;
+  margin: 10px 0;
+  border-radius: 4px;
+
+  &.short {
+    width: 100px;
+  }
+
+  &.long {
+    width: 80%;
+    height: 60px;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.empty-state {
+  padding: 16px;
+  text-align: center;
+  font-style: italic;
+  color: var(--text-secondary);
+}

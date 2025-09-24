@@ -9,9 +9,12 @@
 
   <h2>Developers</h2>
   <div class="dev-cards">
-    <div class="dev-cards__card" *ngFor="let dev of developers">
+    <div class="dev-cards__card" *ngFor="let dev of developers" @fadeIn>
       <a [href]="dev.githubUrl" target="_blank">
-        <img [src]="'https://github.com/' + dev.githubUsername + '.png'" alt="{{ dev.name }}" />
+        <img 
+          [src]="'https://github.com/' + dev.githubUsername + '.png'" 
+          alt="{{ dev.name }}" 
+          loading="lazy" />
         <h3>{{ dev.name }}</h3>
         <p>GitHub: {{ dev.githubUsername }}</p>
       </a>

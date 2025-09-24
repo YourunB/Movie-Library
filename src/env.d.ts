@@ -29,5 +29,8 @@ declare const _NGX_ENV_: Env;
 
 // 3. Use process.env.YOUR_ENV_VAR in your code. (deprecated)
 declare namespace NodeJS {
-  export interface ProcessEnv extends Env {}
+  export interface ProcessEnv extends Env {
+    readonly NG_APP_API_URL: string;
+    readonly NG_APP_ENV: 'development' | 'production' | 'test';
+  }
 }

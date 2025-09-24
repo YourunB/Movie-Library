@@ -25,6 +25,7 @@ export class GalleryPage {
   watchListService = inject(WatchlistService);
   authService = inject(AuthService);
   isAuth$: Observable<boolean>;
+  skeletons = Array(6);
 
   constructor() {
     this.isAuth$ = this.authService.authenticatedSubject;
