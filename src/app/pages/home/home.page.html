@@ -1,7 +1,14 @@
 <main class="wrapper">
   <app-trading-movies></app-trading-movies>
-  <app-upcoming-movies></app-upcoming-movies>
+  <app-toggle-section primaryLabel="Now Playing" secondaryLabel="Upcoming"
+    hint="Switch between current theaters and upcoming releases.">
+    <ng-template #primary>
+      <app-now-playing-movies></app-now-playing-movies>
+    </ng-template>
+    <ng-template #secondary>
+      <app-upcoming-movies></app-upcoming-movies>
+    </ng-template>
+  </app-toggle-section>
   <app-popular-slider></app-popular-slider>
-  <app-now-playing-movies></app-now-playing-movies>
   <app-todays-highlights></app-todays-highlights>
 </main>
