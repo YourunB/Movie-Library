@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: 3px;
   min-width: fit-content !important;
-  right: 500%;
+  right: 490%;
   font-size: 150%;
 }
 
@@ -56,7 +56,6 @@
 }
 .mdc-list-item__primary-text {
   display: flex;
-  // justify-content: space-between;
   gap: 30px;
   margin-right: 0px !important;
   width: 100%;
@@ -101,7 +100,6 @@
   justify-content: end;
   gap: 20px;
   border-radius: 6px;
-  //   background-color: var(--hover-background);
 }
 
 .mat-mdc-form-field-subscript-wrapper {

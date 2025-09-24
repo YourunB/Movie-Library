@@ -22,6 +22,10 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { watchlistReducer } from '../store/watchlist/watchlist.reducer';
 import * as Sentry from '@sentry/browser';
+import { provideTranslateService } from '@ngx-translate/core';
+import {
+  provideTranslateHttpLoader,
+} from '@ngx-translate/http-loader';
 
 Sentry.init({
   dsn: 'https://6f9f051afc78ec016604474bda76db2e@o4510075404943360.ingest.de.sentry.io/4510075406647376',
@@ -61,5 +65,11 @@ export const appConfig: ApplicationConfig = {
     provideEffects([DashboardEffects]),
     provideAnimations(),
     provideRouter(routes),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './i18n/',
+        suffix: '.json',
+      }),
+    }),
   ],
 };
