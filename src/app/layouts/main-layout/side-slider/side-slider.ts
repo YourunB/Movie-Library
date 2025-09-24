@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 interface SideSlide {
@@ -31,8 +31,7 @@ export class SideSlider implements AfterViewInit, OnChanges {
   @ViewChildren('card') cards!: QueryList<ElementRef<HTMLDivElement>>;
   trackByVmKey = (_: number, s: SideSlide) => s.vmKey;
 
-  constructor(private router: Router) {}
-
+  private readonly router = inject(Router);
 
   ngAfterViewInit(): void {
     this.scrollToActive();
