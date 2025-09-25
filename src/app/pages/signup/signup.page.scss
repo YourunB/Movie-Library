@@ -41,3 +41,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.mdc-text-field__input {
+  color: var(--text-primary) !important;
+}
