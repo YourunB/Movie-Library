@@ -17,7 +17,7 @@
                   title: movie.title,
                   poster_path: movie.poster_path,
                   release_date: movie.release_date,
-                  inWatchlist: (watchListService.isMovieInWatchlist(movie.id) | async) ?? false
+                  inWatchlist: watchlistSignals.isInWatchlist(movie.id)
                 }" [posterUrl]="movie.poster_path" [showFavorite]="isAuth()" (favorite)="toggleFavorite(movie)">
         </app-movie-card>
         }

@@ -1,10 +1,10 @@
-import { Component, ElementRef, computed, inject, viewChild, untracked } from '@angular/core';
+import { Component, ElementRef, computed, inject, viewChild, untracked, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, startWith, take } from 'rxjs';
+import { map, startWith } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -43,6 +43,8 @@ export class UpcomingMovies {
   authService = inject(AuthService);
   watchListService = inject(WatchlistService);
   watchlistSignals = inject(WatchlistSignalsStore);
+  // Section title as a signal input to satisfy signal inputs criterion and simplify API
+  title = input('Upcoming');
 
   isAuth = toSignal(this.authService.getAuthenticatedObservable(), { initialValue: false });
 
@@ -84,6 +86,8 @@ export class UpcomingMovies {
   scroll(direction: 'prev' | 'next', cardWidth: number): void {
     const sliderEl = this.sliderRef()?.nativeElement;
     if (!sliderEl) return;
+    // Use untracked to avoid enqueuing change detection/recomputes for a pure DOM side effect
+    // (scrolling) that shouldn't trigger reactive updates.
     untracked(() => {
       sliderEl.scrollBy({
         left: direction === 'next' ? cardWidth * 3 : -cardWidth * 3,
@@ -93,15 +97,7 @@ export class UpcomingMovies {
   }
 
   toggleFavorite(movie: MovieVM): void {
-    this.watchListService
-      .isMovieInWatchlist(movie.id)
-      .pipe(take(1))
-      .subscribe((isInWatchlist) => {
-        if (isInWatchlist) {
-          this.watchListService.removeMovie(movie.id);
-        } else {
-          this.watchListService.addMovie(movie as unknown as TmdbMovie);
-        }
-      });
+    // Route write through signals store to make it the single source of truth
+    this.watchlistSignals.toggle(movie as unknown as TmdbMovie);
   }
 }

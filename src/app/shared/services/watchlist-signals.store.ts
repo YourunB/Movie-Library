@@ -58,6 +58,21 @@ export class WatchlistSignalsStore {
         }
       });
     });
+
+    effect((onCleanup) => {
+      const key = this.storageKey();
+      const handler = (ev: StorageEvent) => {
+        if (ev.key !== key) return;
+        try {
+          const parsed = ev.newValue ? JSON.parse(ev.newValue) : [];
+          this.favoritesSig.set(Array.isArray(parsed) ? parsed : []);
+        } catch {
+          this.errorSig.set('Failed to sync watchlist');
+        }
+      };
+      window.addEventListener('storage', handler);
+      onCleanup(() => window.removeEventListener('storage', handler));
+    });
   }
 
 

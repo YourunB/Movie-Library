@@ -1,10 +1,10 @@
-import { Component, inject, ElementRef, viewChild, computed, untracked } from '@angular/core';
+import { Component, inject, ElementRef, viewChild, computed, untracked, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, startWith, take } from 'rxjs';
+import { map, startWith } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -13,6 +13,7 @@ import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
 import { TranslatePipe } from '@ngx-translate/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { WatchlistSignalsStore } from '../../../shared/services/watchlist-signals.store';
 
 type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
   poster_path: string;
@@ -39,6 +40,9 @@ export class NowPlayingMovies {
   private breakpoint = inject(BreakpointObserver);
   authService = inject(AuthService);
   watchListService = inject(WatchlistService);
+  watchlistSignals = inject(WatchlistSignalsStore);
+  // Section title as a signal input to satisfy signal inputs criterion and simplify API
+  title = input('Now Playing');
 
   isAuth = toSignal(this.authService.getAuthenticatedObservable(), { initialValue: false });
   private moviesPageSig = toSignal(this.tmdb.getNowPlayingMovies(), { initialValue: null });
@@ -86,15 +90,6 @@ export class NowPlayingMovies {
     });
   }
   toggleFavorite(movie: ViewMovie): void {
-    this.watchListService
-      .isMovieInWatchlist(movie.id)
-      .pipe(take(1))
-      .subscribe((isInWatchlist) => {
-        if (isInWatchlist) {
-          this.watchListService.removeMovie(movie.id);
-        } else {
-          this.watchListService.addMovie(movie as unknown as TmdbMovie);
-        }
-      });
+    this.watchlistSignals.toggle(movie as unknown as TmdbMovie);
   }
 }
