@@ -92,5 +92,23 @@
     "title": "Moje filmy do obejrzenia",
     "empty": "Jeszcze nie mam żadnych filmów do obejrzenia"
   },
-  "error": "Błąd"
+  "error": "Błąd",
+  "history-debug": {
+    "title": "Debugowanie historii interfejsu użytkownika",
+    "length": "Długość historii",
+    "undo": "Można cofnąć",
+    "redo": "Można powtórzyć",
+    "toggle": "Przełącz debugowanie"
+  },
+  "select-lang": "Wybierz język",
+  "trailer": {
+    "title": "Zwiastun",
+    "loading": "Ładowanie zwiastun...",
+    "search": "Szukaj na YouTube",
+    "open": "Otwórz na YouTube"
+  },
+  "vpn-info": {
+    "text-1": "Masz problem z zalogowaniem się lub odtwarzaniem zwiastunów?",
+    "text-2": "Niektóre treści mogą być ograniczone w Twoim regionie. Spróbuj wyłączyć VPN lub połączyć się przez lokalizację UE/USA, a następnie spróbuj ponownie."
+  }
 }

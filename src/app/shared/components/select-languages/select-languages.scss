@@ -79,6 +79,7 @@
   border-radius: 8px;
 }
 .mat-mdc-select {
+  transition: all 0.5s ease !important;
   color: var(--text-primary) !important;
 }
 .mat-mdc-select-arrow {
@@ -116,7 +117,7 @@
   width: auto !important;
   border-radius: 0px !important;
   font-size: 150%;
-  transition: all 0.5s ease;
+  transition: all 0.5s ease !important;
   padding-top: 0px !important;
   padding-bottom: 0px !important;
   padding-left: 8px !important;
