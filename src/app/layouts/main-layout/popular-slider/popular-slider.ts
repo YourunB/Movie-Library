@@ -1,32 +1,21 @@
 // layouts/main-layout/popular-slider/popular-slider.ts
-import {
-  Component,
-  Input,
-  ViewChild,
-  ChangeDetectionStrategy,
-  inject,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, input, viewChild, computed, effect } from '@angular/core';
 import {
   CarouselComponent,
   CarouselInnerComponent,
   CarouselItemComponent,
   CarouselControlComponent,
 } from '@coreui/angular';
-import {
-  AsyncPipe,
-  CommonModule,
-  DecimalPipe,
-  NgForOf,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe, CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectPopularPeople } from '../../../../store/dashboard/dashboard.selectors';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { combineLatest, map, startWith } from 'rxjs';
+import { map, startWith } from 'rxjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilCaretLeft, cilCaretRight } from '@coreui/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslatePipe } from '@ngx-translate/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 export interface PersonCard {
   id: number;
   name: string;
@@ -67,9 +56,9 @@ type PersonLinkService =
   providers: [IconSetService],
 })
 export class PopularPeopleSlider {
-  @Input() title = 'Popular People';
-  @Input() itemsPerSlide = 6;
-  @Input() source: 'people' | 'movies' = 'people';
+  title = input('Popular People');
+  itemsPerSlide = input(6);
+  source = input<'people' | 'movies'>('people');
 
   private store = inject(Store);
   private tmdb = inject(TmdbService);
@@ -77,12 +66,12 @@ export class PopularPeopleSlider {
   private breakpoint = inject(BreakpointObserver);
   wikiBase = 'https://pl.wikipedia.org/wiki/';
 
-  @ViewChild(CarouselComponent) carousel?: CarouselComponent;
-  @ViewChild('nextCtrl') nextCtrl!: CarouselControlComponent;
+  carousel = viewChild(CarouselComponent);
+  nextCtrl = viewChild<CarouselControlComponent>('nextCtrl');
 
-  people$ = this.store.select(selectPopularPeople);
+  people = toSignal(this.store.select(selectPopularPeople), { initialValue: [] });
 
-  itemsPerSlide$ = this.breakpoint
+  private itemsPerSlide$ = this.breakpoint
     .observe([
       '(max-width: 400px)',
       '(max-width: 576px)',
@@ -101,53 +90,41 @@ export class PopularPeopleSlider {
       }),
       startWith(6) // default before first match
     );
+  itemsPerSlideSig = toSignal(this.itemsPerSlide$, { initialValue: 6 });
 
-  slides$ = combineLatest([this.people$, this.itemsPerSlide$]).pipe(
-    map(([people, itemsPerSlide]) => {
-      const cards: PersonCard[] = people.map((p) => ({
-        id: p.id,
-        name: p.name,
-        imgSrc: this.tmdb.img(p.profile_path, 'w185'),
-        department: p.known_for_department,
-        popularity: p.popularity,
-      }));
+  slides = computed<PersonCard[][]>(() => {
+    const people = this.people();
+    const itemsPerSlide = this.itemsPerSlideSig();
+    const cards: PersonCard[] = people.map((p) => ({
+      id: p.id,
+      name: p.name,
+      imgSrc: this.tmdb.img(p.profile_path, 'w185'),
+      department: p.known_for_department,
+      popularity: p.popularity,
+    }));
 
-      const chunked: PersonCard[][] = [];
-      for (let i = 0; i < cards.length; i += itemsPerSlide) {
-        chunked.push(cards.slice(i, i + itemsPerSlide));
-      }
-      return chunked;
-    })
-  );
+    const chunked: PersonCard[][] = [];
+    for (let i = 0; i < cards.length; i += itemsPerSlide) {
+      chunked.push(cards.slice(i, i + itemsPerSlide));
+    }
+    return chunked;
+  });
 
   constructor() {
     this.iconSet.icons = { cilCaretLeft, cilCaretRight };
 
-    this.breakpoint
-      .observe([
-        '(max-width: 400px)',
-        '(max-width: 576px)',
-        '(max-width: 800px)',
-        '(max-width: 1000px)',
-        '(max-width: 1200px)',
-      ])
-      .subscribe((result) => {
-        if (result.breakpoints['(max-width: 400px)']) this.itemsPerSlide = 1;
-        else if (result.breakpoints['(max-width: 576px)'])
-          this.itemsPerSlide = 2;
-        else if (result.breakpoints['(max-width: 800px)'])
-          this.itemsPerSlide = 3;
-        else if (result.breakpoints['(max-width: 1000px)'])
-          this.itemsPerSlide = 4;
-        else if (result.breakpoints['(max-width: 1200px)'])
-          this.itemsPerSlide = 5;
-        else this.itemsPerSlide = 6;
-      });
+    // Autoplay effect with cleanup: advances the carousel periodically
+    effect((onCleanupFn) => {
+      // re-establish interval when slides change (e.g., after resize or data load)
+      this.slides();
+      const timer = setInterval(() => this.clickNext(), 8000);
+      onCleanupFn(() => clearInterval(timer));
+    });
   }
 
   clickNext() {
     const ev = new MouseEvent('');
-    this.nextCtrl?.onClick(ev);
+    this.nextCtrl()?.onClick(ev);
   }
 
   trackByIndex(index: number): number {

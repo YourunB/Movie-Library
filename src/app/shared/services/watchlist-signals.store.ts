@@ -63,7 +63,7 @@ export class WatchlistSignalsStore {
 
   readonly loading = computed(() => this.loadingSig());
   readonly error = computed(() => this.errorSig());
-  
+
   add(movie: TmdbMovie): void {
     const ids = this.idsSet();
     if (ids.has(movie.id)) return;
