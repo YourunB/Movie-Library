@@ -1,4 +1,10 @@
-import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -11,22 +17,18 @@ import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TmdbMovie } from '../../../models/dashboard';
-import { Observable, of, take } from 'rxjs';
+import { combineLatest, Observable, of, take } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map, switchMap } from 'rxjs/operators';
 import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslatePipe } from '@ngx-translate/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-movie',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIcon,
-    ScrollingModule,
-    TranslatePipe
-  ],
+  imports: [CommonModule, MatIcon, ScrollingModule, TranslatePipe],
   templateUrl: './movie.page.html',
   styleUrls: ['./movie.page.scss'],
 })
@@ -38,7 +40,23 @@ export class MoviePage implements OnInit, OnChanges {
   private sanitizer = inject(DomSanitizer);
   watchListService = inject(WatchlistService);
 
-  movie$ = this.store.select(selectSelectedMovie);
+  movie$ = combineLatest([
+    this.store.select(selectSelectedMovie),
+    toObservable(this.tmdb.langRequests),
+  ]).pipe(
+    switchMap(([movie]) => {
+      if (!movie) {
+        return of(null);
+      }
+      return this.tmdb.getMovieById(movie.id).pipe(
+        map((res) => ({
+          ...res,
+          poster_path:
+            this.tmdb.img(res.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+        }))
+      );
+    })
+  );
   loading$ = this.store.select(selectLoadingMovie);
   isAuth$: Observable<boolean>;
 
@@ -64,16 +82,23 @@ export class MoviePage implements OnInit, OnChanges {
     });
   }
 
-  trailerUrl$: Observable<SafeResourceUrl | null> = this.route.paramMap.pipe(
-    switchMap((params) => {
+  trailerUrl$: Observable<SafeResourceUrl | null> = combineLatest([
+    this.route.paramMap,
+    toObservable(this.tmdb.langRequests),
+  ]).pipe(
+    switchMap(([params]) => {
       const id = params.get('id');
       if (!id) return of(null);
+
       return this.tmdb.getMovieVideos(Number(id)).pipe(
         map((resp) => {
           const yt = resp.results.find(
-            (v) => v.site === 'YouTube' && (v.type === 'Trailer' || v.type === 'Teaser')
+            (v) =>
+              v.site === 'YouTube' &&
+              (v.type === 'Trailer' || v.type === 'Teaser')
           );
           if (!yt) return null;
+
           return this.sanitizer.bypassSecurityTrustResourceUrl(
             `https://www.youtube.com/embed/${yt.key}`
           );
