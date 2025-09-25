@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, startWith } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
 import { TranslatePipe } from '@ngx-translate/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { WatchlistSignalsStore } from '../../../shared/services/watchlist-signals.store';
 
 export interface MovieVM {
@@ -48,7 +48,9 @@ export class UpcomingMovies {
 
   isAuth = toSignal(this.authService.getAuthenticatedObservable(), { initialValue: false });
 
-  private moviesPageSig = toSignal<TmdbPage<TmdbMovie> | null>(this.tmdb.getUpcomingMovies(), { initialValue: null });
+  private moviesPageSig = toSignal<TmdbPage<TmdbMovie> | null>(toObservable(this.tmdb.langRequests).pipe(
+      switchMap(() => this.tmdb.getUpcomingMovies())
+    ), { initialValue: null });
   movies = computed<MovieVM[]>(() => {
     const res = this.moviesPageSig();
     const results = res?.results ?? [];
