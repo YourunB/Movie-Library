@@ -1,7 +1,7 @@
 <section class="upcoming-section">
   <h2 class="section-title">{{ "upcoming-movies" | translate }}</h2>
 
-  @if (movies$ | async; as movies) { @if (cardWidth$ | async; as cardWidth) {
+  @if (movies(); as movies) { @if (cardWidth(); as cardWidth) {
   <div class="slider-wrapper">
     <button mat-icon-button class="nav prev" (click)="scroll('prev', cardWidth)">
       <mat-icon>chevron_left</mat-icon>
@@ -14,9 +14,8 @@
           title: movie.title,
           poster_path: movie.poster_path,
           release_date: movie.release_date,
-          inWatchlist: (watchListService.isMovieInWatchlist(movie.id) | async) ?? false
-        }" [posterUrl]="movie.poster_path" [showFavorite]="(isAuth$ | async) ?? false"
-        (favorite)="toggleFavorite(movie)">
+          inWatchlist: watchlistSignals.isInWatchlist(movie.id)
+        }" [posterUrl]="movie.poster_path" [showFavorite]="isAuth()" (favorite)="toggleFavorite(movie)">
       </app-movie-card>
       }
     </div>

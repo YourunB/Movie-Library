@@ -1,20 +1,11 @@
 <div class="side-slider">
   <h2 class="h2-side">{{ "upnext-slider" | translate }}</h2>
   <div class="wrapper-side">
-    @for (s of slides; track s.key) {
-    <div
-      #card
-      class="side-card"
-      role="button"
-      tabindex="0"
-      [attr.aria-label]="'Open ' + (s.title || 'movie')"
-      (click)="onOpen(s)"
-    >
+    @for (s of slides(); track s.key) {
+    <div #card class="side-card" role="button" tabindex="0" [attr.aria-label]="'Open ' + (s.title || 'movie')"
+      (click)="onOpen(s)">
       <div class="thumb">
-        <img
-          [src]="s.imgSrc || 'assets/placeholder.jpg'"
-          [alt]="s.title || ''"
-        />
+        <img [src]="s.imgSrc || 'assets/placeholder.jpg'" [alt]="s.title || ''" />
       </div>
 
       <div class="meta">
@@ -34,12 +25,8 @@
         </div>
         }
 
-        <button
-          type="button"
-          class="youtube-link"
-          (click)="onPlay(s); $event.stopPropagation()"
-          [attr.aria-label]="'Play trailer for ' + (s.title || s.name)"
-        >
+        <button type="button" class="youtube-link" (click)="onPlay(s); $event.stopPropagation()"
+          [attr.aria-label]="'Play trailer for ' + (s.title || s.name)">
           ▶
         </button>
       </div>
