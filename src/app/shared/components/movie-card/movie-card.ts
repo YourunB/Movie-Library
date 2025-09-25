@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,26 +17,26 @@ export interface MovieCardModel {
   standalone: true,
   imports: [CommonModule, DatePipe, MatCardModule, MatIconModule, RouterLink],
   template: `
-    <a [routerLink]="['/movie', movie.id]" class="movie-link" *ngIf="movie">
+    <a [routerLink]="['/movie', (movie()?.id ?? 0)]" class="movie-link" *ngIf="movie() as mv">
       <mat-card class="movie-card" [ngClass]="{
-          'movie-card--compact': variant === 'compact',
-          'movie-card--watchlist': variant === 'watchlist'
-        }" (click)="cardClick.emit(movie)">
+          'movie-card--compact': variant() === 'compact',
+          'movie-card--watchlist': variant() === 'watchlist'
+        }" (click)="cardClick.emit(mv)">
         <div class="img-wrapper">
           <img
             mat-card-image
-            [src]="posterUrl"
-            [alt]="movie.title"
+            [src]="posterUrl()"
+            [alt]="mv.title"
             loading="lazy"
             decoding="async"
           />
         </div>
         <mat-card-content class="content">
-          <h3 class="title">{{ movie.title }}</h3>
-          <p class="release" *ngIf="movie.release_date as rd">{{ rd | date: 'longDate' }}</p>
+          <h3 class="title">{{ mv.title }}</h3>
+          <p class="release" *ngIf="mv.release_date as rd">{{ rd | date: 'longDate' }}</p>
           <mat-icon
-            *ngIf="showFavorite"
-            [ngClass]="{ 'in-watchlist': movie.inWatchlist }"
+            *ngIf="showFavorite()"
+            [ngClass]="{ 'in-watchlist': mv.inWatchlist }"
             class="favorite-icon"
             (click)="onFavoriteClick($event)"
             >favorite</mat-icon
@@ -48,10 +48,10 @@ export interface MovieCardModel {
   styleUrls: ['./movie-card.scss'],
 })
 export class MovieCardComponent {
-  @Input() movie!: MovieCardModel | null;
-  @Input() posterUrl = 'images/placeholder.jpg';
-  @Input() showFavorite = false;
-  @Input() variant: 'default' | 'compact' | 'watchlist' = 'default';
+  movie = input.required<MovieCardModel | null>();
+  posterUrl = input('images/placeholder.jpg');
+  showFavorite = input(false);
+  variant = input<'default' | 'compact' | 'watchlist'>('default');
 
   @Output() favorite = new EventEmitter<MovieCardModel>();
   @Output() cardClick = new EventEmitter<MovieCardModel>();
@@ -59,8 +59,8 @@ export class MovieCardComponent {
   onFavoriteClick(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
-    if (this.movie) {
-      this.favorite.emit(this.movie);
+    if (this.movie()) {
+      this.favorite.emit(this.movie()!);
     }
   }
 }

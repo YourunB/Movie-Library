@@ -1,17 +1,5 @@
-import { DatePipe, DecimalPipe } from '@angular/common';
-import {
-  Component,
-  Input,
-  ViewChildren,
-  QueryList,
-  AfterViewInit,
-  ElementRef,
-  OnChanges,
-  ChangeDetectionStrategy,
-  Output,
-  EventEmitter,
-  inject,
-} from '@angular/core';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
+import { Component, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter, inject, input, viewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -31,17 +19,17 @@ interface SideSlide {
 @Component({
   selector: 'app-side-slider',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, TranslatePipe],
+  imports: [CommonModule, DatePipe, DecimalPipe, TranslatePipe],
   templateUrl: './side-slider.html',
   styleUrls: ['./side-slider.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideSlider implements AfterViewInit, OnChanges {
-  @Input() slides: SideSlide[] = [];
-  @Input() activeIndex = 0;
+  slides = input<SideSlide[]>([]);
+  activeIndex = input<number>(0);
 
   @Output() playTrailer = new EventEmitter<{ title: string; id?: number }>();
-  @ViewChildren('card') cards!: QueryList<ElementRef<HTMLDivElement>>;
+  cards = viewChildren<ElementRef<HTMLDivElement>>('card');
   trackByVmKey = (_: number, s: SideSlide) => s.vmKey;
 
   private readonly router = inject(Router);
@@ -72,8 +60,10 @@ export class SideSlider implements AfterViewInit, OnChanges {
   }
 
   private scrollToActive(): void {
-    if (this.cards && this.cards.get(this.activeIndex)) {
-      this.cards.get(this.activeIndex)!.nativeElement.scrollIntoView({
+    const idx = this.activeIndex();
+    const cards = this.cards();
+    if (cards && cards[idx]) {
+      cards[idx]!.nativeElement.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       });

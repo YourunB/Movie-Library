@@ -1,16 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, computed, inject, viewChild, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, Observable, startWith, take } from 'rxjs';
+import { map, startWith, take } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -18,8 +12,9 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
 import { TranslatePipe } from '@ngx-translate/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { WatchlistSignalsStore } from '../../../shared/services/watchlist-signals.store';
 
-// ---- NEW: view-model interface ----
 export interface MovieVM {
   id: number;
   title: string;
@@ -42,35 +37,30 @@ export interface MovieVM {
   templateUrl: './upcoming-movies.html',
   styleUrls: ['./upcoming-movies.scss'],
 })
-export class UpcomingMovies implements OnInit {
+export class UpcomingMovies {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
   authService = inject(AuthService);
   watchListService = inject(WatchlistService);
+  watchlistSignals = inject(WatchlistSignalsStore);
 
-  isAuth$: Observable<boolean> = this.authService.authenticatedSubject;
+  isAuth = toSignal(this.authService.getAuthenticatedObservable(), { initialValue: false });
 
-  // ---- typed with the VM ----
-  movies$!: Observable<MovieVM[]>;
+  private moviesPageSig = toSignal<TmdbPage<TmdbMovie> | null>(this.tmdb.getUpcomingMovies(), { initialValue: null });
+  movies = computed<MovieVM[]>(() => {
+    const res = this.moviesPageSig();
+    const results = res?.results ?? [];
+    return results.slice(0, 10).map<MovieVM>((m) => ({
+      id: m.id,
+      title: m.title,
+      poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+      release_date: m.release_date ?? '',
+    }));
+  });
 
-  @ViewChild('slider', { static: false })
-  sliderRef!: ElementRef<HTMLDivElement>;
+  sliderRef = viewChild<ElementRef<HTMLDivElement>>('slider');
 
-  ngOnInit(): void {
-    this.movies$ = this.tmdb.getUpcomingMovies().pipe(
-      map((res: TmdbPage<TmdbMovie>) =>
-        res.results.slice(0, 10).map<MovieVM>((m) => ({
-          id: m.id,
-          title: m.title,
-          poster_path:
-            this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
-          release_date: m.release_date ?? '',
-        }))
-      )
-    );
-  }
-
-  cardWidth$: Observable<number> = this.breakpoint
+  private cardWidth$ = this.breakpoint
     .observe([
       '(max-width: 400px)',
       '(max-width: 576px)',
@@ -89,13 +79,16 @@ export class UpcomingMovies implements OnInit {
       }),
       startWith(200)
     );
+  cardWidth = toSignal(this.cardWidth$, { initialValue: 200 });
 
   scroll(direction: 'prev' | 'next', cardWidth: number): void {
-    if (!this.sliderRef) return;
-    const slider = this.sliderRef.nativeElement;
-    slider.scrollBy({
-      left: direction === 'next' ? cardWidth * 3 : -cardWidth * 3,
-      behavior: 'smooth',
+    const sliderEl = this.sliderRef()?.nativeElement;
+    if (!sliderEl) return;
+    untracked(() => {
+      sliderEl.scrollBy({
+        left: direction === 'next' ? cardWidth * 3 : -cardWidth * 3,
+        behavior: 'smooth',
+      });
     });
   }
 

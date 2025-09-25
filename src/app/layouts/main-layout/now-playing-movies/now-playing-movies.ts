@@ -1,16 +1,10 @@
-import {
-  Component,
-  inject,
-  ViewChild,
-  ElementRef,
-  OnInit,
-} from '@angular/core';
+import { Component, inject, ElementRef, viewChild, computed, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, Observable, startWith, take } from 'rxjs';
+import { map, startWith, take } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -18,6 +12,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
 import { TranslatePipe } from '@ngx-translate/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
   poster_path: string;
@@ -39,36 +34,27 @@ type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
   templateUrl: './now-playing-movies.html',
   styleUrls: ['./now-playing-movies.scss'],
 })
-export class NowPlayingMovies implements OnInit {
+export class NowPlayingMovies {
   private tmdb = inject(TmdbService);
   private breakpoint = inject(BreakpointObserver);
   authService = inject(AuthService);
   watchListService = inject(WatchlistService);
 
-  isAuth$: Observable<boolean>;
-  movies$!: Observable<ViewMovie[]>;
-  cardWidth = 200;
+  isAuth = toSignal(this.authService.getAuthenticatedObservable(), { initialValue: false });
+  private moviesPageSig = toSignal(this.tmdb.getNowPlayingMovies(), { initialValue: null });
+  movies = computed<ViewMovie[]>(() => {
+    const page = this.moviesPageSig() as TmdbPage<TmdbMovie> | null;
+    const results = page?.results ?? [];
+    return results.slice(0, 12).map((m): ViewMovie => ({
+      ...m,
+      poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+      release_date: m.release_date ?? '',
+    }));
+  });
 
-  @ViewChild('slider', { static: false })
-  sliderRef!: ElementRef<HTMLDivElement>;
+  sliderRef = viewChild<ElementRef<HTMLDivElement>>('slider');
 
-  constructor() {
-    this.isAuth$ = this.authService.authenticatedSubject;
-  }
-
-  ngOnInit(): void {
-    this.movies$ = this.tmdb.getNowPlayingMovies().pipe(
-      map((res: TmdbPage<TmdbMovie>) =>
-        res.results.slice(0, 12).map((m): ViewMovie => ({
-          ...m,
-          poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
-          release_date: m.release_date ?? '',
-        }))
-      )
-    );
-  }
-
-  cardWidth$: Observable<number> = this.breakpoint
+  private cardWidth$ = this.breakpoint
     .observe([
       '(max-width: 400px)',
       '(max-width: 576px)',
@@ -87,13 +73,16 @@ export class NowPlayingMovies implements OnInit {
       }),
       startWith(200)
     );
+  cardWidth = toSignal(this.cardWidth$, { initialValue: 200 });
 
   scroll(direction: 'prev' | 'next', cardWidth: number): void {
-    if (!this.sliderRef) return;
-    const slider = this.sliderRef.nativeElement;
-    slider.scrollBy({
-      left: direction === 'next' ? cardWidth * 3 : -cardWidth * 3,
-      behavior: 'smooth',
+    const slider = this.sliderRef()?.nativeElement;
+    if (!slider) return;
+    untracked(() => {
+      slider.scrollBy({
+        left: direction === 'next' ? cardWidth * 3 : -cardWidth * 3,
+        behavior: 'smooth',
+      });
     });
   }
   toggleFavorite(movie: ViewMovie): void {
