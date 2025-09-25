@@ -51,6 +51,7 @@ export class UpcomingMovies {
   private moviesPageSig = toSignal<TmdbPage<TmdbMovie> | null>(toObservable(this.tmdb.langRequests).pipe(
       switchMap(() => this.tmdb.getUpcomingMovies())
     ), { initialValue: null });
+    
   movies = computed<MovieVM[]>(() => {
     const res = this.moviesPageSig();
     const results = res?.results ?? [];
