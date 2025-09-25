@@ -1,0 +1,75 @@
+{
+  "footer": {
+    "box__title_1": "Deweloperzy na Github",
+    "box__link": {
+      "yury": "Yury",
+      "anastasiya": "Anastasiya",
+      "roman": "Roman",
+      "school": "Szkoła RS",
+      "course": "Angular Kurs "
+    },
+    "box__title_2": "O nauce",
+    "main-info__text": "projekt szkoleniowy"
+  },
+  "header": {
+    "watchlist": "Lista obserwowanych",
+    "signin": "Zaloguj się"
+  },
+  "menu": {
+    "home": "Strona główna",
+    "about": "O nas",
+    "popular": "Najpopularniejszy",
+    "winners": "Zwycięzcy nagród",
+    "animation": "Rodzina i animacja",
+    "popular-films": {
+      "matrix": "Matryca",
+      "inception": "Początek",
+      "interstellar": "Międzygwiezdny",
+      "fight-club": "Klub walki"
+    },
+    "winners-films": {
+      "godfather": "Ojciec chrzestny",
+      "parasite": "Pasożyt",
+      "schindler": "Lista Schindlera"
+    },
+    "animation-films": {
+      "toystory": "Historia zabawki",
+      "frozen": "Zamrożone",
+      "shrek": "Shrek",
+      "moana": "Moana"
+    }
+  },
+  "playing-theaters": "Teraz w kinach",
+  "popular-slider": {
+    "title": "Najpopularniejsze gwiazdy",
+    "popularity": "Popularność"
+  },
+  "upnext-slider": "Następny",
+  "highlights": "Najważniejsze wydarzenia dnia",
+  "upcoming-movies": "Nadchodzące filmy",
+  "about-page": {
+    "title": "O projekcie",
+    "created": "Stworzony",
+    "created-text-1": "Ten projekt jest klonem IMDb zbudowanym przy użyciu",
+    "created-text-2": "Firebase służy do uwierzytelniania i przechowywania bazy danych.",
+    "developers": "Deweloperzy",
+    "school": "RS Szkoła",
+    "course": "Angular Kurs",
+    "course-info-1": "Ten projekt powstał w ramach",
+    "course-info-2": "kurs.",
+    "course-info-3": "Kurs obejmuje podstawy Angular, RxJS, routing, integrację API i architekturę aplikacji"
+  },
+  "gallery-page": {
+    "title": "Galeria filmów",
+    "empty": "Nic nie znaleziono"
+  },
+  "movie-page": {
+    "release": "Wydanie",
+    "trailer": "Przyczepa",
+    "trailer-none": "Przyczepa niedostępna.",
+    "cast": "Obsada",
+    "cast-empty": "Brak dostępnych informacji o obsadzie.",
+    "loading": "Ładowanie tytułu..."
+  },
+  "notfound-page": "Strona nie została znaleziona"
+}

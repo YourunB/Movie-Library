@@ -1,5 +1,5 @@
 <section class="upcoming-section">
-  <h2 class="section-title">Upcoming Movies</h2>
+  <h2 class="section-title">{{ "upcoming-movies" | translate }}</h2>
 
   @if (movies$ | async; as movies) { @if (cardWidth$ | async; as cardWidth) {
   <div class="slider-wrapper">

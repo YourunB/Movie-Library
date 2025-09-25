@@ -1,0 +1,76 @@
+{
+  "footer": {
+    "box__title_1": "Разработчики на Github",
+    "box__link": {
+      "yury": "Юрий",
+      "anastasiya": "Анастасия",
+      "roman": "Роман",
+      "school": "RS школа",
+      "course": "Angular курс"
+    },
+    "box__title_2": "Об обучении",
+    "main-info__text": "учебный проект"
+  },
+  "header": {
+    "watchlist": "Посмотреть",
+    "signin": "Войти"
+  },
+  "menu": {
+    "home": "Главная страница",
+    "about": "O нас",
+    "popular": "Самые популярные",
+    "winners": "Победители премии",
+    "animation": "Семья и мультики",
+    "popular-films": {
+      "matrix": "Матрица",
+      "inception": "Начало",
+      "interstellar": "Интерстеллар",
+      "fight-club": "Бойцовский клуб"
+    },
+    "winners-films": {
+      "godfather": "Крестный отец",
+      "parasite": "Паразиты",
+      "schindler": "Список Шиндлера"
+    },
+    "animation-films": {
+      "toystory": "История игрушек",
+      "frozen": "Замерзшие",
+      "shrek": "Шрек",
+      "moana": "Моана"
+    }
+  },
+  "playing-theaters": "Сейчас в кинотеатрах",
+  "popular-slider": {
+    "title": "Самые популярные знаменитости",
+    "popularity": "Популярность"
+  },
+  "upnext-slider": "Следующие",
+  "highlights": "Актуальное сегодня",
+  "upcoming-movies": "Скоро в прокате",
+  "about-page": {
+    "title": "О проекте",
+    "created": "Создано",
+    "created-text-1": "Этот проект является клоном IMDb, построенным с помощью",
+    "created-text-2": "Firebase используется для аутентификации и хранения базы данных",
+    "developers": "Разработчики",
+    "school": "RS школа",
+    "course": "Angular курс",
+    "course-info-1": "Этот проект был создан в рамках",
+    "course-info-2": "курс.",
+    "course-info-3": "Курс охватывает основы Angular, RxJS, маршрутизацию, интеграцию API и архитектуру приложений."
+  },
+  "gallery-page": {
+     "title": "Галерея фильмов",
+     "empty": "Ничего не найдено"
+   },
+    "movie-page": {
+    "release": "Pелиз",
+    "trailer": "Трейлер",
+    "trailer-none": "Трейлер недоступен.",
+    "cast": "Актерский состав",
+    "cast-empty": "Нет информации об актерском составе",
+    "loading": "Загрузка заголовка..."
+  },
+  "notfound-page": "Страница не найдена"
+}
+

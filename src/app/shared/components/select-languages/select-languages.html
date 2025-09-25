@@ -1,0 +1,33 @@
+<mat-form-field
+  panelClass="language-select-form"
+  [ngClass]="{ opened: isSelectLanguage }"
+>
+  <mat-select
+    panelClass="language-select"
+    [(ngModel)]="selectedLang"
+    (selectionChange)="onLanguageChange($event.value)"
+    required
+    (click)="changeSelectStatus()"
+  >
+    <mat-select-trigger>{{ selectedLang }}</mat-select-trigger>
+    @for (language of languages; track language.shortValue) {
+    <mat-option
+      [value]="language.shortValue"
+      panelClass="language-item"
+      [ngClass]="{ selected: selectedLang === language.shortValue }"
+    >
+      <img
+        src="{{ language.image }}"
+        alt="{{ language.shortValue }}"
+        class="language-icon"
+      />
+      <p class="language-text">
+        {{ language.fullValue[selectedLang.toLowerCase()] }}
+      </p>
+    </mat-option>
+    }
+  </mat-select>
+  @if (!selectedLang) {
+  <mat-error>Please select a language</mat-error>
+  }
+</mat-form-field>

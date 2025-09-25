@@ -1,11 +1,20 @@
 <div class="side-slider">
-  <h2 class="h2-side">Up next</h2>
+  <h2 class="h2-side">{{ "upnext-slider" | translate }}</h2>
   <div class="wrapper-side">
     @for (s of slides; track s.key) {
-    <div #card class="side-card" role="button" tabindex="0" [attr.aria-label]="'Open ' + (s.title || 'movie')"
-      (click)="onOpen(s)">
+    <div
+      #card
+      class="side-card"
+      role="button"
+      tabindex="0"
+      [attr.aria-label]="'Open ' + (s.title || 'movie')"
+      (click)="onOpen(s)"
+    >
       <div class="thumb">
-        <img [src]="s.imgSrc || 'assets/placeholder.jpg'" [alt]="s.title || ''" />
+        <img
+          [src]="s.imgSrc || 'assets/placeholder.jpg'"
+          [alt]="s.title || ''"
+        />
       </div>
 
       <div class="meta">
@@ -14,20 +23,23 @@
 
           @if (s.name) {
           <p class="secondary">{{ s.name }}</p>
-          }
-          @if (s.releaseDate) {
-          <span class="year">{{ s.releaseDate | date:'y' }}</span>
+          } @if (s.releaseDate) {
+          <span class="year">{{ s.releaseDate | date : "y" }}</span>
           }
         </div>
 
         @if (s.rating !== null && s.rating !== undefined) {
         <div class="sub">
-          <span class="rating">★ {{ s.rating | number:'1.1-1' }}</span>
+          <span class="rating">★ {{ s.rating | number : "1.1-1" }}</span>
         </div>
         }
 
-        <button type="button" class="youtube-link" (click)="onPlay(s); $event.stopPropagation()"
-          [attr.aria-label]="'Play trailer for ' + (s.title || s.name)">
+        <button
+          type="button"
+          class="youtube-link"
+          (click)="onPlay(s); $event.stopPropagation()"
+          [attr.aria-label]="'Play trailer for ' + (s.title || s.name)"
+        >
           ▶
         </button>
       </div>

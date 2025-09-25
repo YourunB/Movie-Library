@@ -1,6 +1,19 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, Input, ViewChildren, QueryList, AfterViewInit, ElementRef, OnChanges, ChangeDetectionStrategy, Output, EventEmitter, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChildren,
+  QueryList,
+  AfterViewInit,
+  ElementRef,
+  OnChanges,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface SideSlide {
   key: string;
@@ -18,7 +31,7 @@ interface SideSlide {
 @Component({
   selector: 'app-side-slider',
   standalone: true,
-  imports: [DatePipe, DecimalPipe],
+  imports: [DatePipe, DecimalPipe, TranslatePipe],
   templateUrl: './side-slider.html',
   styleUrls: ['./side-slider.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,7 +75,7 @@ export class SideSlider implements AfterViewInit, OnChanges {
     if (this.cards && this.cards.get(this.activeIndex)) {
       this.cards.get(this.activeIndex)!.nativeElement.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest'
+        block: 'nearest',
       });
     }
   }

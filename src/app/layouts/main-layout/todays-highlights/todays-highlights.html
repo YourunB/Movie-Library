@@ -1,5 +1,5 @@
 <section class="highlights-text">
-  <h2 class="section-title">Today’s Highlights</h2>
+  <h2 class="section-title">{{ "highlights" | translate }}</h2>
 
   <div class="news-list">
     @for (h of highlights$ | async; track h.id) {

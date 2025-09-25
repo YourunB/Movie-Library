@@ -1,5 +1,5 @@
 <main>
-  <h2>Movies Gallery</h2>
+  <h2>{{ "gallery-page.title" | translate }}</h2>
 
   @if (movies$ | async; as movies) {
     @if (movies.length > 0) {
@@ -20,7 +20,7 @@
         }
       </div>
     } @else {
-      <p class="no-results">Nothing was found</p>
+      <p class="no-results">{{ "gallery-page.empty" | translate }}</p>
     }
   } @else {
     <div class="gallery-grid">

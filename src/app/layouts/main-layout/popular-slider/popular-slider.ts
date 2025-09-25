@@ -26,6 +26,7 @@ import { combineLatest, map, startWith } from 'rxjs';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { cilCaretLeft, cilCaretRight } from '@coreui/icons';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TranslatePipe } from '@ngx-translate/core';
 export interface PersonCard {
   id: number;
   name: string;
@@ -58,6 +59,7 @@ type PersonLinkService =
     DecimalPipe,
     IconModule,
     CommonModule,
+    TranslatePipe
   ],
   templateUrl: './popular-slider.html',
   styleUrl: './popular-slider.scss',

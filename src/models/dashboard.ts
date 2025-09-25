@@ -38,7 +38,7 @@ export interface TmdbVideo {
   name: string;
   official?: boolean;
   published_at?: string;
-};
+}
 
 export interface SideSlide {
   key: string;
@@ -48,4 +48,17 @@ export interface SideSlide {
   releaseDate?: string | Date;
   name?: string;
   rating?: number;
+}
+
+export interface Languages {
+  shortValue: string;
+  fullValue: Record<string, string>;
+  requestValue: string;
+  image: string;
+}
+
+export interface Developer {
+  name: Record<string, string>;
+  githubUsername: string;
+  githubUrl: string;
 }

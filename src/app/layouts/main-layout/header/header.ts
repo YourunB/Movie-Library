@@ -4,6 +4,7 @@ import {
   Component,
   inject,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +18,8 @@ import { signOut, User } from 'firebase/auth';
 import { MatIconModule } from '@angular/material/icon';
 import { auth } from '../../../shared/api/farebase';
 import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggle';
+import { SelectLanguages } from '../../../shared/components/select-languages/select-languages';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -30,8 +33,11 @@ import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggl
     RouterLink,
     MatIconModule,
     ThemeToggle,
+    SelectLanguages,
+    TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class Header implements OnInit {
   private store = inject(Store);
