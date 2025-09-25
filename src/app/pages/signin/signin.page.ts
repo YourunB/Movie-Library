@@ -13,10 +13,11 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { SigninService } from '../../shared/services/signin.service';
-import { ErrorDialog } from '../shared/error.dialog/error.dialog';
+import { ErrorDialog } from '../../shared/components/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { WatchlistService } from '../../shared/services/watchlist.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signin.page',
@@ -28,6 +29,7 @@ import { WatchlistService } from '../../shared/services/watchlist.service';
     MatIconModule,
     CommonModule,
     RouterLink,
+    TranslatePipe,
   ],
   templateUrl: './signin.page.html',
   styleUrl: './signin.page.scss',
@@ -97,7 +99,7 @@ export class SigninPage {
       this.signinService
         .signin(loginData.email, loginData.password)
         .then((userCredential) => {
-          this.authService.setUser(userCredential.user);     
+          this.authService.setUser(userCredential.user);
           this.router.navigate(['./']);
         })
         .catch((error: HttpErrorResponse) => {

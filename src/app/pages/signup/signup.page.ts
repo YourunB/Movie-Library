@@ -14,7 +14,7 @@ import { Router, RouterLink } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialog } from '../shared/error.dialog/error.dialog';
+import { ErrorDialog } from '../../shared/components/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

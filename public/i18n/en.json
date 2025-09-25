@@ -71,5 +71,13 @@
     "cast-empty": "No cast information available.",
     "loading": "Loading title..."
   },
-  "notfound-page": "Page hasn't been found"
+  "notfound-page": "Page hasn't been found",
+  "sinin": {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Enter your password",
+    "login": "Log in",
+    "account": "Don't have an account?",
+    "signup": "SignUp"
+  }
 }
