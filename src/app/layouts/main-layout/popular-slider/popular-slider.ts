@@ -1,4 +1,3 @@
-// layouts/main-layout/popular-slider/popular-slider.ts
 import { Component, ChangeDetectionStrategy, inject, input, viewChild, computed, effect } from '@angular/core';
 import {
   CarouselComponent,
@@ -6,7 +5,7 @@ import {
   CarouselItemComponent,
   CarouselControlComponent,
 } from '@coreui/angular';
-import { AsyncPipe, CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectPopularPeople } from '../../../../store/dashboard/dashboard.selectors';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
@@ -42,7 +41,6 @@ type PersonLinkService =
     CarouselInnerComponent,
     CarouselItemComponent,
     CarouselControlComponent,
-    AsyncPipe,
     NgForOf,
     NgIf,
     DecimalPipe,
@@ -88,7 +86,7 @@ export class PopularPeopleSlider {
         if (result.breakpoints['(max-width: 1200px)']) return 5;
         return 6;
       }),
-      startWith(6) // default before first match
+      startWith(6)
     );
   itemsPerSlideSig = toSignal(this.itemsPerSlide$, { initialValue: 6 });
 
@@ -113,9 +111,7 @@ export class PopularPeopleSlider {
   constructor() {
     this.iconSet.icons = { cilCaretLeft, cilCaretRight };
 
-    // Autoplay effect with cleanup: advances the carousel periodically
     effect((onCleanupFn) => {
-      // re-establish interval when slides change (e.g., after resize or data load)
       this.slides();
       const timer = setInterval(() => this.clickNext(), 8000);
       onCleanupFn(() => clearInterval(timer));

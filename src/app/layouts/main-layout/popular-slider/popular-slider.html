@@ -1,9 +1,9 @@
-<div class="popular-slider" [style.--cards-per-slide]="itemsPerSlide">
+<div class="popular-slider" [style.--cards-per-slide]="itemsPerSlideSig()">
   <div class="slider-header">
     <h2 class="h2-section">{{ "popular-slider.title" | translate }}</h2>
   </div>
 
-  <ng-container *ngIf="slides$ | async as slides">
+  <ng-container *ngIf="slides() as slides">
     <c-carousel [interval]="0" [wrap]="false" [activeIndex]="0" class="carousel-wrapper">
       <c-carousel-inner>
         <c-carousel-item *ngFor="let slide of slides; let i = index; trackBy: trackByIndex" [active]="i === 0">
@@ -19,7 +19,8 @@
                 <div class="sub" *ngIf="p.department || p.popularity">
                   <span *ngIf="p.department as d">{{ d }}</span>
                   <span *ngIf="p.department && p.popularity">&nbsp;•&nbsp;</span>
-                  <span *ngIf="p.popularity as pop">{{ "popular-slider.popularity" | translate }}: {{ pop | number:'1.0-0' }}</span>
+                  <span *ngIf="p.popularity as pop">{{ "popular-slider.popularity" | translate }}: {{ pop |
+                    number:'1.0-0' }}</span>
                 </div>
               </div>
             </a>
