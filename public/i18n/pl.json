@@ -71,5 +71,26 @@
     "cast-empty": "Brak dostępnych informacji o obsadzie.",
     "loading": "Ładowanie tytułu..."
   },
-  "notfound-page": "Strona nie została znaleziona"
+  "notfound-page": "Strona nie została znaleziona",
+  "sinin": {
+    "title": "Zaloguj się",
+    "email": "E-mail",
+    "password": "Wprowadź swoje hasło",
+    "login": "Zaloguj się",
+    "account": "Nie masz konta?",
+    "signup": "Zarejestruj się"
+  },
+  "sinup": {
+    "title": "Zarejestruj się",
+    "email": "Email",
+    "password": "Wprowadź swoje hasło",
+    "register": "Zarejestruj się",
+    "account": "Masz już konto?",
+    "signin": "Zaloguj się"
+  },
+  "watchlist": {
+    "title": "Moje filmy do obejrzenia",
+    "empty": "Jeszcze nie mam żadnych filmów do obejrzenia"
+  },
+  "error": "Błąd"
 }

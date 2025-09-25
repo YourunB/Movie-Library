@@ -1,6 +1,6 @@
 <main>
   @if (movies$ | async; as movies) { @if (movies.length > 0) {
-  <h2>My movies for watching</h2>
+  <h2>{{ "watchlist.title" | translate }}</h2>
   <div class="gallery-grid">
     @for (movie of movies; track movie.id) {
     <app-movie-card variant="watchlist" [movie]="{
@@ -14,7 +14,7 @@
     }
   </div>
   } @else {
-  <p class="no-results">I haven`t got any movies to watch yet</p>
+  <p class="no-results">{{ "watchlist.empty" | translate }}</p>
   <a class="watchlist-link" [routerLink]="['/']">
     <mat-icon class="watchlist-icon">home</mat-icon>
   </a>

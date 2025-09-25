@@ -79,5 +79,18 @@
     "login": "Log in",
     "account": "Don't have an account?",
     "signup": "SignUp"
-  }
+  },
+  "sinup": {
+    "title": "Sign Up",
+    "email": "Email",
+    "password": "Enter your password",
+    "register": "Register",
+    "account": "Already have an account?",
+    "signin": "Sign In"
+  },
+  "watchlist": {
+    "title": "My movies for watching",
+    "empty": "I haven`t got any movies to watch yet"
+  },
+  "error": "Error"
 }

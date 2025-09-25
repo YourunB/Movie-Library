@@ -1,8 +1,8 @@
 <main class="signup-page">
   <form [formGroup]="signupForm" class="signup-form" (ngSubmit)="onSubmit()">
-    <p class="signup-form-title">Sign Up</p>
+    <p class="signup-form-title">{{ "sinup.title" | translate }}</p>
     <mat-form-field>
-      <mat-label>Email</mat-label>
+      <mat-label>{{ "sinup.email" | translate }}</mat-label>
       <input
         matInput
         type="email"
@@ -18,7 +18,7 @@
       }
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Enter your password</mat-label>
+      <mat-label>{{ "sinup.password" | translate }}</mat-label>
       <input
         matInput
         [type]="isHide ? 'password' : 'text'"
@@ -46,11 +46,11 @@
       mat-button="elevated"
       [disabled]="signupForm.invalid"
     >
-      Register
+      {{ "sinup.register" | translate }}
     </button>
     <div class="signup-links">
-      <p>Already have an account?</p>
-      <a [routerLink]="['/signin']">SignIn</a>
+      <p>{{ "sinup.account" | translate }}</p>
+      <a [routerLink]="['/signin']">{{ "sinup.signin" | translate }}</a>
     </div>
   </form>
 </main>
