@@ -45,7 +45,10 @@
     "popularity": "Popularity"
   },
   "upnext-slider": "Up next",
-  "highlights": "Today’s Highlights",
+  "highlights": {
+    "title": "Today’s Highlights",
+    "trailer": "Watch Trailer"
+  },
   "upcoming-movies": "Upcoming Movies",
   "about-page": {
     "title": "About the Project",
@@ -110,5 +113,10 @@
   "vpn-info": {
     "text-1": "Having trouble logging in or playing trailers?",
     "text-2": "Some content may be restricted in your region. Try turning off your VPN or connecting through an EU/US location, then retry."
+  },
+  "home-tab": {
+    "playing": "Now Playing",
+    "upcoming": "Upcoming",
+    "text": "Switch between current theaters and upcoming releases."
   }
 }

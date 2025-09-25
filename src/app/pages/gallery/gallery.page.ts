@@ -46,9 +46,11 @@ export class GalleryPage {
   movies = toSignal(
     this.route.queryParamMap.pipe(
       map((params) => params.get('q') ?? ''),
-      switchMap((query) => toObservable(this.tmdb.langRequests).pipe(
-      switchMap(() => this.tmdb.searchMovies(query))
-    ) ),
+      switchMap((query) =>
+        toObservable(this.tmdb.langRequests).pipe(
+          switchMap(() => this.tmdb.searchMovies(query))
+        )
+      ),
       map((res: TmdbPage<TmdbMovie>) => res.results ?? [])
     ),
     { initialValue: [] as TmdbMovie[] }

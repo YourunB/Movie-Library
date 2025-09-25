@@ -12,6 +12,7 @@ import {
 } from '../../../shared/components/trailer-modal/trailer-modal';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 interface HighlightText {
   id: number;
@@ -27,38 +28,42 @@ interface HighlightText {
   templateUrl: './todays-highlights.html',
   styleUrls: ['./todays-highlights.scss'],
 })
-export class TodaysHighlights implements OnInit {
+export class TodaysHighlights {
   private tmdb = inject(TmdbService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
   highlights$!: Observable<HighlightText[]>;
-  ngOnInit(): void {
-    this.highlights$ = this.tmdb.getNowPlayingMovies().pipe(
-      switchMap((res: TmdbPage<TmdbMovie>) => {
-        const movies = res.results.slice(0, 4);
-        return forkJoin(
-          movies.map((m) =>
-            this.tmdb.getMovieVideos(m.id).pipe(
-              map((videos) => {
-                const trailer = videos.results.find(
-                  (v) => v.type === 'Trailer' && v.site === 'YouTube'
-                );
-                return {
-                  id: m.id,
-                  title: m.title,
-                  overview: m.overview,
-                  trailerUrl: trailer
-                    ? `https://www.youtube.com/watch?v=${trailer.key}`
-                    : null,
-                };
-              })
-            )
-          )
-        );
-      })
+  constructor() {
+    this.highlights$ = toObservable(this.tmdb.langRequests).pipe(
+      switchMap((lang) =>
+        this.tmdb.getNowPlayingMovies().pipe(
+          switchMap((res: TmdbPage<TmdbMovie>) => {
+            const movies = (res.results ?? []).slice(0, 4);
+
+            return forkJoin(
+              movies.map((m) =>
+                this.tmdb.getMovieVideos(m.id).pipe(
+                  map((videos) => {
+                    const trailer = videos.results.find(
+                      (v) => v.type === 'Trailer' && v.site === 'YouTube'
+                    );
+                    return {
+                      id: m.id,
+                      title: m.title,
+                      overview: m.overview,
+                      trailerUrl: trailer
+                        ? `https://www.youtube.com/watch?v=${trailer.key}`
+                        : null,
+                    };
+                  })
+                )
+              )
+            );
+          })
+        )
+      )
     );
   }
-
   openTrailerModal(h: HighlightText): void {
     const data: TrailerModalData = {
       movieTitle: h.title,

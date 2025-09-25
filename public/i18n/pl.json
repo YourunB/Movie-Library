@@ -45,7 +45,10 @@
     "popularity": "Popularność"
   },
   "upnext-slider": "Następny",
-  "highlights": "Najważniejsze wydarzenia dnia",
+  "highlights": {
+    "title": "Najważniejsze wydarzenia dnia",
+    "trailer": "Zwiastun zegarka"
+  },
   "upcoming-movies": "Nadchodzące filmy",
   "about-page": {
     "title": "O projekcie",
@@ -110,5 +113,10 @@
   "vpn-info": {
     "text-1": "Masz problem z zalogowaniem się lub odtwarzaniem zwiastunów?",
     "text-2": "Niektóre treści mogą być ograniczone w Twoim regionie. Spróbuj wyłączyć VPN lub połączyć się przez lokalizację UE/USA, a następnie spróbuj ponownie."
+  },
+  "home-tab": {
+    "playing": "Teraz gram",
+    "upcoming": "Nadchodzące",
+    "text": "Przełączanie między obecnymi kinami a nadchodzącymi premierami"
   }
 }

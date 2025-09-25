@@ -79,6 +79,10 @@ export class TmdbService {
     });
   }
 
+  getMovieById(movieId: number) {
+    return this.get<TmdbMovie>(`/movie/${movieId}`);
+  }
+
   getUpcomingMovies(page = 1) {
     return this.get<TmdbPage<TmdbMovie>>('/movie/upcoming', { page });
   }
