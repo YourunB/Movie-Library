@@ -27,7 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     MovieCardComponent,
     PosterUrlPipe,
     TranslatePipe,
-  ],
+],
   templateUrl: './watchlist.page.html',
   styleUrl: './watchlist.page.scss',
 })

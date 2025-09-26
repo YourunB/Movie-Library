@@ -15,8 +15,10 @@
       @if (isAuthenticated) {
       <div routerLink="/watchlist" class="watchlist-link">
         <p>{{ "header.watchlist" | translate }}</p>
+        @if (watchlistSignals.favorites().length>0) {
         <mat-icon class="icon-watchlist">favorite</mat-icon>
         <p class="items">{{ watchlistSignals.favorites().length }}</p>
+        }
       </div>
       } @if (!isAuthenticated) {
       <a [routerLink]="['/signin']">{{ "header.signin" | translate }}</a>

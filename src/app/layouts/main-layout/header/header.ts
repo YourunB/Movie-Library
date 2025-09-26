@@ -21,6 +21,7 @@ import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggl
 import { SelectLanguages } from '../../../shared/components/select-languages/select-languages';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WatchlistSignalsStore } from '../../../shared/services/watchlist-signals.store';
+import { emptyListOfMovies } from '../../../../store/watchlist/watchlist.actions';
 
 @Component({
   selector: 'app-header',
@@ -86,5 +87,6 @@ export class Header implements OnInit {
     signOut(auth);
     this.authService.resetUser();
     this.router.navigate(['/signin']);
+    this.store.dispatch(emptyListOfMovies());
   }
 }

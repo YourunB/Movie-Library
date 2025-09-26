@@ -8,11 +8,13 @@ import { WatchlistService } from './watchlist.service';
   providedIn: 'root',
 })
 export class AuthService {
-   watchListService = inject(WatchlistService);
+  watchListService = inject(WatchlistService);
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
-  authenticatedSubject: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  authenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
 
   setUser(user: User) {
     this.userSubject.next(user);

@@ -97,3 +97,9 @@ main {
 .watchlist-icon:hover {
   color: #f5c518;
 }
+
+.empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

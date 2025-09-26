@@ -9,7 +9,7 @@ import {
   deleteMovieById,
   loadListOfMovies,
 } from '../../../store/watchlist/watchlist.actions';
-import { database } from '../api/farebase';
+import { auth, database } from '../api/farebase';
 import { User } from 'firebase/auth';
 import { child, get, push, ref, update } from 'firebase/database';
 
@@ -43,13 +43,22 @@ export class WatchlistService {
   }
 
   updateDataBaseOfUserMovies() {
-    const newKey = push(child(ref(this.dataBase), 'favorite')).key;
+    const user = auth.currentUser;
+    if (!user) {
+      console.error('No authenticated user found.');
+      return;
+    }
+    const userId = user.uid;
+    console.log(userId);
+    const newKey = push(
+      child(ref(this.dataBase), `users/${userId}/favorite`)
+    ).key;
     this.store
       .select(selectFavoriteMovies)
       .pipe(take(1))
       .subscribe((favouritemovies: TmdbMovie[]) => {
         const updates: Record<string, TmdbMovie[]> = {};
-        updates[`/favorite/${newKey}`] = favouritemovies;
+        updates[`/users/${userId}/favorite/${newKey}`] = favouritemovies;
         update(ref(this.dataBase), updates)
           .then(() => {
             console.log('Database updated successfully!');
@@ -61,15 +70,26 @@ export class WatchlistService {
   }
 
   receiveDataBaseOfUserMovies() {
+    const user = auth.currentUser;
+    if (!user) {
+      console.error('No authenticated user found.');
+      this.store.dispatch(loadListOfMovies({ movies: [] }));
+      return;
+    }
+    const userId = user.uid;
     const dbRef = ref(this.dataBase);
-    get(child(dbRef, `favorite/`))
+    get(child(dbRef, `users/${userId}/favorite`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const data = snapshot.val();
-          if (data) {
-            this.store.dispatch(loadListOfMovies({ movies: data[Object.keys(data)[Object.keys(data).length - 1]] }));
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            const keys = Object.keys(data);
+            const latestKey = keys[keys.length - 1];
+            const movies = data[latestKey];
+
+            this.store.dispatch(loadListOfMovies({ movies: movies ?? [] }));
           } else {
-            console.warn('No movies data found in snapshot.');
+            console.log('No data available for user:', userId);
             this.store.dispatch(loadListOfMovies({ movies: [] }));
           }
         } else {

@@ -39,6 +39,7 @@ export class SigninPage {
   singinForm: FormGroup;
   private signinService = inject(SigninService);
   private authService = inject(AuthService);
+  private watchlistService = inject(WatchlistService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
   watchListService = inject(WatchlistService);
@@ -100,11 +101,12 @@ export class SigninPage {
         .signin(loginData.email, loginData.password)
         .then((userCredential) => {
           this.authService.setUser(userCredential.user);
+          this.watchListService.receiveDataBaseOfUserMovies()
           this.router.navigate(['./']);
         })
         .catch((error: HttpErrorResponse) => {
           this.dialogError.open(ErrorDialog, {
-            data: { message: error.name },
+            data: { message: error.message },
           });
         });
     }

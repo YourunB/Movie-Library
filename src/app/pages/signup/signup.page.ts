@@ -102,7 +102,7 @@ export class SignupPage {
         .catch((error: HttpErrorResponse) => {
           console.log(error);
           this.dialogError.open(ErrorDialog, {
-            data: { message: error.name },
+            data: { message: error.message },
           });
         });
     }
