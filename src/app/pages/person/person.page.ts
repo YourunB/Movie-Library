@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TmdbService } from '../../../services/dashboard/tmdb.service';
+import { TmdbPerson } from '../../../models/dashboard';
 
 @Component({
   selector: 'app-person-page',
@@ -18,7 +19,7 @@ export class PersonPage {
 
   private personIdRaw = toSignal<ParamMap | null>(this.route.paramMap, { initialValue: null });
   personId = computed(() => Number(this.personIdRaw()?.get('id') ?? '0'));
-  person = toSignal(this.tmdb.getPersonDetails(this.personId()), { initialValue: null });
+  person = toSignal<TmdbPerson | null>(this.tmdb.getPersonDetails(this.personId()), { initialValue: null });
   imgUrl = computed(() => this.tmdb.img(this.person()?.profile_path, 'w342') ?? 'images/placeholder.jpg');
 }
 
