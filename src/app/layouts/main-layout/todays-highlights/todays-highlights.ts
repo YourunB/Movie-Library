@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,7 @@ export class TodaysHighlights {
   highlights$!: Observable<HighlightText[]>;
   constructor() {
     this.highlights$ = toObservable(this.tmdb.langRequests).pipe(
-      switchMap((lang) =>
+      switchMap(() =>
         this.tmdb.getNowPlayingMovies().pipe(
           switchMap((res: TmdbPage<TmdbMovie>) => {
             const movies = (res.results ?? []).slice(0, 4);
