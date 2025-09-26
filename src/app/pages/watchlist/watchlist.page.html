@@ -1,6 +1,6 @@
-<main>
+<main class="main">
   @if (watchlistSignals.favorites(); as movies) { @if (movies.length > 0) {
-  <h2>{{ "watchlist.title" | translate }}</h2>
+  <h2 class="title">{{ "watchlist.title" | translate }}</h2>
   <div class="gallery-grid">
     @for (movie of movies; track movie.id) {
     <app-movie-card variant="watchlist" [movie]="{

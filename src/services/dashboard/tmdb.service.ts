@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TmdbMovie, TmdbPage, TmdbPerson, TmdbReview } from '../../models/dashboard';
 import { environment } from '../../environments/environment';
+import { LanguageService } from '../../app/shared/services/language.service';
+import { languageMap } from '../../app/shared/services/dashboard/tmdb.service';
 
 type PosterSize   = 'w92'|'w154'|'w185'|'w342'|'w500'|'w780'|'original';
 type BackdropSize = 'w300'|'w780'|'w1280'|'original';
@@ -11,7 +13,15 @@ export class TmdbService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.tmdb.apiBaseUrl;
   private readonly apiKey  = environment.tmdb.apiKey;
-  private readonly lang = 'en-US';
+  lang = 'en-US';
+  langRequests = signal<string>('en-US');
+  private languageService = inject(LanguageService);
+  constructor() {
+    this.languageService.language$.subscribe((lang) => {
+      this.lang = languageMap[lang] || this.lang;
+      this.langRequests.set(lang);
+    });
+  }
 
   private get<T>(path: string, params: Record<string, string | number> = {}) {
     const p = new HttpParams({

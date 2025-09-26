@@ -26,6 +26,7 @@ export class WatchlistService {
   }
 
   removeMovie(movieId: number) {
+    console.log('remove');
     this.store.dispatch(deleteMovieById({ movieId: movieId }));
     this.updateDataBaseOfUserMovies();
   }

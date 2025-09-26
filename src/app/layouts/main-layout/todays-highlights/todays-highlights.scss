@@ -2,12 +2,15 @@
   margin: 40px auto;
   max-width: 800px;
   padding: 0 12px;
+  display: flex;
+  flex-direction: column;
 
   .section-title {
     color: #f5c518;
     margin-bottom: 20px;
     font-size: 1.6rem;
     font-weight: 600;
+    align-self: center;
   }
 
   .news-list {

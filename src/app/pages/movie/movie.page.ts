@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadMovieById } from '../../../store/dashboard/dashboard.actions';
 import {
@@ -28,7 +28,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-movie',
   standalone: true,
-  imports: [CommonModule, MatIcon, ScrollingModule, TranslatePipe],
+  imports: [CommonModule, MatIcon, ScrollingModule, TranslatePipe, RouterLink],
   templateUrl: './movie.page.html',
   styleUrls: ['./movie.page.scss'],
 })
