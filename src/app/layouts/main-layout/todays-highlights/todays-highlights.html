@@ -1,5 +1,5 @@
 <section class="highlights-text">
-  <h2 class="section-title">{{ "highlights" | translate }}</h2>
+  <h2 class="section-title">{{ "highlights.title" | translate }}</h2>
 
   <div class="news-list">
     @for (h of highlights$ | async; track h.id) {
@@ -10,8 +10,7 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-button color="primary" (click)="$event.stopPropagation(); openTrailerModal(h)">▶ Watch
-          Trailer</button>
+        <button mat-button color="primary" (click)="$event.stopPropagation(); openTrailerModal(h)">▶ {{ "highlights.trailer" | translate }}</button>
       </mat-card-actions>
     </mat-card>
     }

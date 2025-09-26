@@ -1,7 +1,10 @@
 <main class="wrapper">
   <app-trading-movies></app-trading-movies>
-  <app-toggle-section primaryLabel="Now Playing" secondaryLabel="Upcoming"
-    hint="Switch between current theaters and upcoming releases.">
+  <app-toggle-section
+    [primaryLabel]="'home-tab.playing' | translate"
+    [secondaryLabel]="'home-tab.upcoming' | translate"
+    [hint]="'home-tab.text' | translate"
+  >
     <ng-template #primary>
       <app-now-playing-movies></app-now-playing-movies>
     </ng-template>

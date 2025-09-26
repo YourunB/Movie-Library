@@ -7,6 +7,7 @@ import { TodaysHighlights } from '../../layouts/main-layout/todays-highlights/to
 import { ToggleSectionComponent } from '../../shared/components/toggle-section/toggle-section';
 import { Store } from '@ngrx/store';
 import { loadDashboard } from '../../../store/dashboard/dashboard.actions';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { loadDashboard } from '../../../store/dashboard/dashboard.actions';
     UpcomingMovies,
     TodaysHighlights,
     ToggleSectionComponent,
+    TranslatePipe
   ],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',

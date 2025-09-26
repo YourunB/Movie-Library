@@ -1,6 +1,6 @@
 <div class="trailer-modal">
   <div class="modal-header">
-    <h2>{{ data.movieTitle }} - Trailer</h2>
+    <h2>{{ data.movieTitle }} - {{ "trailer.title" | translate }}</h2>
     <button mat-icon-button (click)="closeModal()" class="close-button" aria-label="Close">
       <mat-icon>close</mat-icon>
     </button>
@@ -10,14 +10,14 @@
     @if (loading) {
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p>Loading trailer...</p>
+      <p>{{ "trailer.loading" | translate }}</p>
     </div>
     } @else if (error) {
     <div class="error-container">
       <mat-icon class="error-icon">error_outline</mat-icon>
       <p>{{ error }}</p>
       <button mat-button color="primary" (click)="openYouTubeSearch()">
-        Search on YouTube
+        {{ "trailer.search" | translate }}
       </button>
     </div>
     } @else if (safeUrl) {
@@ -48,7 +48,7 @@
     <div class="video-actions">
       <button mat-button color="primary" (click)="openInYouTube()">
         <mat-icon>open_in_new</mat-icon>
-        Open in YouTube
+        {{ "trailer.open" | translate }}
       </button>
     </div>
     }

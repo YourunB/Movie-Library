@@ -14,7 +14,7 @@
   padding: 30px;
   border-radius: 10px;
   border: 1px solid #f5c518;
-  color: white;
+  color: var(--text-primary) !important;
   min-width: 40%;
 }
 .form-title {
@@ -40,4 +40,8 @@
   gap: 20px;
   align-items: center;
   justify-content: center;
+}
+
+.mdc-text-field__input {
+  color: var(--text-primary) !important;
 }

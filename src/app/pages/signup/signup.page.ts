@@ -14,8 +14,9 @@ import { Router, RouterLink } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialog } from '../shared/error.dialog/error.dialog';
+import { ErrorDialog } from '../../shared/components/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signup.page',
@@ -27,6 +28,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatIconModule,
     CommonModule,
     RouterLink,
+    TranslatePipe
   ],
   templateUrl: './signup.page.html',
   styleUrl: './signup.page.scss',

@@ -45,7 +45,10 @@
     "popularity": "Popularność"
   },
   "upnext-slider": "Następny",
-  "highlights": "Najważniejsze wydarzenia dnia",
+  "highlights": {
+    "title": "Najważniejsze wydarzenia dnia",
+    "trailer": "Zwiastun zegarka"
+  },
   "upcoming-movies": "Nadchodzące filmy",
   "about-page": {
     "title": "O projekcie",
@@ -71,5 +74,49 @@
     "cast-empty": "Brak dostępnych informacji o obsadzie.",
     "loading": "Ładowanie tytułu..."
   },
-  "notfound-page": "Strona nie została znaleziona"
+  "notfound-page": "Strona nie została znaleziona",
+  "sinin": {
+    "title": "Zaloguj się",
+    "email": "E-mail",
+    "password": "Wprowadź swoje hasło",
+    "login": "Zaloguj się",
+    "account": "Nie masz konta?",
+    "signup": "Zarejestruj się"
+  },
+  "sinup": {
+    "title": "Zarejestruj się",
+    "email": "Email",
+    "password": "Wprowadź swoje hasło",
+    "register": "Zarejestruj się",
+    "account": "Masz już konto?",
+    "signin": "Zaloguj się"
+  },
+  "watchlist": {
+    "title": "Moje filmy do obejrzenia",
+    "empty": "Jeszcze nie mam żadnych filmów do obejrzenia"
+  },
+  "error": "Błąd",
+  "history-debug": {
+    "title": "Debugowanie historii interfejsu użytkownika",
+    "length": "Długość historii",
+    "undo": "Można cofnąć",
+    "redo": "Można powtórzyć",
+    "toggle": "Przełącz debugowanie"
+  },
+  "select-lang": "Wybierz język",
+  "trailer": {
+    "title": "Zwiastun",
+    "loading": "Ładowanie zwiastun...",
+    "search": "Szukaj na YouTube",
+    "open": "Otwórz na YouTube"
+  },
+  "vpn-info": {
+    "text-1": "Masz problem z zalogowaniem się lub odtwarzaniem zwiastunów?",
+    "text-2": "Niektóre treści mogą być ograniczone w Twoim regionie. Spróbuj wyłączyć VPN lub połączyć się przez lokalizację UE/USA, a następnie spróbuj ponownie."
+  },
+  "home-tab": {
+    "playing": "Teraz gram",
+    "upcoming": "Nadchodzące",
+    "text": "Przełączanie między obecnymi kinami a nadchodzącymi premierami"
+  }
 }

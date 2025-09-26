@@ -8,6 +8,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-error.dialog',
@@ -17,6 +18,7 @@ import { MatIcon } from '@angular/material/icon';
     MatDialogContent,
     MatDialogActions,
     MatIcon,
+    TranslatePipe,
   ],
   templateUrl: './error.dialog.html',
   styleUrl: './error.dialog.scss',

@@ -8,13 +8,25 @@ import { TmdbMovie } from '../../../models/dashboard';
 import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../../shared/services/auth.service';
 import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
-import { MovieCardComponent, MovieCardModel } from '../../shared/components/movie-card/movie-card';
+import {
+  MovieCardComponent,
+  MovieCardModel,
+} from '../../shared/components/movie-card/movie-card';
 import { PosterUrlPipe } from '../../shared/pipes/poster-url.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-watchlist.page',
   standalone: true,
-  imports: [CommonModule, MatIcon, RouterLink, MatCardModule, MovieCardComponent, PosterUrlPipe],
+  imports: [
+    CommonModule,
+    MatIcon,
+    RouterLink,
+    MatCardModule,
+    MovieCardComponent,
+    PosterUrlPipe,
+    TranslatePipe,
+  ],
   templateUrl: './watchlist.page.html',
   styleUrl: './watchlist.page.scss',
 })

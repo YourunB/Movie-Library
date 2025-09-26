@@ -1,7 +1,7 @@
 <main>
   <h2>{{ "gallery-page.title" | translate }}</h2>
 
-  @if (movies$ | async; as movies) {
+  @if (movies(); as movies) {
     @if (movies.length > 0) {
       <div class="gallery-grid">
         @for (movie of movies; track movie.id) {

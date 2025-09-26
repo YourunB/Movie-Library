@@ -7,22 +7,23 @@ import {
   selectCanRedo,
   selectHistoryLength,
 } from '../../../../store/ui/ui.selectors';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-history-debug',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   template: `
     <div class="history-debug" *ngIf="showDebug">
-      <h4>UI History Debug</h4>
+      <h4>{{ "history-debug.title" | translate }}</h4>
       <div class="history-info">
-        <p>History Length: {{ historyLength$ | async }}</p>
-        <p>Can Undo: {{ canUndo$ | async }}</p>
-        <p>Can Redo: {{ canRedo$ | async }}</p>
+        <p>{{ "history-debug.length" | translate }}: {{ historyLength$ | async }}</p>
+        <p>{{ "history-debug.undo" | translate }}: {{ canUndo$ | async }}</p>
+        <p>{{ "history-debug.redo" | translate }}: {{ canRedo$ | async }}</p>
       </div>
       <div class="history-actions">
         <button [disabled]="(canUndo$ | async) === false" (click)="toggleDebug()">
-          Toggle Debug
+          {{ "history-debug.toggle" | translate }}
         </button>
       </div>
       <div class="history-log" *ngIf="showDetails">

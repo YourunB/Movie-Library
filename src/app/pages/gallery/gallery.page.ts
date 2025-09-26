@@ -15,6 +15,7 @@ import { PosterUrlPipe } from '../../shared/pipes/poster-url.pipe';
 import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-gallery',
@@ -42,10 +43,17 @@ export class GalleryPage {
     this.isAuth$ = this.authService.authenticatedSubject;
   }
 
-  movies$: Observable<TmdbMovie[]> = this.route.queryParamMap.pipe(
-    map((params) => params.get('q') ?? ''),
-    switchMap((query) => this.tmdb.searchMovies(query)),
-    map((res: TmdbPage<TmdbMovie>) => res.results ?? [])
+  movies = toSignal(
+    this.route.queryParamMap.pipe(
+      map((params) => params.get('q') ?? ''),
+      switchMap((query) =>
+        toObservable(this.tmdb.langRequests).pipe(
+          switchMap(() => this.tmdb.searchMovies(query))
+        )
+      ),
+      map((res: TmdbPage<TmdbMovie>) => res.results ?? [])
+    ),
+    { initialValue: [] as TmdbMovie[] }
   );
 
   toggleFavorite(movie: MovieCardModel): void {

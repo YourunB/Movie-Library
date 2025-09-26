@@ -1,10 +1,18 @@
-import { Component, inject, ElementRef, viewChild, computed, untracked, input } from '@angular/core';
+import {
+  Component,
+  inject,
+  ElementRef,
+  viewChild,
+  computed,
+  untracked,
+  input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
-import { map, startWith } from 'rxjs';
+import { map, startWith, switchMap, take } from 'rxjs';
 import { TmdbMovie, TmdbPage } from '../../../../models/dashboard';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -12,7 +20,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { WatchlistService } from '../../../shared/services/watchlist.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card';
 import { TranslatePipe } from '@ngx-translate/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { WatchlistSignalsStore } from '../../../shared/services/watchlist-signals.store';
 
 type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
@@ -30,7 +38,7 @@ type ViewMovie = Omit<TmdbMovie, 'poster_path' | 'release_date'> & {
     MatIconModule,
     RouterModule,
     MovieCardComponent,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './now-playing-movies.html',
   styleUrls: ['./now-playing-movies.scss'],
@@ -44,16 +52,27 @@ export class NowPlayingMovies {
   // Section title as a signal input to satisfy signal inputs criterion and simplify API
   title = input('Now Playing');
 
-  isAuth = toSignal(this.authService.getAuthenticatedObservable(), { initialValue: false });
-  private moviesPageSig = toSignal(this.tmdb.getNowPlayingMovies(), { initialValue: null });
+  isAuth = toSignal(this.authService.getAuthenticatedObservable(), {
+    initialValue: false,
+  });
+
+  private moviesPageSig = toSignal(
+    toObservable(this.tmdb.langRequests).pipe(
+      switchMap(() => this.tmdb.getNowPlayingMovies())
+    ),
+    { initialValue: null }
+  );
   movies = computed<ViewMovie[]>(() => {
     const page = this.moviesPageSig() as TmdbPage<TmdbMovie> | null;
     const results = page?.results ?? [];
-    return results.slice(0, 12).map((m): ViewMovie => ({
-      ...m,
-      poster_path: this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
-      release_date: m.release_date ?? '',
-    }));
+    return results.slice(0, 12).map(
+      (m): ViewMovie => ({
+        ...m,
+        poster_path:
+          this.tmdb.img(m.poster_path, 'w342') ?? 'assets/placeholder.jpg',
+        release_date: m.release_date ?? '',
+      })
+    );
   });
 
   sliderRef = viewChild<ElementRef<HTMLDivElement>>('slider');

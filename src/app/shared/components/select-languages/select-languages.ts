@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { languages, LanguageService } from '../../services/language.service';
 import { Languages } from '../../../../models/dashboard';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-select-languages',
@@ -15,6 +16,7 @@ import { Languages } from '../../../../models/dashboard';
     MatSelectModule,
     MatInputModule,
     FormsModule,
+    TranslatePipe
   ],
   templateUrl: './select-languages.html',
   styleUrl: './select-languages.scss',
