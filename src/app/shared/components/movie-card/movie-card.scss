@@ -9,6 +9,7 @@
 .img-wrapper {
   display: block;
   background: var(--surface-color);
+  overflow: hidden;
 }
 
 .content {
@@ -67,16 +68,21 @@
   overflow: hidden;
   text-overflow: ellipsis;
   min-height: 2.4em;
+  max-width: 100%;
 }
 
 .movie-card.movie-card--compact .release {
   font-size: var(--meta-size);
   text-align: center;
   min-height: 1.2em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movie-card.movie-card--compact .content {
   min-height: 96px;
+  padding: 8px;
 }
 
 .movie-card.movie-card--compact .favorite-icon {
