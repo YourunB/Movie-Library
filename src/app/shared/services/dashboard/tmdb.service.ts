@@ -8,9 +8,9 @@ import {
   TmdbVideo,
 } from '../../../../models/dashboard';
 import { environment } from '../../../../environments/environment';
-import { BehaviorSubject, map } from 'rxjs';
+import { map } from 'rxjs';
 import { LanguageService } from '../language.service';
-import { HistoryService } from '../history.service';
+// import { HistoryService } from '../history.service';
 
 type PosterSize =
   | 'w92'
@@ -33,7 +33,7 @@ interface TmdbMovieDetails {
   videos?: TmdbVideos;
 }
 
-const languageMap: { [key: string]: string } = {
+const languageMap: Record<string, string> = {
   en: 'en-US',
   ru: 'ru-RU',
   pl: 'pl-PL',

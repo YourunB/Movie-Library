@@ -14,7 +14,7 @@ import { RegionInfoService } from './shared/services/region-info.service';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from './shared/services/language.service';
-import { TmdbService } from './shared/services/dashboard/tmdb.service';
+
 
 @Component({
   selector: 'app-root',
@@ -30,7 +30,7 @@ export class App implements OnInit {
   private wasUser = localStorage.getItem('userUID');
   languages = ['en', 'ru', 'pl'];
   selectedLang!: string | null;
-  
+
   showVpnInfo$ = inject(RegionInfoService).showVpnInfo$;
   private translate = inject(TranslateService);
   private languageService = inject(LanguageService);
