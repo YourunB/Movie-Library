@@ -7,7 +7,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./pages/home/home.page').then(m => m.HomePage),
-      
+
   },
   {
     path: 'signup',
@@ -26,6 +26,11 @@ export const routes: Routes = [
     resolve: {
       preload: MovieResolver,
     },
+  },
+  {
+    path: 'person/:id',
+    loadComponent: () =>
+      import('./pages/person/person.page').then(m => m.PersonPage),
   },
   {
     path: 'gallery',
