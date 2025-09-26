@@ -24,6 +24,7 @@
     position: relative;
     height: 280px;
     padding-top: 25px;
+    overflow: hidden;
   }
 
   .slider-header {
@@ -160,7 +161,6 @@
   100% { box-shadow: 0 0 0 14px rgba(255,193,7,0); }
 }
 
-/* Responsive breakpoints */
 @media (max-width: 1400px) {
   .popular-slider { --cards-per-slide: 5; }
 }
@@ -175,4 +175,29 @@
 }
 @media (max-width: 400px) {
   .popular-slider { --cards-per-slide: 1; }
+}
+
+@media (max-width: 800px) {
+  .popular-slider {
+    padding: 12px;
+  }
+  .popular-slider .carousel-wrapper {
+    height: 240px;
+  }
+  .popular-slider .person-card .thumb {
+    width: 96px;
+    height: 96px;
+  }
+}
+@media (max-width: 576px) {
+  .popular-slider .carousel-wrapper {
+    height: 200px;
+  }
+  .popular-slider .person-card .thumb {
+    width: 80px;
+    height: 80px;
+  }
+  .popular-slider .h2-section {
+    font-size: 1.25rem;
+  }
 }

@@ -6,6 +6,7 @@ import {
   CarouselControlComponent,
 } from '@coreui/angular';
 import { CommonModule, DecimalPipe, NgForOf, NgIf } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectPopularPeople } from '../../../../store/dashboard/dashboard.selectors';
 import { TmdbService } from '../../../shared/services/dashboard/tmdb.service';
@@ -46,6 +47,7 @@ type PersonLinkService =
     DecimalPipe,
     IconModule,
     CommonModule,
+    RouterModule,
     TranslatePipe
   ],
   templateUrl: './popular-slider.html',

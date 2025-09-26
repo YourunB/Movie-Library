@@ -1,5 +1,5 @@
 <main>
-  @if (movies$ | async; as movies) { @if (movies.length > 0) {
+  @if (watchlistSignals.favorites(); as movies) { @if (movies.length > 0) {
   <h2>{{ "watchlist.title" | translate }}</h2>
   <div class="gallery-grid">
     @for (movie of movies; track movie.id) {
@@ -8,7 +8,7 @@
         title: movie.title,
         poster_path: movie.poster_path,
         release_date: movie.release_date,
-        inWatchlist: (watchListService.isMovieInWatchlist(movie.id) | async) ?? false
+        inWatchlist: watchlistSignals.isInWatchlist(movie.id)
       }" [posterUrl]="movie.poster_path | posterUrl : 'w342'" [showFavorite]="(isAuth$ | async) ?? false"
       (favorite)="toggleFavorite($event)"></app-movie-card>
     }

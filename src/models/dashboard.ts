@@ -22,6 +22,8 @@ export interface TmdbPerson {
   profile_path: string | null;
   known_for_department?: string;
   popularity?: number;
+  biography?: string;
+  place_of_birth?: string;
 }
 
 export interface TmdbReview {

@@ -32,6 +32,17 @@ export class TmdbService {
     return this.get<TmdbPage<TmdbPerson>>('/person/popular', { page });
   }
 
+  getPersonDetails(personId: number) {
+    return this.get<TmdbPerson>(`/person/${personId}`);
+  }
+
+  getPersonCombinedCredits(personId: number) {
+    interface CreditItem { id: number; media_type: string; title?: string; name?: string; poster_path?: string }
+    return this.get<{ cast: CreditItem[]; crew: CreditItem[] }>(
+      `/person/${personId}/combined_credits`
+    );
+  }
+
   getMovieReviews(movieId: number, page = 1) {
     return this.get<TmdbPage<TmdbReview>>(`/movie/${movieId}/reviews`, { page });
   }
@@ -46,7 +57,7 @@ export class TmdbService {
 
   getMovieById(movieId: number) {
     return this.get<TmdbMovie>(`/movie/${movieId}`);
-  }  
+  }
 
   getMovieVideos(movieId: number) {
   return this.get<{ id: number; results: { key: string; site: string; type: string; name: string }[] }>(

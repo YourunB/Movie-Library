@@ -1,0 +1,11 @@
+<section class="person-section" *ngIf="person() as p">
+  <div class="header">
+    <img [src]="imgUrl()" [alt]="p.name" />
+    <div class="meta">
+      <h1>{{ p.name }}</h1>
+      <p *ngIf="p.known_for_department">{{ p.known_for_department }}</p>
+      <p *ngIf="p.place_of_birth">{{ p.place_of_birth }}</p>
+    </div>
+  </div>
+  <p class="bio" *ngIf="p.biography">{{ p.biography }}</p>
+</section>
