@@ -11,7 +11,7 @@
             <a class="person-card" *ngFor="let p of slide; trackBy: trackByPersonId" [routerLink]="['/person', p.id]"
               [attr.aria-label]="p.name">
               <div class="thumb">
-                <img [src]="p.imgSrc || 'assets/placeholder-profile.jpg'" [alt]="p.name" loading="lazy" />
+                <img [src]="p.imgSrc || 'images/placeholder.jpg'" [alt]="p.name" loading="lazy" />
               </div>
 
               <div class="meta">

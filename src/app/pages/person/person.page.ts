@@ -9,7 +9,7 @@ import { TmdbService } from '../../../services/dashboard/tmdb.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './person.page.html',
-  styleUrl: './person.page.css',
+  styleUrls: ['./person.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonPage {
@@ -19,7 +19,7 @@ export class PersonPage {
   private personIdRaw = toSignal<ParamMap | null>(this.route.paramMap, { initialValue: null });
   personId = computed(() => Number(this.personIdRaw()?.get('id') ?? '0'));
   person = toSignal(this.tmdb.getPersonDetails(this.personId()), { initialValue: null });
-  imgUrl = computed(() => this.tmdb.img(this.person()?.profile_path, 'w342') ?? 'assets/placeholder-profile.jpg');
+  imgUrl = computed(() => this.tmdb.img(this.person()?.profile_path, 'w342') ?? 'images/placeholder.jpg');
 }
 
 

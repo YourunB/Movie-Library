@@ -117,3 +117,35 @@
 
 
 
+@media (max-width: 1000px) {
+  .movie-card.movie-card--watchlist {
+    width: 280px;
+  }
+}
+
+@media (max-width: 800px) {
+  .movie-card.movie-card--compact {
+    width: clamp(140px, 44vw, 200px);
+  }
+  .movie-card.movie-card--compact .img-wrapper img {
+    height: clamp(210px, 64vw, 300px);
+  }
+  .movie-card.movie-card--compact .content {
+    min-height: auto;
+  }
+  .movie-card.movie-card--compact .title {
+    --title-size: clamp(.9rem, 2.8vw, 1rem);
+  }
+  .movie-card.movie-card--compact .release {
+    --meta-size: clamp(.75rem, 2.4vw, .8rem);
+  }
+  .movie-card.movie-card--watchlist {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-card.movie-card--compact {
+    width: clamp(140px, 48vw, 200px);
+  }
+}
