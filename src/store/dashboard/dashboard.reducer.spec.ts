@@ -78,7 +78,7 @@ describe('dashboardReducer', () => {
 
     const state = dashboardReducer(
       start,
-      DashboardActions.loadMovieById({ id: '42' }) // <-- string, not number
+      DashboardActions.loadMovieById({ id: '42' }) 
     );
 
     expect(state.loadingMovie).toBeTrue();
