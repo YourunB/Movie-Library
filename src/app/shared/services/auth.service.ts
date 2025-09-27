@@ -3,17 +3,32 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 import { auth } from '../api/farebase';
 import { WatchlistService } from './watchlist.service';
+import { SignInUpFormData } from '../../../models/dashboard';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-   watchListService = inject(WatchlistService);
+  preUser!: SignInUpFormData;
+  watchListService = inject(WatchlistService);
   private userSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
-  authenticatedSubject: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  authenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
+  setPreuser(preuser: SignInUpFormData): SignInUpFormData {
+    this.preUser = preuser;;
+    return this.preUser;
+  }
+
+  getPreuser(): SignInUpFormData {
+    return this.preUser;
+  }
+
+  getUser(): User | null {
+    return this.userSubject.value;
+  }
   setUser(user: User) {
     this.userSubject.next(user);
     this.authenticatedSubject.next(true);

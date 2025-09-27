@@ -22,5 +22,9 @@ export const watchlistReducer = createReducer(
   on(WatchListActions.loadListOfMovies, (state, { movies }) => ({
     ...state,
     favorite: movies,
+  })),
+   on(WatchListActions.emptyListOfMovies, (state) => ({
+    ...state,
+    favorite: [],
   }))
 );

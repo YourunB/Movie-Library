@@ -8,7 +8,7 @@ export const languages: Languages[] = [
     fullValue: {
       en: 'English',
       pl: 'Angielski',
-      ru: 'Англиский',
+      ru: 'Английский',
     },
     requestValue: 'en-US',
     image: `./icons/en.svg`,

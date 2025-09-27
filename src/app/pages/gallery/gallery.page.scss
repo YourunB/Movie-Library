@@ -1,5 +1,10 @@
 main {
   min-height: calc(100vh - 258px);
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  align-self: center;
 }
 
 .img-wrapper {
@@ -55,12 +60,12 @@ main {
   cursor: pointer;
   height: 50px;
   font-size: 32px;
-  width:  32px;
+  width: 32px;
 }
 
 .favorite-icon:hover {
   color: #f5c518;
-} 
+}
 
 .in-watchlist {
   color: red;
@@ -94,9 +99,15 @@ main {
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.4; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .no-results {

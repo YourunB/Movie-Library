@@ -64,3 +64,8 @@ export interface Developer {
   githubUsername: string;
   githubUrl: string;
 }
+
+export interface SignInUpFormData {
+  email: string;
+  password: string;
+}
