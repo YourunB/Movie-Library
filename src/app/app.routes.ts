@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './shared/guards/auth.guard';
 import { MovieResolver } from '../store/movie/movie.resolver';
+import { PreUserResolver } from './shared/resolvers/signinup.resolver';
 
 export const routes: Routes = [
   {
@@ -12,11 +13,13 @@ export const routes: Routes = [
     path: 'signup',
     loadComponent: () =>
       import('./pages/signup/signup.page').then((m) => m.SignupPage),
+    resolve: { preUserData: PreUserResolver },
   },
   {
     path: 'signin',
     loadComponent: () =>
       import('./pages/signin/signin.page').then((m) => m.SigninPage),
+    resolve: { preUserData: PreUserResolver },
   },
   {
     path: 'movie/:id',

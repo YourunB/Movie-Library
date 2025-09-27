@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialog } from '../../shared/components/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SignInUpFormData } from '../../../models/dashboard';
 
 @Component({
   selector: 'app-signup.page',
@@ -28,26 +29,34 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatIconModule,
     CommonModule,
     RouterLink,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './signup.page.html',
   styleUrl: './signup.page.scss',
 })
-export class SignupPage {
-  signupForm: FormGroup;
+export class SignupPage implements OnInit {
+  @Input() preUserData!: SignInUpFormData;
+  signupForm!: FormGroup;
   private signupService = inject(SignupService);
   private authService = inject(AuthService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
   isHide = true;
-  constructor() {
+ ngOnInit() {
+    console.log(this.preUserData, 'signup');
     this.signupForm = new FormGroup({
-      email: new FormControl('', {
+      email: new FormControl(this.preUserData ? this.preUserData.email : '', {
         validators: [Validators.required, Validators.email],
       }),
-      password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
+      password: new FormControl(
+        this.preUserData ? this.preUserData.password : '',
+        {
+          validators: [Validators.required, Validators.minLength(6)],
+        }
+      ),
+    });
+    this.signupForm.valueChanges.subscribe((value: SignInUpFormData) => {
+      this.authService.setPreuser(value);
     });
   }
 

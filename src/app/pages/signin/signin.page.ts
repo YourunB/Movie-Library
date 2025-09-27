@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SignInUpFormData } from '../../../models/dashboard';
 
 @Component({
   selector: 'app-signin.page',
@@ -35,24 +36,31 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './signin.page.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class SigninPage {
-  singinForm: FormGroup;
+export class SigninPage implements OnInit {
+  @Input() preUserData!: SignInUpFormData
+  singinForm!: FormGroup;
   private signinService = inject(SigninService);
   private authService = inject(AuthService);
-  private watchlistService = inject(WatchlistService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
   watchListService = inject(WatchlistService);
   isHide = true;
 
-  constructor() {
+  ngOnInit() {
+    console.log(this.preUserData, 'signin');
     this.singinForm = new FormGroup({
-      email: new FormControl('', {
+      email: new FormControl(this.preUserData ? this.preUserData.email : '', {
         validators: [Validators.required, Validators.email],
       }),
-      password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
+      password: new FormControl(
+        this.preUserData ? this.preUserData.password : '',
+        {
+          validators: [Validators.required, Validators.minLength(6)],
+        }
+      ),
+    });
+    this.singinForm.valueChanges.subscribe((value: SignInUpFormData) => {
+      this.authService.setPreuser(value);
     });
   }
 
@@ -96,12 +104,12 @@ export class SigninPage {
 
   onSubmit() {
     if (this.singinForm.valid) {
-      const loginData = this.singinForm.value;
+      const loginData: SignInUpFormData = this.singinForm.value;
       this.signinService
         .signin(loginData.email, loginData.password)
         .then((userCredential) => {
           this.authService.setUser(userCredential.user);
-          this.watchListService.receiveDataBaseOfUserMovies()
+          this.watchListService.receiveDataBaseOfUserMovies();
           this.router.navigate(['./']);
         })
         .catch((error: HttpErrorResponse) => {
