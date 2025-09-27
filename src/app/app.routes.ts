@@ -12,7 +12,7 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    data: { title: 'signup.title' },
+    data: { title: 'sinup.title' },
     loadComponent: () =>
       import('./pages/signup/signup.page').then((m) => m.SignupPage),
     resolve: { preUserData: PreUserResolver },
