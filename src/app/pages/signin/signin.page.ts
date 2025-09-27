@@ -38,7 +38,6 @@ import { PasswordStrengthLineComponent } from '../../shared/components/password-
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    CommonModule,
     RouterLink,
     TranslatePipe,
     PasswordStrengthLineComponent,
