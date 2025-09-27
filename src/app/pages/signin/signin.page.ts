@@ -1,5 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -19,6 +27,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SignInUpFormData } from '../../../models/dashboard';
+import { strongPasswordValidator } from '../../shared/validators/strong-password';
+import { PasswordStrengthLineComponent } from '../../shared/components/password-strengh-line/password-strengh-line';
 
 @Component({
   selector: 'app-signin.page',
@@ -31,15 +41,15 @@ import { SignInUpFormData } from '../../../models/dashboard';
     CommonModule,
     RouterLink,
     TranslatePipe,
+    PasswordStrengthLineComponent,
   ],
   templateUrl: './signin.page.html',
   styleUrl: './signin.page.scss',
   encapsulation: ViewEncapsulation.None,
 })
-
 export class SigninPage implements OnInit {
   @Input() title!: string;
-  @Input() preUserData!: SignInUpFormData
+  @Input() preUserData!: SignInUpFormData;
   singinForm!: FormGroup;
   private signinService = inject(SigninService);
   private authService = inject(AuthService);
@@ -49,7 +59,6 @@ export class SigninPage implements OnInit {
   isHide = true;
 
   ngOnInit() {
-    console.log(this.preUserData, 'signin');
     this.singinForm = new FormGroup({
       email: new FormControl(this.preUserData ? this.preUserData.email : '', {
         validators: [Validators.required, Validators.email],
@@ -58,6 +67,7 @@ export class SigninPage implements OnInit {
         this.preUserData ? this.preUserData.password : '',
         {
           validators: [Validators.required, Validators.minLength(6)],
+          asyncValidators: [strongPasswordValidator()],
         }
       ),
     });
@@ -99,12 +109,22 @@ export class SigninPage implements OnInit {
       return 'Password is required';
     } else if (control?.hasError('minlength')) {
       return 'Password must be at least 6 characters long';
+    } else if (control?.hasError('weakPassword')) {
+      return 'Password is too weak. It must contain uppercase, lowercase, number, special character, and be at least 8 characters long.';
     } else {
       return null;
     }
   }
 
+  @ViewChildren('formFieldInput') inputs!: QueryList<
+    ElementRef<HTMLInputElement>
+  >;
+
   onSubmit() {
+    if (this.singinForm.invalid) {
+      this.focusFirstInvalidControl();
+      return;
+    }
     if (this.singinForm.valid) {
       const loginData: SignInUpFormData = this.singinForm.value;
       this.signinService
@@ -119,6 +139,21 @@ export class SigninPage implements OnInit {
             data: { message: error.message },
           });
         });
+    }
+  }
+
+  private focusFirstInvalidControl() {
+    const invalidControlName = Object.keys(this.singinForm.controls).find(
+      (key) => this.singinForm.get(key)?.invalid
+    );
+
+    if (invalidControlName) {
+      const invalidInput = this.inputs.find(
+        (input) =>
+          input.nativeElement.getAttribute('formcontrolname') ===
+          invalidControlName
+      );
+      invalidInput?.nativeElement.focus();
     }
   }
 }
