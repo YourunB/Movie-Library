@@ -16,6 +16,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { combineLatest, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-gallery',
@@ -45,17 +46,18 @@ export class GalleryPage {
   }
 
   movies = toSignal(
-    this.route.queryParamMap.pipe(
-      map((params) => params.get('q') ?? ''),
-      switchMap((query) =>
-        toObservable(this.tmdb.langRequests).pipe(
-          switchMap(() => this.tmdb.searchMovies(query))
-        )
+    combineLatest([
+      this.route.queryParamMap.pipe(
+        map((params) => params.get('q') ?? ''),
+        distinctUntilChanged()
       ),
+      toObservable(this.tmdb.langRequests)
+    ]).pipe(
+      switchMap(([query]) => this.tmdb.searchMovies(query)),
       map((res: TmdbPage<TmdbMovie>) => res.results ?? [])
     ),
     { initialValue: [] as TmdbMovie[] }
-  );
+  );  
 
   toggleFavorite(movie: MovieCardModel): void {
     this.watchListService

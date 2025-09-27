@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,7 +8,6 @@ import {
   ViewChildren,
   ViewEncapsulation,
 } from '@angular/core';
-
 import {
   FormControl,
   FormGroup,
