@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -33,6 +34,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
   styleUrls: ['./movie.page.scss'],
 })
 export class MoviePage implements OnInit, OnChanges {
+  @Input() title!: string;
   private route = inject(ActivatedRoute);
   private store = inject(Store);
   authService = inject(AuthService);

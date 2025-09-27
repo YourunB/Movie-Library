@@ -34,7 +34,9 @@ import { SignInUpFormData } from '../../../models/dashboard';
   templateUrl: './signup.page.html',
   styleUrl: './signup.page.scss',
 })
+
 export class SignupPage implements OnInit {
+  @Input() title!: string;
   @Input() preUserData!: SignInUpFormData;
   signupForm!: FormGroup;
   private signupService = inject(SignupService);

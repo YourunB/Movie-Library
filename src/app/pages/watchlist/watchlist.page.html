@@ -1,4 +1,7 @@
-<main class="main">
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main>
   @if (watchlistSignals.favorites(); as movies) { @if (movies.length > 0) {
   <h2 class="title">{{ "watchlist.title" | translate }}</h2>
   <div class="gallery-grid">

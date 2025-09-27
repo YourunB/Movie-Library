@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
 import { TmdbMovie, TmdbPage } from '../../../models/dashboard';
@@ -32,6 +32,7 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
   styleUrls: ['./gallery.page.scss'],
 })
 export class GalleryPage {
+  @Input() title!: string;
   public route = inject(ActivatedRoute);
   public tmdb = inject(TmdbService);
   watchListService = inject(WatchlistService);

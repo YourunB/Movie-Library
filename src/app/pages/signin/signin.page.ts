@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -36,7 +36,9 @@ import { SignInUpFormData } from '../../../models/dashboard';
   styleUrl: './signin.page.scss',
   encapsulation: ViewEncapsulation.None,
 })
+
 export class SigninPage implements OnInit {
+  @Input() title!: string;
   @Input() preUserData!: SignInUpFormData
   singinForm!: FormGroup;
   private signinService = inject(SigninService);

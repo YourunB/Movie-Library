@@ -42,6 +42,7 @@ window.addEventListener('unhandledrejection', (event) => {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes, withComponentInputBinding()),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
@@ -64,7 +65,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects([DashboardEffects]),
     provideAnimations(),
-    provideRouter(routes, withComponentInputBinding()),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: './i18n/',
