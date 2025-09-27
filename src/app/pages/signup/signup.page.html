@@ -1,61 +1,93 @@
 <head>
   <title>{{ title | translate }}</title>
 </head>
-<main class="signup-page">
-  <form [formGroup]="signupForm" class="signup-form" (ngSubmit)="onSubmit()">
-    <p class="signup-form-title">{{ "sinup.title" | translate }}</p>
+
+<main class="signup-page" role="main" aria-labelledby="signup-title">
+  <form
+    [formGroup]="signupForm"
+    class="signup-form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <p id="signup-title" class="signup-form-title">
+      {{ "sinup.title" | translate }}
+    </p>
+
+    <!-- Email -->
     <mat-form-field>
       <mat-label>{{ "sinup.email" | translate }}</mat-label>
       <input
+        #formFieldInput
         matInput
         type="email"
         formControlName="email"
         autocomplete="email"
-        (input)="markEmailAsTouched()"
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="signupForm.get('email')?.invalid"
+        [attr.aria-describedby]="
+          signupForm.get('email')?.invalid ? 'email-error' : null
+        "
+        cdkFocusInitial
       />
-      @if ( signupForm.get("email")?.invalid ) {
-      <mat-error>
+      @if (signupForm.get("email")?.invalid) {
+      <mat-error id="email-error" role="alert">
         {{ userEmailErrors() }}
       </mat-error>
       }
     </mat-form-field>
+
+    <!-- Password -->
     <mat-form-field>
       <mat-label>{{ "sinup.password" | translate }}</mat-label>
       <input
+        #formFieldInput
         matInput
         [type]="isHide ? 'password' : 'text'"
         formControlName="password"
         autocomplete="current-password"
-        (input)="markPasswordAsTouched()"
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="signupForm.get('password')?.invalid"
+        [attr.aria-describedby]="
+          signupForm.get('password')?.invalid ? 'password-error' : null
+        "
       />
       <button
-        matIconButton
+        mat-icon-button
         matSuffix
+        type="button"
         (click)="hidePassword($event)"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="isHide"
+        [attr.aria-label]="isHide ? 'Show password' : 'Hide password'"
+        [attr.aria-pressed]="!isHide"
       >
         <mat-icon>{{ isHide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-
       @if (signupForm.get("password")?.invalid) {
-      <mat-error>
+      <mat-error id="password-error" role="alert">
         {{ passWordErrors() }}
       </mat-error>
-      } </mat-form-field
-    ><app-password-strength-line
+      }
+    </mat-form-field>
+
+    <app-password-strength-line
       [password]="signupForm.get('password')?.value || ''"
     ></app-password-strength-line>
+
     <button
       class="signup-button"
-      mat-button="elevated"
+      mat-raised-button
+      color="primary"
       [disabled]="signupForm.invalid"
+      [attr.aria-disabled]="signupForm.invalid"
+      type="submit"
     >
       {{ "sinup.register" | translate }}
     </button>
+
     <div class="signup-links">
       <p>{{ "sinup.account" | translate }}</p>
-      <a [routerLink]="['/signin']">{{ "sinup.signin" | translate }}</a>
+      <a [routerLink]="['/signin']" aria-label="Go to signin page">
+        {{ "sinup.signin" | translate }}
+      </a>
     </div>
   </form>
 </main>

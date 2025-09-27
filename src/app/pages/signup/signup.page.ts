@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -32,12 +40,11 @@ import { PasswordStrengthLineComponent } from '../../shared/components/password-
     CommonModule,
     RouterLink,
     TranslatePipe,
-    PasswordStrengthLineComponent
+    PasswordStrengthLineComponent,
   ],
   templateUrl: './signup.page.html',
   styleUrl: './signup.page.scss',
 })
-
 export class SignupPage implements OnInit {
   @Input() title!: string;
   @Input() preUserData!: SignInUpFormData;
@@ -65,6 +72,10 @@ export class SignupPage implements OnInit {
       this.authService.setPreuser(value);
     });
   }
+
+  @ViewChildren('formFieldInput') inputs!: QueryList<
+    ElementRef<HTMLInputElement>
+  >;
 
   hidePassword(event: MouseEvent) {
     console.log(event.type);
@@ -107,6 +118,10 @@ export class SignupPage implements OnInit {
   }
 
   onSubmit() {
+    if (this.signupForm.invalid) {
+      this.focusFirstInvalidControl();
+      return;
+    }
     if (this.signupForm.valid) {
       const signupData = this.signupForm.value;
       this.signupService
@@ -122,6 +137,25 @@ export class SignupPage implements OnInit {
             data: { message: error.message },
           });
         });
+    }
+  }
+
+  private focusFirstInvalidControl() {
+    const invalidControlName = Object.keys(this.signupForm.controls).find(
+      (key) => this.signupForm.get(key)?.invalid
+    );
+
+    if (invalidControlName) {
+      const invalidInput = this.inputs.find(
+        (input) =>
+          input.nativeElement.getAttribute('formcontrolname') ===
+          invalidControlName
+      );
+      invalidInput?.nativeElement.focus();
+      invalidInput?.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
     }
   }
 }
