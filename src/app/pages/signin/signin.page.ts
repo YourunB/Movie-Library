@@ -60,7 +60,6 @@ export class SigninPage implements OnInit {
   isHide = true;
 
   ngOnInit() {
-    console.log(this.preUserData, 'signin');
     this.singinForm = new FormGroup({
       email: new FormControl(this.preUserData ? this.preUserData.email : '', {
         validators: [Validators.required, Validators.email],

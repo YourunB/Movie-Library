@@ -55,7 +55,6 @@ export class SignupPage implements OnInit {
   private dialogError = inject(MatDialog);
   isHide = true;
   ngOnInit() {
-    console.log(this.preUserData, 'signup');
     this.signupForm = new FormGroup({
       email: new FormControl(this.preUserData ? this.preUserData.email : '', {
         validators: [Validators.required, Validators.email],
