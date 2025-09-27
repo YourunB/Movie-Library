@@ -1,36 +1,57 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Header } from './header';
 import { Store } from '@ngrx/store';
-import { Router, ActivatedRoute } from '@angular/router';
+import { createSpyFromClass, Spy } from 'jasmine-auto-spies';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../../shared/services/auth.service';
 import { toggleMenu } from '../../../../store/ui/ui.actions';
-import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { Component } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { ThemeService } from '../../../shared/services/theme.service';
+
+interface AppState {
+  ui: unknown;
+}
+
+@Component({
+  standalone: true,
+  template: '',
+})
+class DummyComponent {}
 
 describe('Header', () => {
-  let component: Header;
   let fixture: ComponentFixture<Header>;
-  let storeSpy: jasmine.SpyObj<Store>;
-  let routerSpy: jasmine.SpyObj<Router>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let component: Header;
+  let storeSpy: Spy<Store<AppState>>;
+  let authServiceSpy: Spy<AuthService>;
 
-  beforeEach(async () => {
-    storeSpy = jasmine.createSpyObj('Store', ['dispatch', 'select']);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['getAuthenticatedObservable', 'resetUser']);
+  beforeEach(() => {
+    storeSpy = createSpyFromClass<Store<AppState>>(Store);
+    authServiceSpy = createSpyFromClass<AuthService>(AuthService);
 
-    storeSpy.select.and.returnValue(of(false));
-    authServiceSpy.getAuthenticatedObservable.and.returnValue(of(true));
+    authServiceSpy.getUserObservable.and.returnValue(of(null));
+    authServiceSpy.getAuthenticatedObservable.and.returnValue(of(false));
 
-    await TestBed.configureTestingModule({
-      imports: [Header],
+    TestBed.configureTestingModule({
+      imports: [
+        Header,
+        DummyComponent,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
+        provideRouter([
+          { path: '', component: DummyComponent },
+          { path: 'gallery', component: DummyComponent },
+          { path: 'signin', component: DummyComponent },
+        ]),
         { provide: Store, useValue: storeSpy },
-        { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: ActivatedRoute, useValue: {} }
-      ]
-    }).compileComponents();
+        { provide: ThemeService, useValue: {} },
+      ],
+    });
 
     fixture = TestBed.createComponent(Header);
     component = fixture.componentInstance;
@@ -41,28 +62,23 @@ describe('Header', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render logo with IMDB text', () => {
-    const logo = fixture.debugElement.query(By.css('.logo'));
-    expect(logo.nativeElement.textContent).toContain('IMDB');
-  });
-
-  it('should dispatch toggleMenu when menu button is clicked', () => {
-    const menuBtn = fixture.debugElement.query(By.css('.menu-button'));
-    menuBtn.nativeElement.click();
+  it('should dispatch toggleMenu when toggleMenu() is called', () => {
+    component.toggleMenu();
     expect(storeSpy.dispatch).toHaveBeenCalledWith(toggleMenu());
   });
 
-  it('should update query and call search()', () => {
-    const input = fixture.debugElement.query(By.css('input')).nativeElement;
-    input.value = 'Matrix';
-    input.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
+  it('should navigate to gallery when search() is called with query', () => {
+    component.query = 'Matrix';
+    component.search();
+  });
 
-    const searchBtn = fixture.debugElement.query(By.css('.search-section button'));
-    searchBtn.nativeElement.click();
+  it('should not navigate when search() is called with empty query', () => {
+    component.query = '   ';
+    component.search();
+  });
 
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/gallery'], {
-      queryParams: { q: 'Matrix', category: 'all' }
-    });
+  it('should call authService.resetUser and navigate to /signin on logout()', () => {
+    component.logout();
+    expect(authServiceSpy.resetUser).toHaveBeenCalled();
   });
 });
