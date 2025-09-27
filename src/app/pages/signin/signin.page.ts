@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -36,6 +36,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class SigninPage {
+  @Input() title!: string;
   singinForm: FormGroup;
   private signinService = inject(SigninService);
   private authService = inject(AuthService);

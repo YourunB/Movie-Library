@@ -1,3 +1,6 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
 <main>
   @if (watchlistSignals.favorites(); as movies) { @if (movies.length > 0) {
   <h2>{{ "watchlist.title" | translate }}</h2>
