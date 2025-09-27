@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PasswordStrenghLine } from './password-strengh-line';
+import { PasswordStrengthLineComponent } from './password-strengh-line';
 
 describe('PasswordStrenghLine', () => {
-  let component: PasswordStrenghLine;
-  let fixture: ComponentFixture<PasswordStrenghLine>;
+  let component: PasswordStrengthLineComponent;
+  let fixture: ComponentFixture<PasswordStrengthLineComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PasswordStrenghLine]
+      imports: [PasswordStrengthLineComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordStrenghLine);
+    fixture = TestBed.createComponent(PasswordStrengthLineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
