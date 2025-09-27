@@ -15,7 +15,9 @@ export class AuthService {
     false
   );
 
-
+  getUser(): User | null {
+    return this.userSubject.value;
+  }
   setUser(user: User) {
     this.userSubject.next(user);
     this.authenticatedSubject.next(true);

@@ -107,8 +107,11 @@ export class MoviePage implements OnInit, OnChanges {
     })
   );
 
-  cast$ = this.route.paramMap.pipe(
-    switchMap((params) => {
+  cast$ = combineLatest([
+    this.route.paramMap,
+    toObservable(this.tmdb.langRequests),
+  ]).pipe(
+    switchMap(([params]) => {
       const id = params.get('id');
       if (!id) return of([]);
       return this.tmdb.getMovieCredits(Number(id)).pipe(map((r) => r.cast));
