@@ -1,3 +1,6 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
 <section class="person-section" *ngIf="person() as p">
   <div class="header">
     <img [src]="imgUrl()" [alt]="p.name" />

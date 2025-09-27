@@ -1,3 +1,6 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
 <main class="login-page" role="main" aria-labelledby="login-title">
   <form [formGroup]="singinForm" class="login-form" (ngSubmit)="onSubmit()" novalidate>
     <p id="login-title" class="form-title">{{ "sinin.title" | translate }}</p>

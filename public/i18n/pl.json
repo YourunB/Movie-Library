@@ -66,13 +66,20 @@
     "title": "Galeria filmów",
     "empty": "Nic nie znaleziono"
   },
+  "person-page": {
+    "title": "Aktor"
+  },
+  "home-page": {
+    "title": "Głównаy"
+  },
   "movie-page": {
     "release": "Wydanie",
     "trailer": "Przyczepa",
     "trailer-none": "Przyczepa niedostępna.",
     "cast": "Obsada",
     "cast-empty": "Brak dostępnych informacji o obsadzie.",
-    "loading": "Ładowanie tytułu..."
+    "loading": "Ładowanie tytułu...",
+    "title": "Informacje"
   },
   "notfound-page": "Strona nie została znaleziona",
   "sinin": {

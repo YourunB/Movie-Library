@@ -49,6 +49,7 @@ import { PasswordStrengthLineComponent } from '../../shared/components/password-
   encapsulation: ViewEncapsulation.None,
 })
 export class SigninPage implements OnInit {
+  @Input() title!: string;
   @Input() preUserData!: SignInUpFormData;
   singinForm!: FormGroup;
   private signinService = inject(SigninService);
@@ -117,7 +118,9 @@ export class SigninPage implements OnInit {
     }
   }
 
-  @ViewChildren('formFieldInput') inputs!: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChildren('formFieldInput') inputs!: QueryList<
+    ElementRef<HTMLInputElement>
+  >;
 
   onSubmit() {
     if (this.singinForm.invalid) {
