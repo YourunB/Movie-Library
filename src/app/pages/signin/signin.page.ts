@@ -29,6 +29,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SignInUpFormData } from '../../../models/dashboard';
 import { strongPasswordValidator } from '../../shared/validators/strong-password';
 import { PasswordStrengthLineComponent } from '../../shared/components/password-strengh-line/password-strengh-line';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signin.page',
@@ -72,6 +73,17 @@ export class SigninPage implements OnInit {
       ),
     });
     this.singinForm.valueChanges.subscribe((value: SignInUpFormData) => {
+      this.authService.setPreuser(value);
+    });
+    if (!this.preUserData) {
+      const draft = localStorage.getItem('signinForm');
+      if (draft) {
+        this.singinForm.patchValue(JSON.parse(draft));
+      }
+    }
+
+    this.singinForm.valueChanges.subscribe((value) => {
+      localStorage.setItem('signinForm', JSON.stringify(value));
       this.authService.setPreuser(value);
     });
   }
@@ -132,6 +144,7 @@ export class SigninPage implements OnInit {
         .then((userCredential) => {
           this.authService.setUser(userCredential.user);
           this.watchListService.receiveDataBaseOfUserMovies();
+          localStorage.removeItem('signinForm');
           this.router.navigate(['./']);
         })
         .catch((error: HttpErrorResponse) => {

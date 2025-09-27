@@ -70,6 +70,16 @@ export class SignupPage implements OnInit {
     this.signupForm.valueChanges.subscribe((value: SignInUpFormData) => {
       this.authService.setPreuser(value);
     });
+    const draft = localStorage.getItem('signupForm');
+    if (!this.preUserData) {
+      if (draft) {
+        this.signupForm.patchValue(JSON.parse(draft));
+      }
+    }
+
+    this.signupForm.valueChanges.subscribe((value) => {
+      localStorage.setItem('signupForm', JSON.stringify(value));
+    });
   }
 
   @ViewChildren('formFieldInput') inputs!: QueryList<
@@ -128,6 +138,7 @@ export class SignupPage implements OnInit {
         .then((userCredential) => {
           localStorage.setItem('userUID', userCredential.user.uid);
           this.authService.setUser(userCredential.user);
+          localStorage.removeItem('signupForm');
           this.router.navigate(['/']);
         })
         .catch((error: HttpErrorResponse) => {
