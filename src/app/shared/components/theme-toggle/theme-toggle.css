@@ -1,0 +1,19 @@
+.theme-toggle-btn {
+  transition: all 0.3s ease;
+}
+.theme-toggle-btn .theme-icon {
+  transition: transform 0.3s ease;
+}
+.theme-toggle-btn:hover .theme-icon {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:active .theme-icon {
+  transform: scale(0.95);
+}
+
+.light-theme :host {
+  color: var(--primary-color);
+}
+.dark-theme :host {
+  color: var(--accent-color);
+}/*# sourceMappingURL=theme-toggle.css.map */
