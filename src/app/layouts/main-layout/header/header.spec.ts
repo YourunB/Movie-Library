@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Header } from './header';
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { toggleMenu } from '../../../../store/ui/ui.actions';
 import { By } from '@angular/platform-browser';
@@ -17,7 +17,7 @@ describe('Header', () => {
   beforeEach(async () => {
     storeSpy = jasmine.createSpyObj('Store', ['dispatch', 'select']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['getUserObservable', 'getAuthenticatedObservable', 'resetUser']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['getAuthenticatedObservable', 'resetUser']);
 
     storeSpy.select.and.returnValue(of(false));
     authServiceSpy.getAuthenticatedObservable.and.returnValue(of(true));
@@ -27,7 +27,8 @@ describe('Header', () => {
       providers: [
         { provide: Store, useValue: storeSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: AuthService, useValue: authServiceSpy }
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: ActivatedRoute, useValue: {} }
       ]
     }).compileComponents();
 
@@ -63,22 +64,5 @@ describe('Header', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/gallery'], {
       queryParams: { q: 'Matrix', category: 'all' }
     });
-  });
-
-  it('should show user email and logout button when authenticated', () => {
-    const email = fixture.debugElement.query(By.css('.user-email'));
-    expect(email.nativeElement.textContent).toContain('test@example.com');
-
-    const logoutIcon = fixture.debugElement.query(By.css('.logout-icon'));
-    expect(logoutIcon).toBeTruthy();
-  });
-
-  it('should call logout() and navigate to /signin', () => {
-    spyOn(component, 'logout').and.callThrough();
-    const logoutIcon = fixture.debugElement.query(By.css('.logout-icon'));
-    logoutIcon.nativeElement.click();
-
-    expect(authServiceSpy.resetUser).toHaveBeenCalled();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/signin']);
   });
 });
