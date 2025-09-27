@@ -1,12 +1,14 @@
 // person.page.spec.ts
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { BehaviorSubject, of, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, of, Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap, convertToParamMap } from '@angular/router';
 import { PersonPage } from './person.page';
 import { TmdbService } from '../../../services/dashboard/tmdb.service';
-import { TranslateService } from '@ngx-translate/core';
 import { signal, WritableSignal } from '@angular/core';
 import { TmdbPerson } from '../../../models/dashboard';
+import { Pipe, PipeTransform } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 
 class MockActivatedRoute {
   private subject: BehaviorSubject<ParamMap>;
@@ -22,35 +24,19 @@ class MockActivatedRoute {
   }
 }
 
-class MockTranslateService {
-  onLangChange = new Subject<unknown>();
-  onDefaultLangChange = new Subject<unknown>();
-  onTranslationChange = new Subject<unknown>();
-
-  get(key: unknown): Observable<string> {
-    return of(String(key));
-  }
-  instant(key: unknown): string {
-    return String(key);
-  }
-  stream(key: unknown): Observable<string> {
-    return this.get(key);
-  }
-}
-
 class MockTmdbService {
   langRequests: WritableSignal<number> = signal(0);
 
-  img = jasmine.createSpy<
-    (path: string | null | undefined, size: string) => string | null
-  >('img').and.callFake((path: string | null | undefined, size: string) => {
+  private static mockImg(path: string | null | undefined, size: string): string | null {
     return path ? `//image.tmdb.org/t/p/${size}${path.startsWith('/') ? '' : '/'}${path}` : null;
-  });
+  }
 
-  getPersonDetails = jasmine.createSpy<(id: number) => Observable<TmdbPerson>>(
-    'getPersonDetails'
-  ).and.callFake((id: number) => {
-    const person = {
+  img = jasmine
+    .createSpy<(path: string | null | undefined, size: string) => string | null>('img')
+    .and.callFake(MockTmdbService.mockImg);
+
+  private static mockPerson(id: number): TmdbPerson {
+    return {
       id,
       name: 'Keanu Reeves',
       profile_path: '/abc.jpg',
@@ -58,9 +44,19 @@ class MockTmdbService {
       place_of_birth: 'Beirut, Lebanon',
       biography: 'An actor known for many films.',
     } as TmdbPerson;
-    return of(person);
-  });
+  }
+
+  getPersonDetails = jasmine
+    .createSpy<(id: number) => Observable<TmdbPerson>>('getPersonDetails')
+    .and.callFake((id: number) => of(MockTmdbService.mockPerson(id)));
 }
+@Pipe({ name: 'translate', standalone: true })
+class DummyTranslatePipe implements PipeTransform {
+  transform(value: unknown): string {
+    return String(value ?? '');
+  }
+}
+
 
 describe('PersonPage', () => {
   let fixture: ComponentFixture<PersonPage>;
@@ -72,13 +68,19 @@ describe('PersonPage', () => {
     route = new MockActivatedRoute({ id: '123' });
 
     await TestBed.configureTestingModule({
-      imports: [PersonPage], 
+      imports: [PersonPage],
       providers: [
         { provide: ActivatedRoute, useValue: route },
         { provide: TmdbService, useClass: MockTmdbService },
-        { provide: TranslateService, useClass: MockTranslateService },
       ],
-    }).compileComponents();
+    })
+      // Replace real TranslatePipe with a simple dummy pipe
+      .overrideComponent(PersonPage, {
+        set: {
+          imports: [CommonModule, DummyTranslatePipe],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(PersonPage);
     component = fixture.componentInstance;
@@ -146,7 +148,7 @@ describe('PersonPage', () => {
   }));
 
   it('should use placeholder image when tmdb.img returns null or profile_path is missing', fakeAsync(() => {
-    (tmdb.img as jasmine.Spy).and.returnValue(null);
+    (tmdb.img as jasmine.Spy).and.callFake(() => null);
 
     (tmdb.getPersonDetails as jasmine.Spy).and.returnValue(
       of({
@@ -171,7 +173,7 @@ describe('PersonPage', () => {
         name: 'Minimal Person',
         profile_path: '/x.jpg',
         biography: 'Short bio',
-        known_for_department: null as unknown as string, 
+        known_for_department: null as unknown as string,
         place_of_birth: null as unknown as string,
       } as TmdbPerson)
     );
