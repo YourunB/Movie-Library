@@ -1,4 +1,3 @@
-// vpn-info-banner.spec.ts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
