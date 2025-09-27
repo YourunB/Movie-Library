@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -34,6 +34,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './signup.page.scss',
 })
 export class SignupPage {
+  @Input() title!: string;
   signupForm: FormGroup;
   private signupService = inject(SignupService);
   private authService = inject(AuthService);

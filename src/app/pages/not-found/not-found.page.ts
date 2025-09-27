@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -10,4 +10,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './not-found.page.html',
   styleUrl: './not-found.page.scss',
 })
-export class NotFoundPage {}
+export class NotFoundPage {
+  @Input() title!: string;
+}

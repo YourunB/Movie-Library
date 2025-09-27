@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { TradingMovies } from '../../layouts/main-layout/trading-movies/trading-movies';
 import { NowPlayingMovies } from '../../layouts/main-layout/now-playing-movies/now-playing-movies';
 import { PopularPeopleSlider } from '../../layouts/main-layout/popular-slider/popular-slider';
@@ -25,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './home.page.scss',
 })
 export class HomePage {
+  @Input() title!: string;
 
   counter = 0;
 

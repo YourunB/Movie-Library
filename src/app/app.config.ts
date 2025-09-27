@@ -11,7 +11,7 @@ import {
 } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import { uiReducer } from '../store/ui/ui.reducer';
 import { dashboardReducer } from '../store/dashboard/dashboard.reducer';
@@ -42,6 +42,7 @@ window.addEventListener('unhandledrejection', (event) => {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes, withComponentInputBinding()),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
@@ -64,7 +65,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects([DashboardEffects]),
     provideAnimations(),
-    provideRouter(routes),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: './i18n/',
