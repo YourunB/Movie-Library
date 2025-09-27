@@ -16,3 +16,7 @@ export const loadListOfMovies = createAction(
   props<{ movies: TmdbMovie[] }>()
 );
 
+export const emptyListOfMovies = createAction(
+  '[Watchlist] Reload list of favorite Movies'
+);
+

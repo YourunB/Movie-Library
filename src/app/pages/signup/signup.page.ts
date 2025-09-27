@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,6 +25,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialog } from '../../shared/components/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SignInUpFormData } from '../../../models/dashboard';
+import { strongPasswordValidator } from '../../shared/validators/strong-password';
+import { PasswordStrengthLineComponent } from '../../shared/components/password-strengh-line/password-strengh-line';
 
 @Component({
   selector: 'app-signup.page',
@@ -28,28 +39,42 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatIconModule,
     CommonModule,
     RouterLink,
-    TranslatePipe
+    TranslatePipe,
+    PasswordStrengthLineComponent,
   ],
   templateUrl: './signup.page.html',
   styleUrl: './signup.page.scss',
 })
-export class SignupPage {
-  signupForm: FormGroup;
+export class SignupPage implements OnInit {
+  @Input() title!: string;
+  @Input() preUserData!: SignInUpFormData;
+  signupForm!: FormGroup;
   private signupService = inject(SignupService);
   private authService = inject(AuthService);
   private router = inject(Router);
   private dialogError = inject(MatDialog);
   isHide = true;
-  constructor() {
+  ngOnInit() {
     this.signupForm = new FormGroup({
-      email: new FormControl('', {
+      email: new FormControl(this.preUserData ? this.preUserData.email : '', {
         validators: [Validators.required, Validators.email],
       }),
-      password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
+      password: new FormControl(
+        this.preUserData ? this.preUserData.password : '',
+        {
+          validators: [Validators.required, Validators.minLength(6)],
+          asyncValidators: [strongPasswordValidator()],
+        }
+      ),
+    });
+    this.signupForm.valueChanges.subscribe((value: SignInUpFormData) => {
+      this.authService.setPreuser(value);
     });
   }
+
+  @ViewChildren('formFieldInput') inputs!: QueryList<
+    ElementRef<HTMLInputElement>
+  >;
 
   hidePassword(event: MouseEvent) {
     console.log(event.type);
@@ -84,12 +109,18 @@ export class SignupPage {
       return 'Password is required';
     } else if (control?.hasError('minlength')) {
       return 'Password must be at least 6 characters long';
+    } else if (control?.hasError('weakPassword')) {
+      return 'Password is too weak. It must contain uppercase, lowercase, number, special character, and be at least 8 characters long.';
     } else {
       return null;
     }
   }
 
   onSubmit() {
+    if (this.signupForm.invalid) {
+      this.focusFirstInvalidControl();
+      return;
+    }
     if (this.signupForm.valid) {
       const signupData = this.signupForm.value;
       this.signupService
@@ -102,9 +133,28 @@ export class SignupPage {
         .catch((error: HttpErrorResponse) => {
           console.log(error);
           this.dialogError.open(ErrorDialog, {
-            data: { message: error.name },
+            data: { message: error.message },
           });
         });
+    }
+  }
+
+  private focusFirstInvalidControl() {
+    const invalidControlName = Object.keys(this.signupForm.controls).find(
+      (key) => this.signupForm.get(key)?.invalid
+    );
+
+    if (invalidControlName) {
+      const invalidInput = this.inputs.find(
+        (input) =>
+          input.nativeElement.getAttribute('formcontrolname') ===
+          invalidControlName
+      );
+      invalidInput?.nativeElement.focus();
+      invalidInput?.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
     }
   }
 }

@@ -1,4 +1,7 @@
-<section class="person-section" *ngIf="person() as p">
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main class="person-section" *ngIf="person() as p">
   <div class="header">
     <img [src]="imgUrl()" [alt]="p.name" />
     <div class="meta">
@@ -8,4 +11,4 @@
     </div>
   </div>
   <p class="bio" *ngIf="p.biography">{{ p.biography }}</p>
-</section>
+</main>

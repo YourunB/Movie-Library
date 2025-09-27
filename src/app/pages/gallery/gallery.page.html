@@ -1,5 +1,8 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
 <main>
-  <h2>{{ "gallery-page.title" | translate }}</h2>
+  <h2 class="title">{{ "gallery-page.title" | translate }}</h2>
 
   @if (movies(); as movies) {
     @if (movies.length > 0) {

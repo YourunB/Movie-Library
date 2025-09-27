@@ -11,7 +11,7 @@ import {
 } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import { uiReducer } from '../store/ui/ui.reducer';
 import { dashboardReducer } from '../store/dashboard/dashboard.reducer';
@@ -23,9 +23,7 @@ import { environment } from '../environments/environment';
 import { watchlistReducer } from '../store/watchlist/watchlist.reducer';
 import * as Sentry from '@sentry/browser';
 import { provideTranslateService } from '@ngx-translate/core';
-import {
-  provideTranslateHttpLoader,
-} from '@ngx-translate/http-loader';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 Sentry.init({
   dsn: 'https://6f9f051afc78ec016604474bda76db2e@o4510075404943360.ingest.de.sentry.io/4510075406647376',
@@ -42,6 +40,15 @@ window.addEventListener('unhandledrejection', (event) => {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      }),
+      withRouterConfig({ onSameUrlNavigation: 'reload' })
+    ),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(
@@ -64,7 +71,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects([DashboardEffects]),
     provideAnimations(),
-    provideRouter(routes),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: './i18n/',

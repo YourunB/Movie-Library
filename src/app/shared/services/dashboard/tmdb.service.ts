@@ -33,7 +33,7 @@ interface TmdbMovieDetails {
   videos?: TmdbVideos;
 }
 
-const languageMap: Record<string, string> = {
+export const languageMap: Record<string, string> = {
   en: 'en-US',
   ru: 'ru-RU',
   pl: 'pl-PL',

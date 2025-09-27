@@ -4,9 +4,10 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadMovieById } from '../../../store/dashboard/dashboard.actions';
 import {
@@ -28,11 +29,12 @@ import { toObservable } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-movie',
   standalone: true,
-  imports: [CommonModule, MatIcon, ScrollingModule, TranslatePipe],
+  imports: [CommonModule, MatIcon, ScrollingModule, TranslatePipe, RouterLink],
   templateUrl: './movie.page.html',
   styleUrls: ['./movie.page.scss'],
 })
 export class MoviePage implements OnInit, OnChanges {
+  @Input() title!: string;
   private route = inject(ActivatedRoute);
   private store = inject(Store);
   authService = inject(AuthService);
@@ -107,8 +109,11 @@ export class MoviePage implements OnInit, OnChanges {
     })
   );
 
-  cast$ = this.route.paramMap.pipe(
-    switchMap((params) => {
+  cast$ = combineLatest([
+    this.route.paramMap,
+    toObservable(this.tmdb.langRequests),
+  ]).pipe(
+    switchMap(([params]) => {
       const id = params.get('id');
       if (!id) return of([]);
       return this.tmdb.getMovieCredits(Number(id)).pipe(map((r) => r.cast));

@@ -1,36 +1,79 @@
-<main class="login-page">
-  <form [formGroup]="singinForm" class="login-form" (ngSubmit)="onSubmit()">
-    <p class="form-title">{{ "sinin.title" | translate }}</p>
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main class="login-page" role="main" aria-labelledby="login-title">
+  <form [formGroup]="singinForm" class="login-form" (ngSubmit)="onSubmit()" novalidate>
+    <p id="login-title" class="form-title">{{ "sinin.title" | translate }}</p>
+
+   
     <mat-form-field>
       <mat-label>{{ "sinin.email" | translate }}</mat-label>
-      <input matInput type="email" formControlName="email" autocomplete="email" (input)="markEmailAsTouched()" />
-      @if ( singinForm.get("email")?.invalid
-      ) {
-      <mat-error>
-        {{ userEmailErrors() }}
-      </mat-error>
+      <input
+        #formFieldInput
+        matInput
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="singinForm.get('email')?.invalid"
+        [attr.aria-describedby]="singinForm.get('email')?.invalid ? 'email-error' : null"
+      />
+      @if (singinForm.get("email")?.invalid) {
+        <mat-error id="email-error" role="alert">
+          {{ userEmailErrors() }}
+        </mat-error>
       }
     </mat-form-field>
+
     <mat-form-field>
       <mat-label>{{ "sinin.password" | translate }}</mat-label>
-      <input matInput [type]="isHide ? 'password' : 'text'" formControlName="password" autocomplete="current-password"
-        (input)="markPasswordAsTouched()" />
-      <button matIconButton matSuffix (click)="hidePassword($event)" [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="isHide">
+      <input
+        #formFieldInput
+        matInput
+        [type]="isHide ? 'password' : 'text'"
+        formControlName="password"
+        autocomplete="current-password"
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="singinForm.get('password')?.invalid"
+        [attr.aria-describedby]="singinForm.get('password')?.invalid ? 'password-error' : null"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hidePassword($event)"
+        [attr.aria-label]="isHide ? 'Show password' : 'Hide password'"
+        [attr.aria-pressed]="!isHide"
+      >
         <mat-icon>{{ isHide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
       @if (singinForm.get("password")?.invalid) {
-      <mat-error>
-        {{ passWordErrors() }}
-      </mat-error>
+        <mat-error id="password-error" role="alert">
+          {{ passWordErrors() }}
+        </mat-error>
       }
     </mat-form-field>
-    <button class="login-button" mat-button="elevated" [disabled]="singinForm.invalid">
+
+    <app-password-strength-line
+      [password]="singinForm.get('password')?.value || ''"
+    ></app-password-strength-line>
+
+    <button
+      class="login-button"
+      mat-raised-button
+      color="primary"
+      [disabled]="singinForm.invalid"
+      [attr.aria-disabled]="singinForm.invalid"
+      type="submit"
+    >
       {{ "sinin.login" | translate }}
     </button>
+
     <div class="login-links">
       <p>{{ "sinin.account" | translate }}</p>
-      <a [routerLink]="['/signup']">{{ "sinin.signup" | translate }}</a>
+      <a [routerLink]="['/signup']" aria-label="Go to signup page">
+        {{ "sinin.signup" | translate }}
+      </a>
     </div>
   </form>
 </main>

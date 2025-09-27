@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -25,6 +25,8 @@ import { Developer } from '../../../models/dashboard';
 })
 
 export class AboutPage {
+  @Input() title!: string;
+
   creationDate = '2025';
 
   projectDescription = `

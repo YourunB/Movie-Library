@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../shared/services/dashboard/tmdb.service';
 import { TmdbMovie, TmdbPage } from '../../../models/dashboard';
@@ -16,6 +16,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { WatchlistService } from '../../shared/services/watchlist.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { combineLatest, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-gallery',
@@ -32,6 +33,7 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
   styleUrls: ['./gallery.page.scss'],
 })
 export class GalleryPage {
+  @Input() title!: string;
   public route = inject(ActivatedRoute);
   public tmdb = inject(TmdbService);
   watchListService = inject(WatchlistService);
@@ -44,17 +46,18 @@ export class GalleryPage {
   }
 
   movies = toSignal(
-    this.route.queryParamMap.pipe(
-      map((params) => params.get('q') ?? ''),
-      switchMap((query) =>
-        toObservable(this.tmdb.langRequests).pipe(
-          switchMap(() => this.tmdb.searchMovies(query))
-        )
+    combineLatest([
+      this.route.queryParamMap.pipe(
+        map((params) => params.get('q') ?? ''),
+        distinctUntilChanged()
       ),
+      toObservable(this.tmdb.langRequests)
+    ]).pipe(
+      switchMap(([query]) => this.tmdb.searchMovies(query)),
       map((res: TmdbPage<TmdbMovie>) => res.results ?? [])
     ),
     { initialValue: [] as TmdbMovie[] }
-  );
+  );  
 
   toggleFavorite(movie: MovieCardModel): void {
     this.watchListService

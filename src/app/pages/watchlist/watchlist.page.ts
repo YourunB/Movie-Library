@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -27,11 +27,12 @@ import { TranslatePipe } from '@ngx-translate/core';
     MovieCardComponent,
     PosterUrlPipe,
     TranslatePipe,
-  ],
+],
   templateUrl: './watchlist.page.html',
   styleUrl: './watchlist.page.scss',
 })
 export class WatchlistPage {
+  @Input() title!: string;
   public tmdb = inject(TmdbService);
   authService = inject(AuthService);
   watchListService = inject(WatchlistService);
