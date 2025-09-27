@@ -10,11 +10,9 @@ import { TrailerModal } from '../../../shared/components/trailer-modal/trailer-m
 import { TranslateModule, TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-/** ---- Minimal helpers & test types (no `any`) ---- */
-
 class MockTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<TranslationObject> {
-    void lang; // silence eslint
+    void lang;
     return of({} as TranslationObject);
   }
 }
@@ -49,7 +47,6 @@ interface CarouselLike {
   activeIndex: number | (() => number);
 }
 
-/** Test-only view onto private members/methods. */
 interface TradingMoviesTestHooks {
   getCarouselIndex(): number;
   onItemChange(i: number): void;
@@ -170,8 +167,6 @@ describe('TradingMovies', function TradingMoviesSpec() {
         backdrop_path: null,
       },
     ];
-
-    // When path is null, simulate service returning fallback image(s)
     mockTmdbService.img.calls.reset();
     mockTmdbService.img.and.callFake((path: string | null) => {
       return path ? 'https://image.tmdb.org/t/p/w342/test.jpg' : 'assets/placeholder-fallback.jpg';
@@ -185,8 +180,8 @@ describe('TradingMovies', function TradingMoviesSpec() {
 
     component.slides$.pipe(take(1)).subscribe((slides) => {
       const s = slides as SlideVm[];
-      expect(s[0].imgSrc).not.toContain('image.tmdb.org');        // used fallback
-      expect(s[0].backgroundImgSrc).not.toContain('image.tmdb.org'); // used fallback
+      expect(s[0].imgSrc).not.toContain('image.tmdb.org');
+      expect(s[0].backgroundImgSrc).not.toContain('image.tmdb.org');
       expect(s[0].imgSrc).toBeTruthy();
       expect(s[0].backgroundImgSrc).toBeTruthy();
       done();
