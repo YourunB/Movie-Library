@@ -17,7 +17,7 @@ export interface MovieCardModel {
   standalone: true,
   imports: [CommonModule, DatePipe, MatCardModule, MatIconModule, RouterLink],
   template: `
-    <a [routerLink]="['/movie', (movie()?.id ?? 0)]" class="movie-link" *ngIf="movie() as mv">
+    <a [routerLink]="['/movie', (movie()?.id ?? 0)]" queryParamsHandling="preserve" class="movie-link" *ngIf="movie() as mv">
       <mat-card class="movie-card" [ngClass]="{
           'movie-card--compact': variant() === 'compact',
           'movie-card--watchlist': variant() === 'watchlist'
