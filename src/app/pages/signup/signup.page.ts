@@ -18,6 +18,7 @@ import { ErrorDialog } from '../../shared/components/error.dialog/error.dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SignInUpFormData } from '../../../models/dashboard';
+import { strongPasswordValidator } from '../../shared/validators/strong-password';
 
 @Component({
   selector: 'app-signup.page',
@@ -42,7 +43,7 @@ export class SignupPage implements OnInit {
   private router = inject(Router);
   private dialogError = inject(MatDialog);
   isHide = true;
- ngOnInit() {
+  ngOnInit() {
     console.log(this.preUserData, 'signup');
     this.signupForm = new FormGroup({
       email: new FormControl(this.preUserData ? this.preUserData.email : '', {
@@ -52,6 +53,7 @@ export class SignupPage implements OnInit {
         this.preUserData ? this.preUserData.password : '',
         {
           validators: [Validators.required, Validators.minLength(6)],
+          asyncValidators: [strongPasswordValidator()],
         }
       ),
     });
@@ -89,10 +91,14 @@ export class SignupPage implements OnInit {
 
   passWordErrors() {
     const control = this.signupForm.get('password');
+    console.log(control?.hasError('weakPassword'), 'password');
+    console.log(control?.invalid, 'password');
     if (control?.hasError('required')) {
       return 'Password is required';
     } else if (control?.hasError('minlength')) {
       return 'Password must be at least 6 characters long';
+    } else if (control?.hasError('weakPassword')) {
+      return 'Password is too weak. It must contain uppercase, lowercase, number, special character, and be at least 8 characters long.';
     } else {
       return null;
     }
