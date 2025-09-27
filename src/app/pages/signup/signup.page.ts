@@ -19,6 +19,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SignInUpFormData } from '../../../models/dashboard';
 import { strongPasswordValidator } from '../../shared/validators/strong-password';
+import { PasswordStrengthLineComponent } from '../../shared/components/password-strengh-line/password-strengh-line';
 
 @Component({
   selector: 'app-signup.page',
@@ -31,6 +32,7 @@ import { strongPasswordValidator } from '../../shared/validators/strong-password
     CommonModule,
     RouterLink,
     TranslatePipe,
+    PasswordStrengthLineComponent
   ],
   templateUrl: './signup.page.html',
   styleUrl: './signup.page.scss',
@@ -91,8 +93,6 @@ export class SignupPage implements OnInit {
 
   passWordErrors() {
     const control = this.signupForm.get('password');
-    console.log(control?.hasError('weakPassword'), 'password');
-    console.log(control?.invalid, 'password');
     if (control?.hasError('required')) {
       return 'Password is required';
     } else if (control?.hasError('minlength')) {

@@ -10,8 +10,7 @@
         autocomplete="email"
         (input)="markEmailAsTouched()"
       />
-      @if ( signupForm.get("email")?.invalid
-      ) {
+      @if ( signupForm.get("email")?.invalid ) {
       <mat-error>
         {{ userEmailErrors() }}
       </mat-error>
@@ -35,12 +34,15 @@
       >
         <mat-icon>{{ isHide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
+
       @if (signupForm.get("password")?.invalid) {
       <mat-error>
         {{ passWordErrors() }}
       </mat-error>
-      }
-    </mat-form-field>
+      } </mat-form-field
+    ><app-password-strength-line
+      [password]="signupForm.get('password')?.value || ''"
+    ></app-password-strength-line>
     <button
       class="signup-button"
       mat-button="elevated"
