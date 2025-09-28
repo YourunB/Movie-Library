@@ -65,4 +65,21 @@ describe('HomePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should increase counter', () => {
+    component.counter = 0;
+    component.onCounterIncreased();
+    expect(component.counter).toBe(1);
+  });
+
+  it('should decrease counter', () => {
+    component.counter = 5;
+    component.onCounterDecreased();
+    expect(component.counter).toBe(4);
+  });
+
+  it('should change counter to new value', () => {
+    component.onCounterChanged(42);
+    expect(component.counter).toBe(42);
+  });
 });

@@ -11,21 +11,20 @@ class MockTranslatePipe implements PipeTransform {
   }
 }
 
-class MockDialogRef {
-  close(): void {
-    void 0;
-  }
-}
-
 describe('ErrorDialog', () => {
   let fixture: ComponentFixture<ErrorDialog>;
+  let component: ErrorDialog;
+  let dialogRefSpy: jasmine.SpyObj<MatDialogRef<ErrorDialog>>;
 
   beforeEach(async () => {
+    dialogRefSpy = jasmine.createSpyObj<MatDialogRef<ErrorDialog>>('MatDialogRef', ['close']);
+
     await TestBed.configureTestingModule({
       imports: [ErrorDialog],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: { message: 'Test error message' } },
-        { provide: MatDialogRef, useClass: MockDialogRef },
+        { provide: MatDialogRef, useValue: dialogRefSpy },
+        { provide: TranslatePipe, useValue: new MockTranslatePipe() },
       ],
     })
       .overrideComponent(ErrorDialog, {
@@ -35,10 +34,20 @@ describe('ErrorDialog', () => {
       .compileComponents();
 
     fixture = TestBed.createComponent(ErrorDialog);
+    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(fixture.componentInstance).toBeTruthy();
+    expect(component).toBeTruthy();
+  });
+
+  it('should close the dialog when close() is called', () => {
+    component.close();
+    expect(dialogRefSpy.close).toHaveBeenCalled();
+  });
+
+  it('should expose injected message data', () => {
+    expect(component.data.message).toBe('Test error message');
   });
 });
