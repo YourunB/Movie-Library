@@ -1,28 +1,20 @@
 import {
   ComponentFixture,
   TestBed,
-  fakeAsync,
-  tick,
 } from '@angular/core/testing';
 import { SignupPage } from './signup.page';
 import {
   ReactiveFormsModule,
-  FormGroup,
-  FormControl,
-  Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { ElementRef, QueryList } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 
 describe('SignupPage', () => {
   let component: SignupPage;
   let fixture: ComponentFixture<SignupPage>;
-  let router: Router;
 
   const storeMock = {
     dispatch: jasmine.createSpy('dispatch'),
@@ -60,7 +52,6 @@ describe('SignupPage', () => {
 
     fixture = TestBed.createComponent(SignupPage);
     component = fixture.componentInstance;
-    router = TestBed.inject(Router);
     fixture.detectChanges();
     spyOn(localStorage, 'setItem');
     spyOn(localStorage, 'removeItem');

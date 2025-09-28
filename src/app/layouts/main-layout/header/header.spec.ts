@@ -1,55 +1,46 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Header } from './header';
-import { Store } from '@ngrx/store';
 import { createSpyFromClass, Spy } from 'jasmine-auto-spies';
+import { Store } from '@ngrx/store';
+import { AuthService } from '../../../shared/services/auth.service';
+import { ThemeService } from '../../../shared/services/theme.service';
+import { WatchlistSignalsStore } from '../../../shared/services/watchlist-signals.store';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '../../../shared/services/auth.service';
-import { toggleMenu } from '../../../../store/ui/ui.actions';
+import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { Component } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { ThemeService } from '../../../shared/services/theme.service';
-
-interface AppState {
-  ui: unknown;
-}
-
-@Component({
-  standalone: true,
-  template: '',
-})
-class DummyComponent {}
+import { toggleMenu } from '../../../../store/ui/ui.actions';
+import { emptyListOfMovies } from '../../../../store/watchlist/watchlist.actions';
 
 describe('Header', () => {
   let fixture: ComponentFixture<Header>;
   let component: Header;
-  let storeSpy: Spy<Store<AppState>>;
+  let storeSpy: Spy<Store<unknown>>;
   let authServiceSpy: Spy<AuthService>;
+  let routerSpy: Spy<Router>;
 
   beforeEach(() => {
-    storeSpy = createSpyFromClass<Store<AppState>>(Store);
-    authServiceSpy = createSpyFromClass<AuthService>(AuthService);
+    storeSpy = createSpyFromClass(Store);
+    authServiceSpy = createSpyFromClass(AuthService);
+    routerSpy = createSpyFromClass(Router);
 
     authServiceSpy.getUserObservable.and.returnValue(of(null));
     authServiceSpy.getAuthenticatedObservable.and.returnValue(of(false));
+    routerSpy.navigate.and.stub();
 
     TestBed.configureTestingModule({
       imports: [
         Header,
-        DummyComponent,
         HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
       providers: [
-        provideRouter([
-          { path: '', component: DummyComponent },
-          { path: 'gallery', component: DummyComponent },
-          { path: 'signin', component: DummyComponent },
-        ]),
         { provide: Store, useValue: storeSpy },
         { provide: AuthService, useValue: authServiceSpy },
         { provide: ThemeService, useValue: {} },
+        { provide: Router, useValue: routerSpy },
+        { provide: ActivatedRoute, useValue: {} },
+        { provide: WatchlistSignalsStore, useValue: { favorites: () => [] } },
       ],
     });
 
@@ -70,15 +61,21 @@ describe('Header', () => {
   it('should navigate to gallery when search() is called with query', () => {
     component.query = 'Matrix';
     component.search();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/gallery'], {
+      queryParams: { q: 'Matrix', category: 'all' },
+    });
   });
 
   it('should not navigate when search() is called with empty query', () => {
     component.query = '   ';
     component.search();
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
 
   it('should call authService.resetUser and navigate to /signin on logout()', () => {
     component.logout();
     expect(authServiceSpy.resetUser).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/signin']);
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(emptyListOfMovies());
   });
 });
