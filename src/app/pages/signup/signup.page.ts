@@ -150,7 +150,7 @@ export class SignupPage implements OnInit {
     }
   }
 
-  private focusFirstInvalidControl() {
+  focusFirstInvalidControl() {
     const invalidControlName = Object.keys(this.signupForm.controls).find(
       (key) => this.signupForm.get(key)?.invalid
     );
