@@ -1,0 +1,47 @@
+.highlights-text {
+  margin: 40px auto;
+  max-width: 800px;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+
+
+  .section-title {
+    color: #f5c518;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    align-self: center;
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .news-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 12px;
+      transition: background 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #7e7d7d;
+      }
+
+      .overview {
+        font-size: 0.95rem;
+        opacity: 0.85;
+        color: #bda9a9;
+      }
+    }
+  }
+}

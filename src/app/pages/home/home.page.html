@@ -1,0 +1,20 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main class="wrapper">
+  <app-trading-movies></app-trading-movies>
+  <app-toggle-section
+    [primaryLabel]="'home-tab.playing' | translate"
+    [secondaryLabel]="'home-tab.upcoming' | translate"
+    [hint]="'home-tab.text' | translate"
+  >
+    <ng-template #primary>
+      <app-now-playing-movies></app-now-playing-movies>
+    </ng-template>
+    <ng-template #secondary>
+      <app-upcoming-movies></app-upcoming-movies>
+    </ng-template>
+  </app-toggle-section>
+  <app-popular-slider></app-popular-slider>
+  <app-todays-highlights></app-todays-highlights>
+</main>

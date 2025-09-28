@@ -1,0 +1,33 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main>
+  <h1>{{ title | translate }}</h1>
+  <p><strong>{{ "about-page.created" | translate }}:</strong> {{ creationDate }}</p>
+  <p>
+    {{ "about-page.created-text-1" | translate }} 
+    <a href="https://www.themoviedb.org/documentation/api" target="_blank">TMDB API</a>.
+    {{ "about-page.created-text-2" | translate }} 
+  </p>
+
+  <h2>{{ "about-page.developers" | translate }} </h2>
+  <div class="dev-cards">
+    <div class="dev-cards__card" *ngFor="let dev of developers" @fadeIn>
+      <a [href]="dev.githubUrl" target="_blank">
+        <img 
+          [src]="'https://github.com/' + dev.githubUsername + '.png'" 
+          alt="{{ dev.name[selectedLang] }}" 
+          loading="lazy" />
+        <h3>{{ dev.name[selectedLang] }}</h3>
+        <p>GitHub: {{ dev.githubUsername }}</p>
+      </a>
+    </div>
+  </div>
+
+  <h2><a href="https://rs.school/" target="_blank">{{ "about-page.school" | translate }}</a> {{ "about-page.course" | translate }}</h2>
+  <p>
+    {{ "about-page.course-info-1" | translate }} 
+    <a href="https://rs.school/courses/angular" target="_blank">{{ "about-page.school" | translate }} Angular</a> {{ "about-page.course-info-2" | translate }}
+    {{ "about-page.course-info-3" | translate }}
+  </p>
+</main>

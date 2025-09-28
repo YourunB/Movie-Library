@@ -1,0 +1,129 @@
+{
+  "footer": {
+    "box__title_1": "Developers on Github",
+    "box__link": {
+      "yury": "Yury",
+      "anastasiya": "Anastasiya",
+      "roman": "Roman",
+      "school": "RS School",
+      "course": "Angular Course"
+    },
+    "box__title_2": "About study",
+    "main-info__text": "training project"
+  },
+  "header": {
+    "watchlist": "Watchlist",
+    "signin": "SignIn"
+  },
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "popular": "Most Popular",
+    "winners": "Award Winners",
+    "animation": "Family & Animation",
+    "popular-films": {
+      "matrix": "Matrix",
+      "inception": "Inception",
+      "interstellar": "Interstellar",
+      "fight-club": "Fight Club"
+    },
+    "winners-films": {
+      "godfather": "The Godfather",
+      "parasite": "Parasite",
+      "schindler": "Schindler's List"
+    },
+    "animation-films": {
+      "toystory": "Toy Story",
+      "frozen": "Frozen",
+      "shrek": "Shrek",
+      "moana": "Moana"
+    }
+  },
+  "playing-theaters": "Now Playing in Theaters",
+  "popular-slider": {
+    "title": "Most popular celebrities",
+    "popularity": "Popularity"
+  },
+  "upnext-slider": "Up next",
+  "highlights": {
+    "title": "Today’s Highlights",
+    "trailer": "Watch Trailer"
+  },
+  "upcoming-movies": "Upcoming Movies",
+  "about-page": {
+    "title": "About the Project",
+    "created": "Created",
+    "created-text-1": "This project is an IMDb clone built using the",
+    "created-text-2": "Firebase is used for authentication and database storage.",
+    "developers": "Developers",
+    "school": "RS School",
+    "course": "Angular Course",
+    "course-info-1": "This project was created as part of the ",
+    "course-info-2": "course.",
+    "course-info-3": "The course covers Angular fundamentals, RxJS, routing, API integration, and application architecture."
+  },
+  "person-page": {
+    "title": "Actor"
+  },
+  "home-page": {
+    "title": "Main"
+  },
+  "gallery-page": {
+    "title": "Movies Gallery",
+    "empty": "Nothing was found"
+  },
+  "movie-page": {
+    "release": "Release",
+    "trailer": "Trailer",
+    "trailer-none": "Trailer not available.",
+    "cast": "Cast",
+    "cast-empty": "No cast information available.",
+    "loading": "Loading title...",
+    "title": "Description"
+  },
+  "notfound-page": "Page hasn't been found",
+  "sinin": {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Enter your password",
+    "login": "Log in",
+    "account": "Don't have an account?",
+    "signup": "SignUp"
+  },
+  "sinup": {
+    "title": "Sign Up",
+    "email": "Email",
+    "password": "Enter your password",
+    "register": "Register",
+    "account": "Already have an account?",
+    "signin": "Sign In"
+  },
+  "watchlist": {
+    "title": "My movies for watching",
+    "empty": "I haven`t got any movies to watch yet"
+  },
+  "error": "Error",
+  "history-debug": {
+    "title": "UI History Debug",
+    "length": "History Length",
+    "undo": "Can Undo",
+    "redo": "Can Redo",
+    "toggle": "Toggle Debug"
+  },
+  "select-lang": "Please select a language",
+  "trailer": {
+    "title": "Trailer",
+    "loading": "Loading trailer...",
+    "search": "Search on YouTube",
+    "open": "Open in YouTube"
+  },
+  "vpn-info": {
+    "text-1": "Having trouble logging in or playing trailers?",
+    "text-2": "Some content may be restricted in your region. Try turning off your VPN or connecting through an EU/US location, then retry."
+  },
+  "home-tab": {
+    "playing": "Now Playing",
+    "upcoming": "Upcoming",
+    "text": "Switch between current theaters and upcoming releases."
+  }
+}

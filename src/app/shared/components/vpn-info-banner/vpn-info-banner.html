@@ -1,0 +1,14 @@
+@if (showVpnInfo$ | async) {
+<div class="vpn-banner">
+  <div class="banner-content">
+    <mat-icon class="info-icon">info</mat-icon>
+    <div class="banner-text">
+      <strong>{{ "vpn-info.text-1" | translate }}</strong>
+      {{ "vpn-info.text-2" | translate }}
+    </div>
+    <button mat-icon-button (click)="hideBanner()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+}

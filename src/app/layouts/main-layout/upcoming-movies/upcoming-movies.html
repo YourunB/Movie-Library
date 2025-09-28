@@ -1,0 +1,28 @@
+<section class="upcoming-section">
+  <h2 class="section-title">{{ "upcoming-movies" | translate }}</h2>
+
+  @if (movies(); as movies) { @if (cardWidth(); as cardWidth) {
+  <div class="slider-wrapper">
+    <button mat-icon-button class="nav prev" (click)="scroll('prev', cardWidth)">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <div class="slider" #slider>
+      @for (movie of movies; track movie.id) {
+      <app-movie-card variant="compact" [movie]="{
+          id: movie.id,
+          title: movie.title,
+          poster_path: movie.poster_path,
+          release_date: movie.release_date,
+          inWatchlist: watchlistSignals.isInWatchlist(movie.id)
+        }" [posterUrl]="movie.poster_path" [showFavorite]="isAuth()" (favorite)="toggleFavorite(movie)">
+      </app-movie-card>
+      }
+    </div>
+
+    <button mat-icon-button class="nav next" (click)="scroll('next', cardWidth)">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+  } }
+</section>

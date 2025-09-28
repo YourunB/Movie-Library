@@ -1,0 +1,23 @@
+main {
+  min-height: calc(100vh - 258px);
+}
+
+.person-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.header {
+  display: flex;
+  gap: 16px;
+}
+img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px; }
+.bio {
+  margin-top:
+  16px;
+  opacity: 0.9;
+}

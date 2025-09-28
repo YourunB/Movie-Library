@@ -1,0 +1,25 @@
+main {
+  min-height: calc(100vh - 273px);
+  max-width: 1280px;
+  width: 100%;
+  text-align: center;
+}
+
+.dev-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  &__card {
+    width: 300px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &__card img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+}

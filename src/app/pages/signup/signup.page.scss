@@ -1,0 +1,45 @@
+.signup-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: calc(100vh - 258px);
+}
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #f5c518;
+  color: white;
+  min-width: 40% !important;
+}
+.signup-form-title {
+  align-self: center;
+}
+
+.signup-button {
+  color: black !important;
+  background-color: white !important;
+}
+
+.signup-button:disabled {
+  color: gray !important;
+}
+
+.signup-button:hover {
+  color: white;
+  background-color: #f5c518;
+}
+
+.signup-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mdc-text-field__input {
+  color: var(--text-primary) !important;
+}

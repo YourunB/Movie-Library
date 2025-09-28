@@ -1,0 +1,39 @@
+<header class="app-header">
+  <div class="header-wrapper">
+    <div class="left-section">
+      <a class="logo" routerLink="/">MVLB</a>
+      <button class="menu-button" (click)="toggleMenu()">☰</button>
+    </div>
+
+    <div class="search-section">
+      <input type="text" [(ngModel)]="query" />
+      <button (click)="search()">🔍</button>
+    </div>
+
+    <div class="right-section">
+      <app-theme-toggle></app-theme-toggle>
+      @if (isAuthenticated) {
+      <div routerLink="/watchlist" class="watchlist-link">
+        <p>{{ "header.watchlist" | translate }}</p>
+        @if (watchlistSignals.favorites().length>0) {
+        <mat-icon class="icon-watchlist">favorite</mat-icon>
+        <p class="items">{{ watchlistSignals.favorites().length }}</p>
+        }
+      </div>
+      } @if (!isAuthenticated) {
+      <a [routerLink]="['/signin']">{{ "header.signin" | translate }}</a>
+      } @else {
+      <div class="logout-menu">
+        <p class="user-email">{{ user?.email }}</p>
+        <button class="logout-button">
+          <mat-icon class="logout-icon" (click)="logout()">logout</mat-icon>
+        </button>
+      </div>
+      }
+
+      <app-select-languages></app-select-languages>
+    </div>
+  </div>
+
+  <app-menu *ngIf="menuOpen$ | async"></app-menu>
+</header>

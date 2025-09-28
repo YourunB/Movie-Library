@@ -1,0 +1,76 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main class="login-page" role="main" aria-labelledby="login-title">
+  <form [formGroup]="singinForm" class="login-form" (ngSubmit)="onSubmit()" novalidate>
+    <p id="login-title" class="form-title">{{ "sinin.title" | translate }}</p>
+
+    <!-- Email -->
+    <mat-form-field>
+      <mat-label>{{ "sinin.email" | translate }}</mat-label>
+      <input
+        #formFieldInput
+        matInput
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="singinForm.get('email')?.invalid"
+        [attr.aria-describedby]="singinForm.get('email')?.invalid ? 'email-error' : null"
+      />
+      <mat-error id="email-error" *ngIf="singinForm.get('email')?.invalid" role="alert">
+        {{ userEmailErrors() }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field>
+      <mat-label>{{ "sinin.password" | translate }}</mat-label>
+      <input
+        #formFieldInput
+        matInput
+        [type]="isHide ? 'password' : 'text'"
+        formControlName="password"
+        autocomplete="current-password"
+        [attr.aria-required]="true"
+        [attr.aria-invalid]="singinForm.get('password')?.invalid"
+        [attr.aria-describedby]="singinForm.get('password')?.invalid ? 'password-error' : null"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hidePassword($event)"
+        [attr.aria-label]="isHide ? 'Show password' : 'Hide password'"
+        [attr.aria-pressed]="!isHide"
+      >
+        <mat-icon>{{ isHide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <mat-error id="password-error" *ngIf="singinForm.get('password')?.invalid" role="alert">
+        {{ passWordErrors() }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Strength line -->
+    <app-password-strength-line [password]="singinForm.get('password')?.value || ''"></app-password-strength-line>
+
+    <!-- Submit -->
+    <button
+      class="login-button"
+      mat-raised-button
+      color="primary"
+      [disabled]="singinForm.invalid"
+      [attr.aria-disabled]="singinForm.invalid"
+      type="submit"
+    >
+      {{ "sinin.login" | translate }}
+    </button>
+
+    <!-- Links -->
+    <div class="login-links">
+      <p>{{ "sinin.account" | translate }}</p>
+      <a [routerLink]="['/signup']" aria-label="Go to signup page">{{ "sinin.signup" | translate }}</a>
+    </div>
+  </form>
+</main>
+

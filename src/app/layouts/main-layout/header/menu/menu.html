@@ -1,0 +1,93 @@
+<nav class="dropdown-menu">
+  <div class="dropdown-menu__wrapper">
+    <div class="header">
+      <div class="header__logo">MVLB</div>
+      <button (click)="close()" class="header__close">✕</button>
+    </div>
+
+    <div class="main">
+      <a routerLink="/" (click)="close()">{{ "menu.home" | translate }}</a>
+      <a routerLink="/about" (click)="close()">{{
+        "menu.about" | translate
+      }}</a>
+
+      <div class="main__menu-section">
+        <h3>{{ "menu.popular" | translate }}</h3>
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Matrix' }"
+          (click)="close()"
+          >{{ "menu.popular-films.matrix" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Inception' }"
+          (click)="close()"
+          >{{ "menu.popular-films.inception" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Interstellar' }"
+          (click)="close()"
+          >{{ "menu.popular-films.interstellar" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Fight Club' }"
+          (click)="close()"
+          >{{ "menu.popular-films.fight-club" | translate }}</a
+        >
+      </div>
+
+      <div class="main__menu-section">
+        <h3>{{ "menu.winners" | translate }}</h3>
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'The Godfather' }"
+          (click)="close()"
+          >{{ "menu.winners-films.godfather" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Parasite' }"
+          (click)="close()"
+          >{{ "menu.winners-films.parasite" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Schindler\'s List' }"
+          (click)="close()"
+          >{{ "menu.winners-films.schindler" | translate }}</a
+        >
+      </div>
+
+      <div class="main__menu-section">
+        <h3>{{ "menu.animation" | translate }}</h3>
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Toy Story' }"
+          (click)="close()"
+          >{{ "menu.animation-films.toystory" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Frozen' }"
+          (click)="close()"
+          >{{ "menu.animation-films.frozen" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Shrek' }"
+          (click)="close()"
+          >{{ "menu.animation-films.shrek" | translate }}</a
+        >
+        <a
+          [routerLink]="['/gallery']"
+          [queryParams]="{ q: 'Moana' }"
+          (click)="close()"
+          >{{ "menu.animation-films.moana" | translate }}</a
+        >
+      </div>
+    </div>
+  </div>
+</nav>

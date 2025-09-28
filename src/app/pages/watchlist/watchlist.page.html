@@ -1,0 +1,32 @@
+<head>
+  <title>{{ title | translate }}</title>
+</head>
+<main>
+  @if (watchlistSignals.favorites(); as movies) { @if (movies.length > 0) {
+  <h2 class="title">{{ "watchlist.title" | translate }}</h2>
+  <div class="gallery-grid">
+    @for (movie of movies; track movie.id) {
+    <app-movie-card
+      variant="watchlist"
+      [movie]="{
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+        inWatchlist: watchlistSignals.isInWatchlist(movie.id)
+      }"
+      [posterUrl]="movie.poster_path | posterUrl : 'w342'"
+      [showFavorite]="(isAuth$ | async) ?? false"
+      (favorite)="toggleFavorite($event)"
+    ></app-movie-card>
+    }
+  </div>
+  } @else {
+  <div class="empty-list">
+    <p class="no-results">{{ "watchlist.empty" | translate }}</p>
+    <a class="watchlist-link" [routerLink]="['/']">
+      <mat-icon class="watchlist-icon">home</mat-icon>
+    </a>
+  </div>
+  } }
+</main>

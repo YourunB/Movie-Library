@@ -1,0 +1,22 @@
+<section class="toggle-section">
+  <div class="toggle-header" role="tablist" aria-label="Section toggle">
+    <button type="button" class="toggle-btn" role="tab" [attr.aria-selected]="active === 'primary'"
+      [class.active]="active === 'primary'" (click)="setActive('primary')">
+      {{ primaryLabel }}
+    </button>
+    <button type="button" class="toggle-btn" role="tab" [attr.aria-selected]="active === 'secondary'"
+      [class.active]="active === 'secondary'" (click)="setActive('secondary')">
+      {{ secondaryLabel }}
+    </button>
+    <ng-content select="[extra-controls]"></ng-content>
+  </div>
+  <p class="hint" *ngIf="hint">{{ hint }}</p>
+  <div class="toggle-body">
+    <ng-container *ngIf="active === 'primary'">
+      <ng-container *ngTemplateOutlet="primaryTpl"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="active === 'secondary'">
+      <ng-container *ngTemplateOutlet="secondaryTpl"></ng-container>
+    </ng-container>
+  </div>
+</section>

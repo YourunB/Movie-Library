@@ -1,0 +1,34 @@
+<section class="now-playing-section">
+  <div class="section-wrapper">
+    <h2 class="section-title">🎟 {{ "playing-theaters" | translate }}</h2>
+
+    <div class="slider-wrapper">
+      @if (movies(); as movies) {
+      @if (cardWidth(); as cardWidth) {
+
+      <button mat-icon-button class="nav prev" (click)="scroll('prev', cardWidth)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <div class="slider" #slider>
+        @for (movie of movies; track movie.id) {
+        <app-movie-card variant="compact" [movie]="{
+                  id: movie.id,
+                  title: movie.title,
+                  poster_path: movie.poster_path,
+                  release_date: movie.release_date,
+                  inWatchlist: watchlistSignals.isInWatchlist(movie.id)
+                }" [posterUrl]="movie.poster_path" [showFavorite]="isAuth()" (favorite)="toggleFavorite(movie)">
+        </app-movie-card>
+        }
+      </div>
+
+      <button mat-icon-button class="nav next" (click)="scroll('next', cardWidth)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+      }
+      }
+    </div>
+  </div>
+</section>

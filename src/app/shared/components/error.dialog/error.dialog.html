@@ -1,0 +1,11 @@
+<div class="error-dialog">
+  <h2 mat-dialog-title class="dialog-title">{{ "error" | translate }}</h2>
+  <mat-dialog-content>
+    <p class="error-message">{{ data.message }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button class="button-close" matButton (click)="close()" cdkFocusInitial>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>
