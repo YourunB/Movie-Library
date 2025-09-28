@@ -5,7 +5,7 @@
   <form [formGroup]="singinForm" class="login-form" (ngSubmit)="onSubmit()" novalidate>
     <p id="login-title" class="form-title">{{ "sinin.title" | translate }}</p>
 
-   
+    <!-- Email -->
     <mat-form-field>
       <mat-label>{{ "sinin.email" | translate }}</mat-label>
       <input
@@ -18,13 +18,12 @@
         [attr.aria-invalid]="singinForm.get('email')?.invalid"
         [attr.aria-describedby]="singinForm.get('email')?.invalid ? 'email-error' : null"
       />
-      @if (singinForm.get("email")?.invalid) {
-        <mat-error id="email-error" role="alert">
-          {{ userEmailErrors() }}
-        </mat-error>
-      }
+      <mat-error id="email-error" *ngIf="singinForm.get('email')?.invalid" role="alert">
+        {{ userEmailErrors() }}
+      </mat-error>
     </mat-form-field>
 
+    <!-- Password -->
     <mat-form-field>
       <mat-label>{{ "sinin.password" | translate }}</mat-label>
       <input
@@ -47,17 +46,15 @@
       >
         <mat-icon>{{ isHide ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
-      @if (singinForm.get("password")?.invalid) {
-        <mat-error id="password-error" role="alert">
-          {{ passWordErrors() }}
-        </mat-error>
-      }
+      <mat-error id="password-error" *ngIf="singinForm.get('password')?.invalid" role="alert">
+        {{ passWordErrors() }}
+      </mat-error>
     </mat-form-field>
 
-    <app-password-strength-line
-      [password]="singinForm.get('password')?.value || ''"
-    ></app-password-strength-line>
+    <!-- Strength line -->
+    <app-password-strength-line [password]="singinForm.get('password')?.value || ''"></app-password-strength-line>
 
+    <!-- Submit -->
     <button
       class="login-button"
       mat-raised-button
@@ -69,11 +66,11 @@
       {{ "sinin.login" | translate }}
     </button>
 
+    <!-- Links -->
     <div class="login-links">
       <p>{{ "sinin.account" | translate }}</p>
-      <a [routerLink]="['/signup']" aria-label="Go to signup page">
-        {{ "sinin.signup" | translate }}
-      </a>
+      <a [routerLink]="['/signup']" aria-label="Go to signup page">{{ "sinin.signup" | translate }}</a>
     </div>
   </form>
 </main>
+
