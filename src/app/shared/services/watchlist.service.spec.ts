@@ -1,77 +1,89 @@
 import { TestBed } from '@angular/core/testing';
-import { RegionInfoService } from './region-info.service';
-import { PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { WatchlistService } from './watchlist.service';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { TmdbMovie } from '../../../models/dashboard';
+import { selectFavoriteMovies } from '../../../store/watchlist/watchlist.selectors';
+import {
+  addMovie,
+  deleteMovieById,
+  loadListOfMovies,
+} from '../../../store/watchlist/watchlist.actions';
+import { auth } from '../api/farebase';
+import { User } from 'firebase/auth';
 
-describe('RegionInfoService (browser)', () => {
-  let service: RegionInfoService;
-  let httpSpy: jasmine.SpyObj<HttpClient>;
+describe('WatchlistService', () => {
+  let service: WatchlistService;
+  let store: MockStore;
+  const mockMovie: TmdbMovie = { id: 1, title: 'Test Movie' } as TmdbMovie;
 
   beforeEach(() => {
-    httpSpy = jasmine.createSpyObj<HttpClient>('HttpClient', ['get']);
-
-    const storage: Record<string, string | null> = {};
-    spyOn(localStorage, 'getItem').and.callFake((key: string) => storage[key] ?? null);
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string) => {
-      storage[key] = value;
-    });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string) => {
-      delete storage[key];
-    });
-
-    spyOnProperty(window, 'navigator', 'get').and.returnValue({
-      userAgent: 'Mozilla/5.0 yabrowser',
-      language: 'ru-RU',
-    } as Navigator);
-
-    spyOn(Intl, 'DateTimeFormat').and.returnValue({
-      resolvedOptions: () => ({ timeZone: 'Europe/Moscow' }),
-    } as Intl.DateTimeFormat);
-
-    httpSpy.get.and.returnValue(of('RU'));
-
     TestBed.configureTestingModule({
-      providers: [
-        { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: HttpClient, useValue: httpSpy },
-      ],
+      providers: [WatchlistService, provideMockStore()],
     });
 
-    service = TestBed.inject(RegionInfoService);
+    service = TestBed.inject(WatchlistService);
+    store = TestBed.inject(MockStore);
+
+    Object.defineProperty(auth, 'currentUser', {
+      value: {
+        uid: 'user123',
+        email: 'test@example.com',
+        _stopProactiveRefresh: () => {
+          /*test*/
+        },
+      } as unknown as User,
+      writable: true,
+    });
+
+    spyOn(service, 'updateDataBaseOfUserMovies').and.callFake((): void => {
+      /*test*/
+    });
+    spyOn(service, 'receiveDataBaseOfUserMovies').and.callFake((): void => {
+      const user = auth.currentUser;
+      const movies = user ? [mockMovie] : [];
+      store.dispatch(loadListOfMovies({ movies }));
+    });
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should dispatch addMovie and update database', () => {
+    store.overrideSelector(selectFavoriteMovies, [mockMovie]);
+    const dispatchSpy = spyOn(store, 'dispatch');
+    service.addMovie(mockMovie);
+    expect(dispatchSpy).toHaveBeenCalledWith(addMovie({ movie: mockMovie }));
+    expect(service.updateDataBaseOfUserMovies).toHaveBeenCalled();
   });
 
-  it('should show VPN info on Russian signals', () => {
-    expect(service.getShowVpnInfo()).toBeTrue();
+  it('should dispatch deleteMovieById and update database', () => {
+    store.overrideSelector(selectFavoriteMovies, [mockMovie]);
+    const dispatchSpy = spyOn(store, 'dispatch');
+    service.removeMovie(mockMovie.id);
+    expect(dispatchSpy).toHaveBeenCalledWith(deleteMovieById({ movieId: mockMovie.id }));
+    expect(service.updateDataBaseOfUserMovies).toHaveBeenCalled();
   });
 
-  it('should hide VPN info after acknowledge', () => {
-    service.acknowledge(1);
-    expect(service.getShowVpnInfo()).toBeFalse();
-    expect(localStorage.setItem).toHaveBeenCalled();
+  it('should check if movie is in watchlist', (done: DoneFn) => {
+    store.overrideSelector(selectFavoriteMovies, [mockMovie]);
+    service.isMovieInWatchlist(mockMovie.id).subscribe((result: boolean) => {
+      expect(result).toBeTrue();
+      done();
+    });
   });
 
-  it('should reset dismissal and recheck geo', () => {
-    service.resetDismissal();
-    expect(localStorage.removeItem).toHaveBeenCalledWith('vpnInfoDismissedUntil');
-    expect(httpSpy.get).toHaveBeenCalledWith(
-      'https://ipapi.co/country/',
-      jasmine.objectContaining({ responseType: 'text' })
-    );
+  it('should receive movies from database and dispatch loadListOfMovies', () => {
+    store.overrideSelector(selectFavoriteMovies, [mockMovie]);
+    const dispatchSpy = spyOn(store, 'dispatch');
+    service.receiveDataBaseOfUserMovies();
+    expect(dispatchSpy).toHaveBeenCalledWith(loadListOfMovies({ movies: [mockMovie] }));
   });
 
-  it('should hide VPN info explicitly', () => {
-    service.hideVpnInfo();
-    expect(service.getShowVpnInfo()).toBeFalse();
-  });
-
-  it('should flag region block if not already shown', () => {
-    service.hideVpnInfo();
-    service.flagPossibleRegionBlock();
-    expect(service.getShowVpnInfo()).toBeTrue();
+  it('should dispatch empty list if no user', () => {
+    Object.defineProperty(auth, 'currentUser', {
+      value: null,
+      writable: true,
+    });
+    store.overrideSelector(selectFavoriteMovies, []);
+    const dispatchSpy = spyOn(store, 'dispatch');
+    service.receiveDataBaseOfUserMovies();
+    expect(dispatchSpy).toHaveBeenCalledWith(loadListOfMovies({ movies: [] }));
   });
 });
