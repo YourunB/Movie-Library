@@ -1,4 +1,3 @@
-// strong-password.validator.ts
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
