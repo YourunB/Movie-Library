@@ -27,24 +27,18 @@ cd Movie-Library
 npm i
 ```
 
-3. Set up environment variables
-```bash
-cp src/environments/environment.example.ts src/environments/environment.ts
-# Edit environment.ts with your API keys
-```
-
-4. Start the development server
+3. Start the development server
 ```bash
 npm run start
 ```
 
-5. Run tests
+4. Run tests
 ```bash
 npm run test
 npm run test:e2e
 ```
 
-6. Build for production
+5. Build for production
 ```bash
 npm run build
 ```
