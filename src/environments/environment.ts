@@ -8,6 +8,5 @@ export const environment = {
     language: 'en-US',
     region: 'PL',
     includeImageLanguage: 'pl,en,null'
-  },
-  useMocks: false
+  }
 };
