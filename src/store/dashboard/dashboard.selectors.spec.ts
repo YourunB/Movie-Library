@@ -6,8 +6,6 @@ import {
   selectReviews,
   selectLoading,
   selectError,
-  selectSelectedMovie,
-  selectLoadingMovie,
 } from './dashboard.selectors';
 import { DashboardState } from './dashboard.reducer';
 import { TmdbMovie, TmdbPerson, TmdbReview } from '../../models/dashboard';
@@ -92,22 +90,5 @@ describe('Dashboard Selectors', () => {
 
     expect(selectError(rootState)).toBe('Oops');
     expect(selectError.projector(state)).toBe('Oops');
-  });
-
-  it('selectSelectedMovie returns selected movie', () => {
-    const state = makeState({ selectedMovie: movieB });
-    const rootState = makeRootState(state);
-
-    // Use toEqual for objects (selectors may return new references)
-    expect(selectSelectedMovie(rootState)).toEqual(movieB);
-    expect(selectSelectedMovie.projector(state)).toEqual(movieB);
-  });
-
-  it('selectLoadingMovie returns loadingMovie flag', () => {
-    const state = makeState({ loadingMovie: true });
-    const rootState = makeRootState(state);
-
-    expect(selectLoadingMovie(rootState)).toBeTrue();
-    expect(selectLoadingMovie.projector(state)).toBeTrue();
   });
 });
