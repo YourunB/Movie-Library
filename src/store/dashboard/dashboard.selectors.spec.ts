@@ -1,4 +1,3 @@
-// src/store/dashboard/dashboard.selectors.spec.ts
 import {
   selectDashboardState,
   selectTrending,
@@ -14,7 +13,6 @@ import { DashboardState } from './dashboard.reducer';
 import { TmdbMovie, TmdbPerson, TmdbReview } from '../../models/dashboard';
 
 describe('Dashboard Selectors', () => {
-  // Minimal mock entities (cast to target types to keep tests lightweight)
   const movieA = { id: 1, title: 'Movie A' } as unknown as TmdbMovie;
   const movieB = { id: 2, title: 'Movie B' } as unknown as TmdbMovie;
   const person = { id: 10, name: 'Person X' } as unknown as TmdbPerson;
@@ -31,7 +29,6 @@ describe('Dashboard Selectors', () => {
     error: 'Oops',
   };
 
-  // Infer app state type from a selector input (avoids `any` and index signatures)
   type AppState = Parameters<typeof selectTrending>[0];
 
   const makeState = (overrides: Partial<DashboardState> = {}): DashboardState => ({
