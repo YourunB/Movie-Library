@@ -20,66 +20,97 @@ describe('Dashboard Selectors', () => {
   const person = { id: 10, name: 'Person X' } as unknown as TmdbPerson;
   const review = { id: 'r1', author: 'Critic', content: 'Great!' } as unknown as TmdbReview;
 
-  const featureState: DashboardState = {
+  const baseState: DashboardState = {
     trending: [movieA],
     topRated: [movieB],
     popularPeople: [person],
     reviews: [review],
-    selectedMovie: movieB,
+    selectedMovie: null,
     loading: true,
-    loadingMovie: true,
+    loadingMovie: false,
     error: 'Oops',
   };
 
-  interface RootState {
-    dashboard: DashboardState;
-  }
+  // Infer app state type from a selector input (avoids `any` and index signatures)
+  type AppState = Parameters<typeof selectTrending>[0];
 
-  const rootState: RootState = { dashboard: featureState };
+  const makeState = (overrides: Partial<DashboardState> = {}): DashboardState => ({
+    ...baseState,
+    ...overrides,
+  });
+
+  const makeRootState = (state: DashboardState): AppState =>
+    ({ dashboard: state } as unknown as AppState);
 
   it('selectDashboardState returns the feature slice', () => {
-    expect(selectDashboardState(rootState)).toBe(featureState);
+    const state = makeState();
+    const rootState = makeRootState(state);
+
+    expect(selectDashboardState(rootState)).toBe(state);
   });
 
   it('selectTrending returns trending list', () => {
-    // via full selector (root state)
+    const state = makeState();
+    const rootState = makeRootState(state);
+
     expect(selectTrending(rootState)).toEqual([movieA]);
-    // via projector (unit-level)
-    expect(selectTrending.projector(featureState)).toEqual([movieA]);
+    expect(selectTrending.projector(state)).toEqual([movieA]);
   });
 
   it('selectTopRated returns top rated list', () => {
+    const state = makeState();
+    const rootState = makeRootState(state);
+
     expect(selectTopRated(rootState)).toEqual([movieB]);
-    expect(selectTopRated.projector(featureState)).toEqual([movieB]);
+    expect(selectTopRated.projector(state)).toEqual([movieB]);
   });
 
   it('selectPopularPeople returns people list', () => {
+    const state = makeState();
+    const rootState = makeRootState(state);
+
     expect(selectPopularPeople(rootState)).toEqual([person]);
-    expect(selectPopularPeople.projector(featureState)).toEqual([person]);
+    expect(selectPopularPeople.projector(state)).toEqual([person]);
   });
 
   it('selectReviews returns reviews list', () => {
+    const state = makeState();
+    const rootState = makeRootState(state);
+
     expect(selectReviews(rootState)).toEqual([review]);
-    expect(selectReviews.projector(featureState)).toEqual([review]);
+    expect(selectReviews.projector(state)).toEqual([review]);
   });
 
   it('selectLoading returns loading flag', () => {
+    const state = makeState();
+    const rootState = makeRootState(state);
+
     expect(selectLoading(rootState)).toBeTrue();
-    expect(selectLoading.projector(featureState)).toBeTrue();
+    expect(selectLoading.projector(state)).toBeTrue();
   });
 
   it('selectError returns error message', () => {
+    const state = makeState();
+    const rootState = makeRootState(state);
+
     expect(selectError(rootState)).toBe('Oops');
-    expect(selectError.projector(featureState)).toBe('Oops');
+    expect(selectError.projector(state)).toBe('Oops');
   });
 
   it('selectSelectedMovie returns selected movie', () => {
-    expect(selectSelectedMovie(rootState)).toBe(movieB);
-    expect(selectSelectedMovie.projector(featureState)).toBe(movieB);
+    const state = makeState({ selectedMovie: movieB });
+    const rootState = makeRootState(state);
+
+    // Use toEqual for objects (selectors may return new references)
+    expect(selectSelectedMovie(rootState)).toEqual(movieB);
+    expect(selectSelectedMovie.projector(state)).toEqual(movieB);
   });
 
   it('selectLoadingMovie returns loadingMovie flag', () => {
+    const state = makeState({ loadingMovie: true });
+    const rootState = makeRootState(state);
+
     expect(selectLoadingMovie(rootState)).toBeTrue();
-    expect(selectLoadingMovie.projector(featureState)).toBeTrue();
+    expect(selectLoadingMovie.projector(state)).toBeTrue();
   });
 });
