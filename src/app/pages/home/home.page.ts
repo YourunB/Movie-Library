@@ -19,7 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     UpcomingMovies,
     TodaysHighlights,
     ToggleSectionComponent,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
