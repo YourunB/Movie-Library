@@ -87,7 +87,6 @@ export class SignupPage implements OnInit {
   >;
 
   hidePassword(event: MouseEvent) {
-    console.log(event.type);
     event.stopPropagation();
     event.preventDefault();
     this.isHide = !this.isHide;
@@ -142,7 +141,6 @@ export class SignupPage implements OnInit {
           this.router.navigate(['/']);
         })
         .catch((error: HttpErrorResponse) => {
-          console.log(error);
           this.dialogError.open(ErrorDialog, {
             data: { message: error.message },
           });

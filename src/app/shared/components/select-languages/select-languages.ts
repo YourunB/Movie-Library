@@ -31,7 +31,6 @@ export class SelectLanguages {
     localStorage.getItem('language')?.toLocaleUpperCase() || 'EN';
 
   onLanguageChange(newValue: string) {
-    console.log('Selected Language:', newValue);
     this.selectedLang = newValue;
     this.languageService.changeLanguage(this.selectedLang.toLocaleLowerCase());
     this.isSelectLanguage = false;

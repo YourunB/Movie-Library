@@ -60,7 +60,6 @@ export class MovieCardComponent {
     event.stopPropagation();
     event.preventDefault();
     if (this.movie()) {
-      console.log(this.movie());
       this.favorite.emit(this.movie()!);
     }
   }

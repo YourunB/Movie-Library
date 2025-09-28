@@ -26,7 +26,6 @@ export class WatchlistService {
   }
 
   removeMovie(movieId: number) {
-    console.log('remove');
     this.store.dispatch(deleteMovieById({ movieId: movieId }));
     this.updateDataBaseOfUserMovies();
   }
@@ -45,11 +44,9 @@ export class WatchlistService {
   updateDataBaseOfUserMovies() {
     const user = auth.currentUser;
     if (!user) {
-      console.error('No authenticated user found.');
       return;
     }
     const userId = user.uid;
-    console.log(userId);
     const newKey = push(
       child(ref(this.dataBase), `users/${userId}/favorite`)
     ).key;
@@ -72,7 +69,6 @@ export class WatchlistService {
   receiveDataBaseOfUserMovies() {
     const user = auth.currentUser;
     if (!user) {
-      console.error('No authenticated user found.');
       this.store.dispatch(loadListOfMovies({ movies: [] }));
       return;
     }
@@ -89,7 +85,6 @@ export class WatchlistService {
 
             this.store.dispatch(loadListOfMovies({ movies: movies ?? [] }));
           } else {
-            console.log('No data available for user:', userId);
             this.store.dispatch(loadListOfMovies({ movies: [] }));
           }
         } else {
